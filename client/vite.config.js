@@ -41,4 +41,7 @@ export default defineConfig({
       '/api': 'http://localhost:8787',
     },
   },
+  preview: {
+    allowedHosts: true,
+  },
 })
