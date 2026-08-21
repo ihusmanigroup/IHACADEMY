@@ -1,0 +1,552 @@
+IH Academy | Winter Internship 2026-27
+Page 1
+IH ACADEMY
+ Winter Internship 2026-27
+ Backend Engineering
+ Node.js, Express, databases, authentication, API design, security, testing, documentation
+ and deployment.
+Program length
+4 weeks
+Weekly structure
+4 track assignments + required free course(s)
+Difficulty path
+Easy -> Intermediate -> Advanced -> Capstone
+Visibility rule
+Intern sees only the track selected in the application
+Unlock rule
+Next week unlocks only after all previous-week assignments and required course proofs are
+approved
+Submission types
+GitHub repository, deployed link when applicable, notes/comments, PDF evidence report and
+optional supporting file
+Program rules
+• This document replaces the old eight-week/summer assignment bank for the Winter Internship portal.
+• Week 1 contains two required free courses; Weeks 2-4 contain one required free course each.
+• All four assignments in a week are mandatory. Course certificates are also mandatory.
+• A submission may be Draft, Submitted, Changes Requested or Approved. Only Approved items count toward
+unlocking.
+• Plagiarism, copied repositories, exposed API keys, fake deployments or fabricated screenshots result in
+rejection.
+• Deadlines, opening dates and review windows must be admin-configurable; do not hardcode them in the
+frontend.
+Standard PDF evidence report
+• Cover page: intern name, track, week, assignment, repository URL and live URL.
+• 1-2 pages of implementation summary and architecture/folder structure.
+• Screenshots of required features and important validation/error states.
+• Testing table with scenario, expected result, actual result and pass/fail.
+• Challenges, limitations and what the intern would improve next.
+
+IH Academy | Winter Internship 2026-27
+Page 2
+WEEK 1 - Foundation & Workflow
+Complete every assignment and the required free course proof. Week 2 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ EASY
+ 7-9 h
+REST Notes API
+Assignment question: Build a versioned REST API for personal notes with title, body, tags, pinned status and
+timestamps.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Implement create, list, single read, update and delete endpoints.
+• Add pagination, text search and tag filtering.
+• Return 404 for missing resources and 400/422 for invalid data.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+All CRUD endpoints, filters and validation behave according to the documentation.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 2
+ EASY
+ 9-11 h
+User Authentication API
+Assignment question: Build registration, login, profile and logout/refresh-token endpoints for internship users.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Hash passwords securely.
+• Issue access and refresh tokens with expiry.
+• Protect profile routes and never expose password hashes.
+• Add duplicate email and invalid credential handling.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+
+IH Academy | Winter Internship 2026-27
+Page 3
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+A new user can register, authenticate, refresh and access only protected profile data.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 9-11 h
+Task Manager API
+Assignment question: Build a multi-user task API with status, priority, due date and ownership.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Associate every task with its authenticated owner.
+• Add status/priority/date filters and sorting.
+• Prevent users from reading or changing another user’s tasks.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Authorization isolation and task filters pass documented tests.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 4
+INTERMEDIAT
+ E
+ 10-12 h
+Blog API
+Assignment question: Build a blog backend with users, posts, categories, comments and publishing status.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Support draft and published posts.
+• Generate unique slugs.
+• Paginate public posts and include author/category information.
+• Allow only authors or admins to edit/delete content.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+
+IH Academy | Winter Internship 2026-27
+Page 4
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Public and protected workflows work without leaking draft content.
+Evidence required
+Successful and failed request screenshots plus test output
+Required free course(s)
+FREE COURSE 1: Git & GitHub for Beginners
+Establish clean repository, branch, commit and pull-request habits.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Mandatory Week 1 proof
+FREE COURSE 2: Node.js & Backend Architecture
+Learn Node runtime, Express structure, routing, middleware and environment configuration.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Mandatory Week 1 proof
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 5
+WEEK 2 - Applied Development
+Complete every assignment and the required free course proof. Week 3 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+INTERMEDIAT
+ E
+ 10-12 h
+Inventory Management API
+Assignment question: Create an inventory API for products, categories, suppliers and stock adjustments.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Track stock-in and stock-out operations as immutable movement records.
+• Reject operations that would make stock negative.
+• Add low-stock query and date-range movement report.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Calculated stock equals movement history and negative inventory is blocked.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 2
+INTERMEDIAT
+ E
+ 10-12 h
+Library Management API
+Assignment question: Build an API for books, members, borrowing and returns.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Track available copies separately from total copies.
+• Prevent borrowing unavailable books.
+• Calculate overdue status using configurable loan days.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+
+IH Academy | Winter Internship 2026-27
+Page 6
+Acceptance check
+Borrow/return flow updates availability correctly and invalid states are blocked.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 9-11 h
+URL Shortener Service
+Assignment question: Build a URL shortener with custom aliases, expiration and click analytics.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Validate destination URLs.
+• Generate collision-safe aliases.
+• Redirect valid aliases and return a clear response for expired links.
+• Record click timestamp, referrer and basic user-agent information.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Redirect, expiry, uniqueness and analytics work as documented.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 4
+INTERMEDIAT
+ E
+ 10-12 h
+Expense Tracker API
+Assignment question: Build a secure income/expense API with categories, monthly summaries and budget
+alerts.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Support date/category/type filters.
+• Aggregate monthly totals and category totals.
+• Allow per-category monthly budgets and report overspending.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+
+IH Academy | Winter Internship 2026-27
+Page 7
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Summary values match transaction data and remain user-isolated.
+Evidence required
+Successful and failed request screenshots plus test output
+Required free course(s)
+FREE COURSE 1: Databases & REST APIs
+Cover schema design, CRUD, validation, pagination and API conventions.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Supports Week 2
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 8
+WEEK 3 - Integration & Quality
+Complete every assignment and the required free course proof. Week 4 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 14-18 h
+E-commerce Backend
+Assignment question: Build a backend for products, variants, carts, orders and inventory reservation.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Model products and variants cleanly.
+• Calculate order totals server-side.
+• Prevent checkout when requested quantity exceeds stock.
+• Use transaction/session logic where supported.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Cart and order totals cannot be manipulated by the client; stock remains consistent.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 2
+ ADVANCED
+ 10-13 h
+File Upload Service
+Assignment question: Build a secure file upload API for images and PDFs with metadata and ownership.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Validate MIME type and size.
+• Use Cloudinary/S3-compatible storage or a documented local adapter.
+• Store file metadata and secure deletion.
+• Reject executable or unsupported uploads.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+
+IH Academy | Winter Internship 2026-27
+Page 9
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Only permitted files are stored and users can manage only their own uploads.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 3
+ ADVANCED
+ 10-13 h
+Email Notification Service
+Assignment question: Create a notification module for welcome, password reset and assignment submission
+emails.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Use templates and a provider abstraction.
+• Queue or retry failed deliveries.
+• Store delivery status without exposing secrets.
+• Provide a development mode using a safe test provider.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Templates render correctly and failures are logged/retried without crashing requests.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 4
+ ADVANCED
+ 11-14 h
+Role-Based Access Control
+Assignment question: Implement reusable RBAC for student, intern, mentor and admin roles.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Create role and permission middleware.
+• Protect example resources with ownership and permission checks.
+• Document an access-control matrix.
+• Add automated authorization tests.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+
+IH Academy | Winter Internship 2026-27
+Page 10
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Every protected action matches the documented role-permission matrix.
+Evidence required
+Successful and failed request screenshots plus test output
+Required free course(s)
+FREE COURSE 1: Authentication & API Security
+Cover password hashing, JWT, authorization, CORS, rate limiting and secure secrets.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Required for Week 3
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 11
+WEEK 4 - Production Challenge
+Complete every assignment and the required free course proof. Week completion review remains locked until
+mentor approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 16-20 h
+Learning Management API
+Assignment question: Build course, lesson, enrollment, progress and certificate-ready APIs for IH Academy.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Model courses, modules and ordered lessons.
+• Track lesson completion per user.
+• Calculate progress consistently on the server.
+• Restrict course authoring actions to authorized roles.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Enrollment and progress flows are consistent, authorized and documented.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 2
+ ADVANCED
+ 16-20 h
+Winter Internship Assignment API
+Assignment question: Build APIs for tracks, four weeks, assignments, free-course proofs, week locking and
+submissions.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• A user must see only the selected internship track.
+• Week N+1 unlocks only after all required items in Week N are approved.
+• Support GitHub, live URL, notes and PDF attachment fields.
+• Store submission status: draft, submitted, changes_requested, approved.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+
+IH Academy | Winter Internship 2026-27
+Page 12
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Track isolation, approval workflow and sequential unlocking work end to end.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 3
+ ADVANCED
+ 14-18 h
+Booking and Scheduling Backend
+Assignment question: Build a mentor-session booking API with availability, time slots, cancellation and conflict
+prevention.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Store times in UTC.
+• Prevent overlapping bookings and double booking.
+• Apply cancellation rules and status history.
+• Provide mentor and student schedule queries.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Concurrent booking attempts cannot reserve the same slot.
+Evidence required
+Successful and failed request screenshots plus test output
+ ASSIGNMENT 4
+ ADVANCED
+ 22-30 h
+IH Academy Backend Capstone
+Assignment question: Build a production-ready backend combining authentication, courses, winter
+internships, assignments, submissions, files, notifications and admin review.
+Required work
+• Use Node.js + Express with a clean routes/controllers/services structure.
+• Use MongoDB or PostgreSQL with documented schema decisions.
+• Validate all request data and return consistent JSON errors.
+• Use modular architecture and centralized errors/logging.
+• Provide OpenAPI documentation and automated tests for critical flows.
+• Add rate limiting, secure headers and environment validation.
+• Deploy with seeded demo accounts and no hardcoded secrets.
+Expected deliverables
+• GitHub repository with meaningful commits
+• Postman/Bruno collection or OpenAPI documentation
+
+IH Academy | Winter Internship 2026-27
+Page 13
+• .env.example and setup-ready README
+• PDF report with endpoint table, schema diagram and test screenshots
+Submission mode
+GitHub URL + deployed API URL + API collection + PDF
+Acceptance check
+Core user, internship and admin workflows pass the final acceptance checklist.
+Evidence required
+Successful and failed request screenshots plus test output
+Required free course(s)
+FREE COURSE 1: Testing, Documentation & Deployment
+Cover automated tests, API docs, logging and cloud deployment.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Required for final approval
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved

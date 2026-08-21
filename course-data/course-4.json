@@ -1,0 +1,548 @@
+{
+  "title": "React.js for Absolute Beginners",
+  "description": "Build modern UIs with components, JSX, props, state, events, hooks, and the React Developer mindset.",
+  "category": "Frontend",
+  "level": "Beginner",
+  "pricing_type": "Free",
+  "price": 0,
+  "xp_reward": 120,
+  "thumbnail_url": null,
+  "lessons": [
+    {
+      "title": "Module 1 — Components & JSX",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 1.1 [Unlocked]: What is React?",
+            "content": "## Introduction & Core Concepts\n\nReact is a free, open-source JavaScript library, created by Meta (Facebook) in 2013, for building user interfaces — especially single-page applications (SPAs) where the page updates dynamically without full reloads. React is a **library**, not a framework: it handles the view layer, and you choose the rest of your tools.\n\nThe core idea: **everything is a component**. You build small, reusable pieces (buttons, cards, forms) and compose them into pages.\n\n**Real-world analogy:** React components are like LEGO bricks. Instead of molding one giant block, you snap standard bricks together. Every brick is reusable, replaceable, and you can build anything from a simple card to a full dashboard.\n\n### How React Thinks\n\n1. **Component-based**: UI is broken into isolated, reusable pieces\n2. **Declarative**: You describe what the UI should look like for a given state; React handles updating the DOM\n3. **Virtual DOM**: React keeps a lightweight copy of the DOM in memory, compares it to the new one, and applies only the differences — this is why updates are fast\n\n### How a React App Boots\n\n```\nmain.jsx ──► <App /> component tree\n              │\n              ▼\n        React renders components\n              │\n              ▼\n      Virtual DOM diffing\n              │\n              ▼\n    Real DOM updated minimally\n```\n\n### Real-World Use Cases & Rules\n\n- React is used by Facebook, Instagram, Netflix, Airbnb, and countless other companies\n- React only handles the UI; routing (React Router), state (Redux/Zustand), and data fetching are separate choices\n- A React app is a tree of components starting from `<App />`\n- Learning React requires solid JavaScript fundamentals (functions, objects, arrays, ES6 syntax)\n\n### Key Takeaways\n\n- React is a JS library for building component-based UIs\n- Declarative + Virtual DOM = fast, predictable updates\n- Reusable components are the heart of every React app\n- JavaScript first, then React"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 1.2 [Locked — Requires 1.1 Completion]: JSX Fundamentals",
+            "content": "## Introduction & Core Concepts\n\n**JSX (JavaScript XML)** looks like HTML but lives inside JavaScript. It's a syntax extension that lets you describe UI structure directly in your component code.\n\n```jsx\nfunction Greeting() {\n    return (\n        <div>\n            <h1>Hello, world!</h1>\n            <p>Welcome to React.</p>\n        </div>\n    );\n}\n```\n\n**Explanation:** JSX is not HTML — browsers can't read it directly. A build tool (like Vite) transpiles it into normal JavaScript function calls that create the elements. In practice, you write JSX like HTML with a few key differences.\n\n### Key JSX Rules\n\n| Rule | Example |\n|---|---|\n| Every JSX expression needs exactly one root element | Wrap siblings in a `<div>` or a fragment `<>...</>` |\n| Use `className`, not `class` | `<div className=\"card\">` |\n| Embed JS with `{ }` | `<h1>{title}</h1>` |\n| Self-close empty tags | `<img src={url} alt=\"\"/>` |\n| Inline styles are objects with camelCase keys | `style={{ color: \"red\" }}` |\n| Comments in JSX: `{/* ... */}` | `{/* renders nothing */}` |\n\n### Embedding Expressions\n\n```jsx\nfunction Profile() {\n    const name = \"Samira\";\n    const age = 25;\n    return (\n        <p>\n            {name} is {age} years old and lives in{\" \"}\n            {`New York`}.\n        </p>\n    );\n}\n```\n\n**Expected output:** Renders \"Samira is 25 years old and lives in New York.\" — the values are computed in JavaScript and inserted into the text.\n\n**Real-world analogy:** JSX is like a mad-libs template. The words and pictures are fixed, and the `{ }` blanks get filled with live values from your JavaScript at render time.\n\n### Real-World Use Cases & Rules\n\n- One root element per component return\n- `className` instead of `class`\n- Anything between `{ }` is real JavaScript\n- Naming: components are PascalCase (`Profile`, not `profile`)\n\n### Code Example / Implementation\n\n```jsx\nfunction StudentCard({ name, course }) {\n    return (\n        <div className=\"card\">\n            <h2>{name}</h2>\n            <p>Enrolled in {course}</p>\n        </div>\n    );\n}\n```\n\n### Key Takeaways\n\n- JSX = HTML-like syntax inside JavaScript\n- `{ }` escapes into JavaScript; `className` replaces `class`\n- One root element per component\n- Components are PascalCase functions that return JSX"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 1.3 [Locked — Requires 1.2 Completion]: Components & Composition",
+            "content": "## Introduction & Core Concepts\n\nA **component** is a JavaScript function (or class) that returns JSX. Components can be reused anywhere, and larger components are built by composing smaller ones.\n\n```jsx\nfunction Avatar({ name }) {\n    return <img src={`https://avatar.example/${name}.png`} alt={name} />;\n}\n\nfunction UserCard({ user }) {\n    return (\n        <div className=\"card\">\n            <Avatar name={user.name} />\n            <h2>{user.name}</h2>\n            <p>{user.role}</p>\n        </div>\n    );\n}\n\nfunction Dashboard() {\n    const users = [\n        { name: \"Ali\", role: \"Student\" },\n        { name: \"Lee\", role: \"Instructor\" },\n    ];\n    return (\n        <div>\n            {users.map((user) => (\n                <UserCard key={user.name} user={user} />\n            ))}\n        </div>\n    );\n}\n```\n\n**Explanation:** `Dashboard` renders a list of users using `.map()`, passing each user object to `UserCard` as a prop. `UserCard` composes `Avatar` inside itself. This is **composition** — building rich UIs from small pieces.\n\n### Why Composition Wins\n\n- **Reuse**: write once, render many times\n- **Isolation**: fix a bug in one card, not in the whole page\n- **Readability**: each component has one clear job\n- **Testability**: test a small component in isolation\n\n### Component Rules\n\n- Component names must start with a capital letter (this is what React uses to tell components apart from HTML tags)\n- A component must return exactly one root element\n- A component receives `props` (read-only inputs) and renders JSX\n\n### Real-World Use Cases & Rules\n\n- Build a component tree: pages compose sections, sections compose cards\n- Map over arrays of data to render lists of components\n- Each component should do one job\n- Props flow one way: parent to child\n\n### Code Example / Implementation\n\n```jsx\nfunction Button({ label, onClick }) {\n    return <button onClick={onClick}>{label}</button>;\n}\n```\n\n### Key Takeaways\n\n- Components = functions returning JSX\n- Compose small components to build big interfaces\n- Components are PascalCase and take props\n- Map over data to render lists"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 1.4 [Locked — Requires 1.3 Completion]: Setting Up a React Project",
+            "content": "## Introduction & Core Concepts\n\nThe fastest, officially recommended way to create a React project is **Vite**, a modern build tool that's faster than older tools like Create React App.\n\n```bash\nnpm create vite@latest my-app -- --template react\ncd my-app\nnpm install\nnpm run dev\n```\n\n**Explanation:**\n- The first command scaffolds a new React project with Vite\n- `npm install` downloads the project's dependencies\n- `npm run dev` starts a local development server (usually at http://localhost:5173) with hot reload — edits appear instantly\n\n### Project Structure\n\n```\nmy-app/\n ├── index.html          ← the single HTML page\n ├── package.json        ← project metadata & dependencies\n └── src/\n      ├── main.jsx       ← entry point; renders <App /> into the DOM\n      ├── App.jsx        ← root component\n      └── index.css      ← global styles\n```\n\n### What main.jsx Does\n\n```jsx\nimport React from \"react\";\nimport ReactDOM from \"react-dom/client\";\nimport App from \"./App.jsx\";\n\nReactDOM.createRoot(document.getElementById(\"root\")).render(\n    <React.StrictMode>\n        <App />\n    </React.StrictMode>\n);\n```\n\n**Explanation:** `main.jsx` is the app's entry point. It grabs the `<div id=\"root\">` element from `index.html`, creates a React root, and renders the entire component tree starting from `<App />`. StrictMode is a development helper that highlights potential problems.\n\n### Real-World Use Cases & Rules\n\n- Vite + React is the modern standard setup\n- One root div; the whole app renders inside it — that's why it's called a SPA (single-page application)\n- `npm run dev` for development; `npm run build` creates optimized production files\n- Components live in `src/`, one component per file by convention\n\n### Code Example / Implementation\n\n```jsx\n// src/App.jsx\nimport \"./App.css\";\n\nfunction App() {\n    return <h1>Welcome to my first React app!</h1>;\n}\n\nexport default App;\n```\n\n### Key Takeaways\n\n- Vite scaffolds a fast modern React project\n- main.jsx mounts the app into #root\n- npm run dev = instant hot-reload development\n- One component per file in src/"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 1,
+      "quiz": {
+        "title": "Module 1 Quiz — Pass to Unlock Module 2",
+        "questions": [
+          {
+            "q": "What is React?",
+            "options": [
+              "A CSS preprocessor",
+              "A JavaScript library for building user interfaces",
+              "A database management system",
+              "An HTML templating language"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "How does React keep updates fast?",
+            "options": [
+              "By reloading the page on every change",
+              "By using a Virtual DOM to apply only minimal changes",
+              "By writing directly to disk",
+              "By disabling animations"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why is JSX transpiled before the browser reads it?",
+            "options": [
+              "Browsers cannot read JSX directly",
+              "It improves internet speed",
+              "It changes the language to Python",
+              "It is not transpiled at all"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Which attribute replaces \"class\" in JSX?",
+            "options": [
+              "classname",
+              "cssClass",
+              "className",
+              "class"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "How do you embed a JavaScript expression in JSX?",
+            "options": [
+              "{{ expression }}",
+              "${ expression }",
+              "{ expression }",
+              "<% expression %>"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "What is a component in React?",
+            "options": [
+              "A CSS file",
+              "A function that returns JSX",
+              "A database table",
+              "A browser extension"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why should component names start with a capital letter?",
+            "options": [
+              "It is only a style preference",
+              "React uses capital letters to distinguish components from HTML tags",
+              "It makes the bundle smaller",
+              "It is required by the browser"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does composition mean in React?",
+            "options": [
+              "Writing code without functions",
+              "Building large interfaces from small, reusable components",
+              "Compressing images",
+              "Merging CSS files"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which tool is the modern, recommended way to start a React project?",
+            "options": [
+              "Vite",
+              "Internet Explorer",
+              "Dreamweaver",
+              "Microsoft Word"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "What does npm run dev do?",
+            "options": [
+              "Deletes the project",
+              "Starts a development server with hot reload",
+              "Installs the browser",
+              "Compiles the database"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 2 — Props & State",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 2.1 [Unlocked]: Props: Passing Data Down",
+            "content": "## Introduction & Core Concepts\n\n**Props** (short for \"properties\") are how a parent component passes data to a child component. They are read-only inputs — a component can never modify its own props.\n\n```jsx\nfunction Welcome({ name, course }) {\n    return (\n        <p>\n            Welcome, {name}! You are taking {course}.\n        </p>\n    );\n}\n\nfunction App() {\n    return <Welcome name=\"Ali\" course=\"React\" />;\n}\n```\n\n**Explanation:** In `App`, the props `name` and `course` are passed like HTML attributes. Inside `Welcome`, they arrive as a single `props` object, which we destructure for clarity: `({ name, course })`.\n\n**Expected output:** \"Welcome, Ali! You are taking React.\"\n\n**Real-world analogy:** Props are like filling out a shipping label — the parent (sender) writes the details (data) on the box, and the child (carrier) receives the box and reads the label. The carrier never rewrites the label; it only reads it.\n\n### The Rules of Props\n\n- Props flow **one way**: parent → child (this is called unidirectional data flow)\n- Props are **read-only**: children must never mutate them\n- Any JavaScript value can be a prop: strings, numbers, booleans, arrays, objects, functions\n- Default values are possible: `function Card({ title = \"Untitled\" })`\n\n### Real-World Use Cases & Rules\n\n- Reuse a component with different data by passing different props\n- Pass functions as props to let children communicate UP to parents (more on this in the next topic)\n- Props make components predictable: same props, same output\n\n### Code Example / Implementation\n\n```jsx\nfunction ProductCard({ name, price, inStock }) {\n    return (\n        <div className=\"product\">\n            <h3>{name}</h3>\n            <p>${price}</p>\n            <span>{inStock ? \"In stock\" : \"Sold out\"}</span>\n        </div>\n    );\n}\n```\n\n### Key Takeaways\n\n- Props carry data from parent to child\n- Props are read-only inputs\n- One-way data flow keeps components predictable\n- Destructure props in the function signature"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 2.2 [Locked — Requires 2.1 Completion]: State: Data That Changes",
+            "content": "## Introduction & Core Concepts\n\n**State** is data that changes over time and causes React to re-render the UI when it changes. Without state, React would just be static HTML templates.\n\n```jsx\nimport { useState } from \"react\";\n\nfunction Counter() {\n    const [count, setCount] = useState(0);\n\n    return (\n        <div>\n            <p>You clicked {count} times</p>\n            <button onClick={() => setCount(count + 1)}>Click me</button>\n        </div>\n    );\n}\n```\n\n**Explanation:**\n- `useState(0)` declares a state variable `count` starting at 0\n- `useState` returns a pair: the current value (`count`) and an updater function (`setCount`)\n- Calling `setCount(count + 1)` updates the value AND tells React to re-render the component\n- The UI always reflects the current state — you never touch the DOM manually\n\n**Expected output:** Each click increases the number by 1 and updates the screen instantly.\n\n**Real-world analogy:** State is like a scoreboard at a sports game. The scoreboard operator (React) updates the display whenever the score (state) changes — and every fan in the stadium (the UI) instantly sees the new number. You don't repaint the board; you update the value.\n\n### State Rules\n\n- State changes must go through the updater function (`setCount`), never by direct assignment like `count = 5`\n- Calling the updater schedules a re-render — the component function runs again with the new value\n- State is local to the component that declares it\n- Only state that affects the UI needs to be state; static values can be plain variables\n\n### Real-World Use Cases & Rules\n\n- useState is a hook — all hooks start with \"use\" and follow the Rules of Hooks\n- The updater can accept a function form for updates based on the previous value: `setCount(c => c + 1)`\n- Each component instance has its own independent state\n\n### Code Example / Implementation\n\n```jsx\nimport { useState } from \"react\";\n\nfunction Toggle() {\n    const [isOn, setIsOn] = useState(false);\n\n    return (\n        <button onClick={() => setIsOn(!isOn)}>\n            {isOn ? \"ON\" : \"OFF\"}\n        </button>\n    );\n}\n```\n\n### Key Takeaways\n\n- State = data that changes; changing it re-renders the UI\n- useState returns [value, updaterFunction]\n- Never mutate state directly — always use the updater\n- State is local to its component"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 2.3 [Locked — Requires 2.2 Completion]: Controlled Inputs & Two-Way Flow",
+            "content": "## Introduction & Core Concepts\n\nA **controlled input** is a form field whose value is driven by React state — the input shows exactly what the state holds, and every keystroke updates the state.\n\n```jsx\nimport { useState } from \"react\";\n\nfunction LoginForm() {\n    const [email, setEmail] = useState(\"\");\n    const [password, setPassword] = useState(\"\");\n\n    return (\n        <form>\n            <input\n                type=\"email\"\n                placeholder=\"Email\"\n                value={email}\n                onChange={(e) => setEmail(e.target.value)}\n            />\n            <input\n                type=\"password\"\n                placeholder=\"Password\"\n                value={password}\n                onChange={(e) => setPassword(e.target.value)}\n            />\n        </form>\n    );\n}\n```\n\n**Explanation:** The value of each input is `email` / `password` state, and every change event (each keystroke) calls the updater. Because the state and the input are always in sync, React is the single source of truth for the form.\n\n**Real-world analogy:** A controlled input is like a bank teller's screen: the customer writes a deposit slip (types into the input), and the teller updates the ledger (state) — the screen and ledger never disagree because every slip goes through the teller.\n\n### Why Control Matters\n\n- The form's value is always predictable — it lives in state, not hidden inside the DOM\n- You can validate, transform, or restrict input (e.g., force uppercase) by processing the value in the updater\n- It is the standard, reliable pattern used by virtually all real React forms\n\n### Real-World Use Cases & Rules\n\n- value={state} + onChange={(e) => setState(e.target.value)} is the pattern\n- The event object (e) carries e.target.value — the current text in the field\n- Controlled inputs make validation and submission trivial\n\n### Code Example / Implementation\n\n```jsx\nfunction SearchBox({ onSearch }) {\n    const [query, setQuery] = useState(\"\");\n\n    const handleSubmit = (e) => {\n        e.preventDefault();          // prevent page reload\n        onSearch(query);             // pass the value up\n    };\n\n    return (\n        <form onSubmit={handleSubmit}>\n            <input value={query} onChange={(e) => setQuery(e.target.value)} />\n            <button type=\"submit\">Search</button>\n        </form>\n    );\n}\n```\n\n### Key Takeaways\n\n- Controlled inputs: value = state, onChange updates state\n- React is the single source of truth for the form\n- e.target.value holds the current field text\n- preventDefault() stops the page from reloading on submit"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 2.4 [Locked — Requires 2.3 Completion]: Lifting State Up",
+            "content": "## Introduction & Core Concepts\n\nWhen two or more components need to share the same data, the data must live in their **closest common parent** — this is called **lifting state up**. The parent holds the state and passes it down via props, along with updater functions so children can change it.\n\n```jsx\nimport { useState } from \"react\";\n\nfunction TemperatureDisplay({ celsius }) {\n    const fahrenheit = (celsius * 9) / 5 + 32;\n    return (\n        <div>\n            <p>Celsius: {celsius}°C</p>\n            <p>Fahrenheit: {fahrenheit.toFixed(1)}°F</p>\n        </div>\n    );\n}\n\nfunction Slider({ value, setValue }) {\n    return (\n        <input\n            type=\"range\"\n            min=\"-20\"\n            max=\"50\"\n            value={value}\n            onChange={(e) => setValue(Number(e.target.value))}\n        />\n    );\n}\n\nfunction App() {\n    const [celsius, setCelsius] = useState(20);\n    return (\n        <div>\n            <Slider value={celsius} setValue={setCelsius} />\n            <TemperatureDisplay celsius={celsius} />\n        </div>\n    );\n}\n```\n\n**Explanation:** The state `celsius` lives in `App`, the common parent of `Slider` and `TemperatureDisplay`. `Slider` receives the value and the updater as props; `TemperatureDisplay` receives only the value. When the slider moves, state changes, and BOTH children re-render with the new value — the display updates instantly in both units.\n\n**Real-world analogy:** Lifting state up is like a school's central timetable: all classrooms (components) read the schedule from the main office (the common parent), which holds the single official copy. No classroom keeps its own version — everyone stays in sync automatically.\n\n### When to Lift State\n\n- Two siblings must show or change the same data\n- The state controls what several components render\n- If a child's state is needed by its parent or siblings, move it to the parent\n\n### Real-World Use Cases & Rules\n\n- State flows down as props; updates flow up through callbacks (functions passed as props)\n- The parent is the single source of truth\n- Every component gets exactly the props it needs — no more, no less\n- This pattern (state up, events down) is the foundation of nearly every React app\n\n### Code Example / Implementation\n\n```jsx\nfunction App() {\n    const [isDark, setIsDark] = useState(false);\n\n    return (\n        <div className={isDark ? \"dark\" : \"light\"}>\n            <Header />\n            <Toolbar onToggleTheme={() => setIsDark(!isDark)} />\n        </div>\n    );\n}\n```\n\n### Key Takeaways\n\n- Share data by lifting state to the closest common parent\n- Data flows down (props); changes flow up (callbacks)\n- The parent is the single source of truth\n- Siblings stay in sync automatically"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 2,
+      "quiz": {
+        "title": "Module 2 Quiz — Pass to Unlock Module 3",
+        "questions": [
+          {
+            "q": "What are props?",
+            "options": [
+              "Data passed from a parent component to a child component",
+              "Data stored in the database",
+              "CSS classes",
+              "Global variables"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Can a component change its own props?",
+            "options": [
+              "Yes, with setProps()",
+              "No, props are read-only",
+              "Yes, by reassigning them",
+              "Only on Tuesdays"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which direction do props flow in React?",
+            "options": [
+              "Child to parent",
+              "Both directions freely",
+              "Parent to child",
+              "Randomly"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "What does useState(0) return?",
+            "options": [
+              "The value 0",
+              "A pair: the current value and an updater function",
+              "A promise",
+              "A component"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What happens when you call setCount(count + 1)?",
+            "options": [
+              "The page reloads",
+              "The component re-renders with the new value",
+              "The browser closes",
+              "Nothing"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why should you never write count = 5 directly?",
+            "options": [
+              "It is slower",
+              "It does not trigger a re-render, so the UI would not update",
+              "It deletes the variable",
+              "It is only forbidden in production"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is a controlled input?",
+            "options": [
+              "An input whose value is driven by React state",
+              "An input without a label",
+              "A disabled input",
+              "An input that is never updated"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Where does e.target.value come from in an onChange handler?",
+            "options": [
+              "A random number generator",
+              "The current text content of the input field",
+              "The database",
+              "The component name"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "When should you lift state up?",
+            "options": [
+              "When a component becomes too large",
+              "When multiple components need to share the same data",
+              "When the page loads",
+              "Never — state must stay local"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "In the lifted-state pattern, what flows down and what flows up?",
+            "options": [
+              "Events flow down, state flows up",
+              "Props (data) flow down, updates flow up through callbacks",
+              "Both flow sideways",
+              "Nothing flows"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 3 — Events, Rendering & Forms",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 3.1 [Unlocked]: Handling Events",
+            "content": "## Introduction & Core Concepts\n\nReact handles events with **synthetic events** — consistent cross-browser wrappers around native browser events — using JSX attributes like `onClick`, `onChange`, and `onSubmit`.\n\n```jsx\nfunction Button() {\n    const handleClick = () => {\n        alert(\"Button clicked!\");\n    };\n    return <button onClick={handleClick}>Click me</button>;\n}\n```\n\n**Explanation:** `onClick` receives a function reference — NOT a function call. The function runs only when the click actually happens. In plain JavaScript you wrote `addEventListener`; in React you attach handlers directly in JSX.\n\n**Real-world analogy:** Passing `handleClick` (without parentheses) is like giving a friend your phone number: they call you when needed. Writing `handleClick()` would be like calling yourself at the moment you hand over the number — the callback fires immediately instead of later.\n\n### Common Events\n\n| JSX Attribute | Fires When |\n|---|---|\n| `onClick` | Element clicked |\n| `onChange` | Input value changes |\n| `onSubmit` | Form submitted |\n| `onMouseEnter` | Mouse enters element |\n| `onKeyDown` | Key pressed while focused |\n| `onFocus` / `onBlur` | Element gains / loses focus |\n\n### The Event Object\n\nReact passes the synthetic event to the handler:\n\n```jsx\nconst handleChange = (e) => {\n    console.log(e.target.value);  // current input text\n};\n```\n\n### Rules to Remember\n\n- Handlers are functions — never call them in the attribute: `onClick={handleClick}`, not `onClick={handleClick()}`\n- Inline arrow functions are fine for small logic: `onClick={() => setCount(count + 1)}`\n- Prevent default browser behavior with `e.preventDefault()` in forms\n- Remove event listeners yourself? Not needed — React cleans up automatically\n\n### Real-World Use Cases & Rules\n\n- Keep handler logic in named functions for readability\n- Use e.target to find what was clicked or changed\n- Forms: intercept the submit event with preventDefault, then process the data\n\n### Key Takeaways\n\n- React events are JSX attributes: onClick, onChange, onSubmit\n- Pass function references, not calls\n- e.target gives you the element and its value\n- preventDefault() stops reloads in forms"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 3.2 [Locked — Requires 3.1 Completion]: Conditional Rendering",
+            "content": "## Introduction & Core Concepts\n\n**Conditional rendering** means the component renders different JSX based on state or props — using the exact same `if` and ternary logic you know from JavaScript.\n\n```jsx\nimport { useState } from \"react\";\n\nfunction LoginStatus({ isLoggedIn }) {\n    return isLoggedIn ? <p>Welcome back!</p> : <p>Please log in.</p>;\n}\n\nfunction App() {\n    const [isLoggedIn, setIsLoggedIn] = useState(false);\n\n    return (\n        <div>\n            <LoginStatus isLoggedIn={isLoggedIn} />\n            <button onClick={() => setIsLoggedIn(!isLoggedIn)}>\n                {isLoggedIn ? \"Log out\" : \"Log in\"}\n            </button>\n        </div>\n    );\n}\n```\n\n**Explanation:** The ternary `isLoggedIn ? <p>A</p> : <p>B</p>` picks one of two pieces of JSX. When state changes, React re-renders and the other branch shows — this is how loading screens, error states, and empty states appear and disappear.\n\n**Real-world analogy:** Conditional rendering is like a restaurant menu that exists in two versions — lunch and dinner. Depending on the time of day (the condition), the host hands you one menu or the other. Same restaurant, different menu shown.\n\n### Techniques\n\n| Technique | When to Use | Example |\n|---|---|---|\n| Ternary | Two branches | `isLoading ? <Spinner/> : <Content/>` |\n| && operator | Show-or-nothing | `hasError && <ErrorBox/>` |\n| Early return | Whole component branch | `if (!user) return <LoginPrompt/>;` |\n\n### Real-World Use Cases & Rules\n\n- `{isAdmin && <AdminPanel/>}` renders AdminPanel only when isAdmin is true\n- `{items.length === 0 ? <EmptyState/> : <List items={items}/>}` handles empty data gracefully\n- Never render raw booleans: `{count && ...}` renders \"0\" when count is 0 — use an explicit comparison\n- Conditions can live anywhere inside the JSX\n\n### Code Example / Implementation\n\n```jsx\nfunction OrderSummary({ items }) {\n    if (items.length === 0) {\n        return <p>Your cart is empty.</p>;\n    }\n    return <p>{items.length} item(s) in cart.</p>;\n}\n```\n\n### Key Takeaways\n\n- Same if/ternary/&& logic as plain JavaScript\n- Ternary for two branches, && for show-or-nothing, early returns for big branches\n- Guard against rendering 0 or false accidentally\n- React re-evaluates conditions on every render"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 3.3 [Locked — Requires 3.2 Completion]: Lists & Keys",
+            "content": "## Introduction & Core Concepts\n\nRendering lists in React means converting an array of data into an array of JSX elements — almost always with `.map()`. Each item needs a **key**: a stable, unique identifier that React uses to track items when the list changes.\n\n```jsx\nfunction StudentList({ students }) {\n    return (\n        <ul>\n            {students.map((student) => (\n                <li key={student.id}>{student.name}</li>\n            ))}\n        </ul>\n    );\n}\n```\n\n**Explanation:** For each student, `.map()` produces one `<li>` containing the name. The `key` prop (`student.id`) tells React which item is which when items are added, removed, or reordered — so it can update only what changed instead of re-rendering the whole list.\n\n**Real-world analogy:** Keys are like student ID numbers on a school roster. When a student transfers out or a new one joins, the office tracks people by ID — not by memory of names — so records stay correct without rewriting the whole roster.\n\n### Key Rules\n\n- Keys must be **unique among siblings**\n- Prefer stable IDs from your data; never use array index when items can reorder\n- Keys are a hint for React — they are not rendered into the DOM\n- Every mapped element needs a key, including the top-level element in each map\n\n### Real-World Use Cases & Rules\n\n- `{data.map(item => <Item key={item.id} {...item} />)}` is the universal pattern\n- Use index keys only for static lists that never change order\n- Keys fix the most common React console warning you'll see\n\n### Code Example / Implementation\n\n```jsx\nconst courses = [\n    { id: 1, title: \"HTML\" },\n    { id: 2, title: \"CSS\" },\n    { id: 3, title: \"JavaScript\" },\n];\n\nfunction CourseList() {\n    return (\n        <ul>\n            {courses.map((c) => (\n                <li key={c.id}>{c.title}</li>\n            ))}\n        </ul>\n    );\n}\n```\n\n### Key Takeaways\n\n- .map() turns data arrays into JSX lists\n- Every item needs a unique, stable key\n- Prefer IDs over array indexes\n- Keys keep lists fast and correct during updates"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 3.4 [Locked — Requires 3.3 Completion]: Forms & Submissions",
+            "content": "## Introduction & Core Concepts\n\nBuilding forms in React combines everything so far: controlled inputs (state), onChange handlers, and onSubmit with preventDefault.\n\n```jsx\nimport { useState } from \"react\";\n\nfunction RegistrationForm() {\n    const [form, setForm] = useState({ name: \"\", email: \"\" });\n\n    const handleChange = (e) => {\n        const { name, value } = e.target;\n        setForm({ ...form, [name]: value });\n    };\n\n    const handleSubmit = (e) => {\n        e.preventDefault();\n        console.log(\"Submitted:\", form);\n    };\n\n    return (\n        <form onSubmit={handleSubmit}>\n            <input\n                name=\"name\"\n                placeholder=\"Full name\"\n                value={form.name}\n                onChange={handleChange}\n            />\n            <input\n                name=\"email\"\n                type=\"email\"\n                placeholder=\"Email\"\n                value={form.email}\n                onChange={handleChange}\n            />\n            <button type=\"submit\">Register</button>\n        </form>\n    );\n}\n```\n\n**Explanation:** One state object holds the whole form. The input's `name` attribute (which exactly matches the state key) and the dynamic key `[name]` let ONE handler serve every field — a clean pattern you'll see in real codebases. On submit, `e.preventDefault()` stops the page from reloading and the data is ready to send to a server or API.\n\n**Real-world analogy:** This form pattern is like a shared clipboard in a survey: every field (name, email) is written to the same form sheet (state object), and when the respondent finishes, the sheet (submission) goes to the office — no individual field is ever out of sync with the sheet.\n\n### Real-World Use Cases & Rules\n\n- One `handleChange` with name-based dynamic keys handles all fields\n- Always preventDefault() on submit\n- Validate before submitting: check required fields, email format, password length\n- On success, reset the form by setting state back to the initial values\n\n### Code Example / Implementation\n\n```jsx\nconst handleSubmit = (e) => {\n    e.preventDefault();\n    if (!form.name || !form.email) {\n        alert(\"Please fill in all fields.\");\n        return;\n    }\n    console.log(\"Validated submission:\", form);\n};\n```\n\n### Key Takeaways\n\n- Forms = controlled inputs + one change handler + onSubmit with preventDefault\n- Dynamic keys ([name]) let one handler serve all fields\n- Validate before you submit\n- Reset by restoring initial state"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 3,
+      "quiz": {
+        "title": "Module 3 Quiz — Pass to Unlock Module 4",
+        "questions": [
+          {
+            "q": "How do you attach a click handler in React?",
+            "options": [
+              "onClick=\"handleClick()\"",
+              "onClick={handleClick}",
+              "click=\"handleClick\"",
+              "addEventListener directly in JSX"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why must you NOT write onClick={handleClick()}?",
+            "options": [
+              "It is slower",
+              "The function runs immediately instead of when clicked",
+              "It breaks the syntax highlighter",
+              "It deletes the handler"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does e.preventDefault() do in a form handler?",
+            "options": [
+              "Stops the page from reloading on submit",
+              "Disables all buttons",
+              "Clears the console",
+              "Hides the form"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "What does the ternary `isLoggedIn ? <A/> : <B/>` do?",
+            "options": [
+              "Renders both A and B",
+              "Renders A when isLoggedIn is true, otherwise B",
+              "Throws an error",
+              "Renders neither"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which technique renders something only when a condition is true?",
+            "options": [
+              "{condition && <Thing/>}",
+              "{condition || <Thing/>}",
+              "{condition + <Thing/>}",
+              "{condition * <Thing/>}"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Why must mapped list items have keys?",
+            "options": [
+              "To style them",
+              "React uses keys to track items during updates",
+              "Keys are required by the browser",
+              "To make them clickable"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the best key for a list item?",
+            "options": [
+              "The array index",
+              "A stable unique ID from the data",
+              "The item's position in the list",
+              "The string \"item\""
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does .map() return in a React list render?",
+            "options": [
+              "A string",
+              "An array of JSX elements",
+              "The original array unchanged",
+              "A single div"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "How does one handleChange serve every input field?",
+            "options": [
+              "By using the field's name attribute as a dynamic state key",
+              "By calling setForm for each input separately",
+              "It cannot — each field needs its own handler",
+              "By using alert()"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Which attribute should each input have so the shared handler knows which field it is?",
+            "options": [
+              "type",
+              "name",
+              "placeholder",
+              "maxlength"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 4 — Hooks, Best Practices & Real-World Use",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 4.1 [Unlocked]: useEffect & Side Effects",
+            "content": "## Introduction & Core Concepts\n\n**Side effects** are things that reach outside the component's render: fetching data from an API, setting a browser title, timers, or subscribing to services. These belong in `useEffect`.\n\n```jsx\nimport { useState, useEffect } from \"react\";\n\nfunction Clock() {\n    const [time, setTime] = useState(new Date());\n\n    useEffect(() => {\n        const timer = setInterval(() => {\n            setTime(new Date());\n        }, 1000);\n        return () => clearInterval(timer);  // cleanup\n    }, []);\n\n    return <p>{time.toLocaleTimeString()}</p>;\n}\n```\n\n**Explanation:**\n- `useEffect(() => {...}, [])` runs the effect after the component renders\n- The empty dependency array `[]` means \"run once on mount\" — the timer starts once\n- The **cleanup function** (`clearInterval`) runs when the component unmounts — preventing memory leaks\n- With a dependency array like `[userId]`, the effect re-runs whenever `userId` changes\n\n**Real-world analogy:** useEffect is like a hotel housekeeping schedule: the effect is the daily clean (runs after you check in — mount), the dependency array says which room changes trigger a reclean, and the cleanup is the checkout sweep that makes sure no towels are left behind (no memory leaks).\n\n### The Three Shapes of useEffect\n\n| Pattern | When It Runs | Use Case |\n|---|---|---|\n| `useEffect(fn)` | After every render | Rarely needed; usually a bug |\n| `useEffect(fn, [])` | Once on mount | Timers, initial data fetch |\n| `useEffect(fn, [dep])` | When dep changes | Fetch data for selected item |\n\n### Real-World Use Cases & Rules\n\n- Data fetching on mount: fetch inside the effect, store results with useState\n- Always clean up timers, intervals, and subscriptions\n- Effects run AFTER the DOM updates, never during render\n- Don't forget the dependency array — it prevents infinite loops\n\n### Code Example / Implementation\n\n```jsx\nuseEffect(() => {\n    const controller = new AbortController();\n    fetch(`https://api.example.com/user/${userId}`, { signal: controller.signal })\n        .then((res) => res.json())\n        .then((data) => setUser(data));\n    return () => controller.abort();  // cancel in-flight request\n}, [userId]);\n```\n\n### Key Takeaways\n\n- useEffect runs side effects after render\n- Dependency array controls when it re-runs\n- Always clean up timers and subscriptions\n- Standard home for API calls"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 4.2 [Locked — Requires 4.1 Completion]: Rules of Hooks",
+            "content": "## Introduction & Core Concepts\n\nHooks (`useState`, `useEffect`, and others) are functions that let components use state and lifecycle features. They work because React relies on the **order** of their calls — which is why there are strict rules.\n\n### The Two Rules\n\n1. **Only call hooks at the top level** — never inside loops, conditionals, or nested functions.\n2. **Only call hooks from React functions** — components or custom hooks, never plain JavaScript functions.\n\n```jsx\n// ❌ BAD: conditional hook call\nfunction Bad({ isLoggedIn }) {\n    if (isLoggedIn) {\n        useEffect(fetchData);  // order changes between renders!\n    }\n    return <p>Hello</p>;\n}\n\n// ✅ GOOD: always called, in the same order\nfunction Good({ isLoggedIn }) {\n    useEffect(fetchData);\n    return <p>Hello</p>;\n}\n```\n\n**Explanation:** On every render React must see the same hooks in the same order — that's how it maps state back to the right component. If a hook is skipped one render and present the next, React loses track of which state belongs where.\n\n**Real-world analogy:** Hooks are like numbered lockers in a gym. The members (hooks) always check in at their assigned lockers in the same order, every visit. If one member suddenly switches lockers mid-week (conditional call), the staff (React) can't find anyone's gear — everything gets scrambled.\n\n### Custom Hooks: Reusable Logic\n\nA **custom hook** is a function starting with `use` that wraps other hooks — the way to share stateful logic between components:\n\n```jsx\nfunction useWindowWidth() {\n    const [width, setWidth] = useState(window.innerWidth);\n\n    useEffect(() => {\n        const onResize = () => setWidth(window.innerWidth);\n        window.addEventListener(\"resize\", onResize);\n        return () => window.removeEventListener(\"resize\", onResize);\n    }, []);\n\n    return width;\n}\n```\n\n### Real-World Use Cases & Rules\n\n- Hooks only at the top level, only in React functions\n- Name custom hooks with `use`\n- Custom hooks are just functions that use other hooks\n- When logic repeats across components, extract a custom hook\n\n### Key Takeaways\n\n- Top-level only; same order every render\n- Hooks only inside components or custom hooks\n- Custom hooks (useXxx) share logic between components\n- Violating the rules causes hard-to-find bugs"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 4.3 [Locked — Requires 4.2 Completion]: React Best Practices",
+            "content": "## Introduction & Core Concepts\n\nProfessional React code is built on habits that keep large apps maintainable.\n\n### The Checklist\n\n- **Components are small and single-purpose** — one component, one job; split long components\n- **Props stay read-only and minimal** — pass exactly what a component needs\n- **State lives as high as needed, as low as possible** — lift for sharing, keep local when isolated\n- **Keys are stable IDs** — never random values or reordering indexes\n- **Hooks follow the Rules of Hooks** — top level, consistent order\n- **Handlers are named functions, not inline logic** where readability matters\n- **Extract reusable logic into custom hooks**\n- **Use functional updates** — `setCount(c => c + 1)` when the new value depends on the old one\n\n### The Thinking Behind It\n\n- Predictability: same props + same state = same UI\n- Testability: small components are easy to test in isolation\n- Readability: a component file you can read top-to-bottom without jumping around\n- Performance: unnecessary state and giant components are the usual culprits, not React itself\n\n**Real-world analogy:** Best practices are like a kitchen's mise en place: ingredients chopped and organized before service. A chef who preps everything (small components, clean props) cooks faster and handles a rush (a growing app) without chaos — while an improvised kitchen burns down at scale.\n\n### Code Example / Implementation\n\n```jsx\nfunction useUser(id) {\n    const [user, setUser] = useState(null);\n    useEffect(() => {\n        fetch(`/api/users/${id}`)\n            .then((r) => r.json())\n            .then(setUser);\n    }, [id]);\n    return user;\n}\n```\n\n### Key Takeaways\n\n- Small components, minimal props, sensible state placement\n- Stable keys, Rules of Hooks, named handlers\n- Custom hooks for repeated logic\n- Predictable code scales; clever code doesn't"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 4.4 [Locked — Requires 4.3 Completion]: Real-World Usage & Capstone",
+            "content": "## Introduction & Core Concepts\n\nReact powers the user interfaces of Facebook, Instagram, Netflix, Airbnb, Uber, Discord, and thousands of other products. Real apps combine components, props, state, effects, forms, and conditional rendering with two extra tools you'll learn next: **React Router** (multiple pages without reloads) and **data fetching** from APIs. Professional React apps are built with a build tool like Vite, and often TypeScript, and are deployed to platforms like Vercel or Netlify.\n\n### Capstone: Todo List App\n\nThis app uses every concept from this course — state, props, controlled inputs, events, lists with keys, and conditional rendering:\n\n```jsx\nimport { useState } from \"react\";\n\nfunction TodoApp() {\n    const [todos, setTodos] = useState([]);\n    const [text, setText] = useState(\"\");\n\n    const addTodo = (e) => {\n        e.preventDefault();\n        if (!text.trim()) return;\n        setTodos([...todos, { id: Date.now(), text, done: false }]);\n        setText(\"\");\n    };\n\n    const toggleTodo = (id) => {\n        setTodos(todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));\n    };\n\n    return (\n        <div>\n            <h1>My Todos</h1>\n            <form onSubmit={addTodo}>\n                <input\n                    value={text}\n                    onChange={(e) => setText(e.target.value)}\n                    placeholder=\"What needs doing?\"\n                />\n                <button type=\"submit\">Add</button>\n            </form>\n            {todos.length === 0 ? (\n                <p>No todos yet — add one above.</p>\n            ) : (\n                <ul>\n                    {todos.map((todo) => (\n                        <li\n                            key={todo.id}\n                            onClick={() => toggleTodo(todo.id)}\n                            style={{ textDecoration: todo.done ? \"line-through\" : \"none\" }}\n                        >\n                            {todo.text}\n                        </li>\n                    ))}\n                </ul>\n            )}\n        </div>\n    );\n}\n\nexport default TodoApp;\n```\n\n**Explanation:** The form is a controlled input that adds todos to state. Clicking a todo toggles it done. The list is rendered with `.map()` and stable keys (`Date.now()`), the empty state uses a ternary, and the text decoration is a computed inline style. This is a miniature version of real todo apps — and a classic first portfolio project.\n\n### Your Next Steps\n\n1. Build the todo app, then add a delete button and a \"clear completed\" button\n2. Split it into TodoList, TodoItem, and TodoForm components\n3. Learn React Router and data fetching from APIs next\n4. Join a real codebase — everything you see there is built from these foundations\n\n### Key Takeaways\n\n- React is the UI standard for major web products\n- The todo capstone applies every module concept\n- Next: routing, API data fetching, TypeScript\n- Keep building — portfolio projects compound your skills"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 4,
+      "quiz": {
+        "title": "Module 4 Quiz — Pass to Complete the Course",
+        "questions": [
+          {
+            "q": "What is a side effect in React?",
+            "options": [
+              "A CSS animation",
+              "Work that reaches outside the component, like API calls or timers",
+              "A re-render",
+              "An error in the console"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does useEffect(fn, []) do?",
+            "options": [
+              "Runs after every render",
+              "Runs once when the component mounts",
+              "Runs before the render",
+              "Never runs"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the cleanup function inside useEffect for?",
+            "options": [
+              "To speed up rendering",
+              "To remove timers, subscriptions, or in-flight requests when the component unmounts",
+              "To reset state",
+              "To delete the browser history"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Where can hooks be called?",
+            "options": [
+              "Inside loops",
+              "Inside conditionals",
+              "Only at the top level of components or custom hooks",
+              "Anywhere in JavaScript"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "Why must hooks always run in the same order?",
+            "options": [
+              "React maps state to components by call order",
+              "The browser requires it",
+              "It is only for performance",
+              "It is a lint rule with no functional reason"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "What is a custom hook?",
+            "options": [
+              "A component that renders nothing",
+              "A function starting with \"use\" that wraps other hooks",
+              "A special CSS class",
+              "A database query"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why should components stay small and single-purpose?",
+            "options": [
+              "They are easier to read, test, and maintain",
+              "They run faster in all cases",
+              "It is required by the browser",
+              "Small components cannot have bugs"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "When should you use the functional update form setCount(c => c + 1)?",
+            "options": [
+              "Never",
+              "When the new value depends on the previous value",
+              "Only for arrays",
+              "Only when the count is negative"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does the todo app use to give each item a stable key?",
+            "options": [
+              "The array index",
+              "The text content",
+              "Date.now()",
+              "A random number regenerated on every render"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "What should you learn next after mastering these React basics?",
+            "options": [
+              "React Router and data fetching from APIs",
+              "HTML tables",
+              "CSS colors",
+              "There is nothing more to learn"
+            ],
+            "answer": 0
+          }
+        ]
+      }
+    }
+  ]
+}

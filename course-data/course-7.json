@@ -1,0 +1,548 @@
+{
+  "title": "Large Language Models (LLMs) for Absolute Beginners",
+  "description": "Understand how ChatGPT-style models work: tokens, parameters, training, prompting, context windows, hallucinations, and responsible use.",
+  "category": "AI Fundamentals",
+  "level": "Beginner",
+  "pricing_type": "Free",
+  "price": 0,
+  "xp_reward": 100,
+  "thumbnail_url": null,
+  "lessons": [
+    {
+      "title": "Module 1 — What Are LLMs?",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 1.1 [Unlocked]: Understanding LLMs",
+            "content": "## Introduction & Core Concepts\n\nA **Large Language Model (LLM)** is an AI system trained on enormous amounts of text that can understand, generate, and work with human language. \"Large\" refers to the billions of parameters — the model's internal settings, learned from training data, that shape how it responds.\n\n**Explanation:** LLMs predict the next word in a sequence. Show them \"The capital of France is...\" and they continue \"...Paris.\" Every sentence they produce is built word-by-word from probability — but the scale of training makes this simple mechanism produce astonishing results.\n\n**Real-world analogy:** An LLM is like a librarian who has read nearly every book ever written. When you ask a question, they don't look anything up in a database — they answer from everything they've absorbed, in fluent, confident language. Their strength is breadth and speed; their weakness is that their \"memory\" is training data, not a live reference desk.\n\n### Famous LLMs\n\n| Model | Company | Known For |\n|---|---|---|\n| GPT-4 / GPT-5 | OpenAI | ChatGPT — general assistant |\n| Claude | Anthropic | Long documents, careful writing |\n| Gemini | Google | Integrated with Google products |\n| Llama | Meta | Open-source, runnable locally |\n| DeepSeek | DeepSeek AI | Open-weight models, strong reasoning |\n\n### What LLMs Can Do\n\n- Write, summarize, and translate text\n- Answer questions and explain concepts\n- Generate code and debug existing code\n- Structure and analyze data (with limitations)\n- Power chatbots and virtual assistants\n- Help with learning — exactly how this course uses them\n\n### Real-World Use Cases & Rules\n\n- LLMs predict text; everything else follows from that\n- They have no built-in \"truth check\" — verify important facts\n- Training data has a cutoff date — they don't know recent events unless given them\n- Context (what you provide) matters more than the model: prompt quality drives output quality\n\n### Key Takeaways\n\n- LLM = AI trained on massive text data to understand and generate language\n- \"Large\" = billions of learned parameters\n- Word-by-word prediction at scale = fluent language\n- Powerful but imperfect: verify, provide context, learn prompting"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 1.2 [Locked — Requires 1.1 Completion]: Tokens & Parameters",
+            "content": "## Introduction & Core Concepts\n\nLLMs don't read words — they read **tokens**: chunks of text (a word, part of a word, or punctuation). Models have a **context window**: the maximum number of tokens they can hold at once.\n\n### Tokenization: The Word Breakdown\n\n```\n\"I love IH Academy!\" → [\"I\", \" love\", \" IH\", \" Academy\", \"!\"]\n\nSupercalifragilistic → [\"Super\", \"cali\", \"fragil\", \"istic\"]\n```\n\n**Explanation:** Tokens are how the model prices and limits everything: input, output, and context all count in tokens. Rough rule of thumb: about 750 words ≈ 1,000 tokens in English (it varies by language — some languages need far more tokens per word).\n\n### The Key Numbers\n\n| Term | Meaning | Example |\n|---|---|---|\n| Context window | Max tokens the model can process at once | 8K, 32K, 128K, 200K+ |\n| Max output | Longest single response | Often 4K–8K tokens |\n| Input tokens | Your message + system prompt + history | Billed as input |\n| Output tokens | The model's response | Billed as output |\n\n### Why Context Size Matters\n\n- Small window → your document + prompt must fit together\n- Long history eats context: \"chat history bloat\" makes early messages forgotten\n- Bigger windows cost more per call\n- Token math decides what fits: 100K tokens ≈ a medium novel\n\n**Real-world analogy:** The context window is the model's desk. Your question, the attached document, the system instructions, and past conversation all share one desk. Slide too much onto it and the oldest papers fall off — the model literally \"forgets\" them. Choosing what stays on the desk is a core skill.\n\n### Real-World Use Cases & Rules\n\n- Costs scale with tokens — shorter prompts = cheaper calls\n- Count tokens before building features (most providers give token counters)\n- Prioritize: system instructions and task-critical content beat chat history\n- Different models = different windows; match the model to the job\n\n### Key Takeaways\n\n- Tokens = the model's unit of text and price\n- Context window = the desk everything must fit on\n- Input + output + history all count toward limits\n- Manage context deliberately — it's a skill, not a setting"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 1.3 [Locked — Requires 1.2 Completion]: Training: How LLMs Learn",
+            "content": "## Introduction & Core Concepts\n\nLLMs learn in three stages. Each stage builds on the last, and each explains a behavior you'll observe in practice.\n\n### Stage 1: Pre-training (The Library)\n\nThe model reads petabytes of text — books, articles, websites, code — and learns to **predict the next word**. Trillions of examples tune billions of parameters until the model has absorbed grammar, facts, reasoning patterns, and language structure.\n\n**Result:** A raw \"next-word machine\" — knows a lot, but doesn't follow instructions well.\n\n### Stage 2: Fine-tuning / Supervised Learning (The Classroom)\n\nHumans write high-quality example conversations: \"Given this instruction, here is an excellent response.\" The model trains on these examples to follow instructions, adopt helpfulness, and refuse harmful requests.\n\n**Result:** An assistant that understands what you want.\n\n### Stage 3: Reinforcement Learning (The Coach)\n\nHumans rank several model responses from best to worst. The model is trained to prefer higher-ranked answers — the \"RLHF\" technique (Reinforcement Learning from Human Feedback) made famous by ChatGPT.\n\n**Result:** Responses that align with human preferences: helpful, safe, and well-structured.\n\n### What Training Does NOT Do\n\n- No internet access at inference — the model generates from what it learned\n- Knowledge frozen at the training cutoff date\n- No ability to verify facts in real time\n- No memory of your previous conversations across sessions (unless the app stores them)\n\n**Real-world analogy:** Training is like becoming a chess grandmaster: first you study thousands of games (pre-training), then you learn tournament rules and etiquette (fine-tuning), then a coach ranks your moves and sharpens your play (RLHF). On the day of a match you have no coach and no internet — you play purely from everything you internalized.\n\n### Real-World Use Cases & Rules\n\n- Responses come from training, not live research\n- Facts older than the cutoff are unknown; newer facts must be supplied\n- RLHF is why models are generally helpful and safe — but it's preference shaping, not truth verification\n- Knowing the stages explains \"why did it say that?\" in production\n\n### Key Takeaways\n\n- Three stages: pre-training (next-word), fine-tuning (instruction following), RLHF (human preference)\n- No live internet at generation time\n- Knowledge cutoff = frozen knowledge\n- Training explains model behavior — and its limits"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 1.4 [Locked — Requires 1.3 Completion]: Inference: How LLMs Generate",
+            "content": "## Introduction & Core Concepts\n\n**Inference** is the moment of truth: the model generating a response. Generation is sequential — one token at a time — with **sampling** choosing each next token from probabilities.\n\n```\nUser: \"Explain APIs\"\n      ▼\nSystem prompt + user message → tokens → model weights\n      ▼\nToken 1: \"APIs\"      (chosen from top candidates)\nToken 2: \" are\"      (probabilities updated by context)\nToken 3: \" the\"\nToken 4: \" backbone\"\n   ... (repeats until stop token or max output)\n```\n\n**Explanation:** Each token choice is a probability decision over the whole vocabulary — influenced by the model's temperature setting and the context so far. This is why the same prompt can produce different answers: the generation has randomness built in.\n\n### The Parameters You Control\n\n| Parameter | What It Does | Effect |\n|---|---|---|\n| temperature | Randomness of choices | Low (0–0.3): focused, factual; High (0.7–1+): creative, varied |\n| max_tokens | Cap on output length | Controls response size and cost |\n| top_p | Candidate cutoff | Alternative to temperature for diversity |\n| seed | Fix randomness | Same prompt → same output (where supported) |\n\n### Why Responses Vary\n\n- Sampling is probabilistic — multiple valid continuations exist\n- Higher temperature = wider sampling = more variety (and more risk of hallucination)\n- Lower temperature = more deterministic = better for code and math\n- The \"same\" model can answer differently on two calls — that's normal\n\n**Real-world analogy:** Inference is a game of Chinese whispers with a probabilistic dictionary: each word is chosen from a ranked list of likely next words, influenced by everything said so far. Turn up temperature and the player takes bolder guesses; turn it down and they stick to the safest word every time.\n\n### Real-World Use Cases & Rules\n\n- Set temperature by job: factual → low, creative → high\n- Cap max_tokens to control cost and response size\n- For reproducible outputs, lower temperature and use a fixed seed\n- Generation is sequential — long responses are slower and costlier than short ones\n\n### Key Takeaways\n\n- Inference = sequential token-by-token generation with sampling\n- temperature controls creativity/randomness; low = factual\n- max_tokens caps output; seed enables reproducibility\n- Probabilistic generation explains answer variety"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 1,
+      "quiz": {
+        "title": "Module 1 Quiz — Pass to Unlock Module 2",
+        "questions": [
+          {
+            "q": "What does \"LLM\" stand for?",
+            "options": [
+              "Large Language Model",
+              "Long Learning Memory",
+              "Low Latency Machine",
+              "Logical Language Module"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "How does an LLM generate language?",
+            "options": [
+              "By copying from a database",
+              "By predicting the next token word-by-word",
+              "By searching the internet",
+              "By running rule-based grammars"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What are tokens?",
+            "options": [
+              "Security keys",
+              "Chunks of text the model reads and prices",
+              "Network packets",
+              "Database rows"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the context window?",
+            "options": [
+              "A browser popup",
+              "The maximum tokens the model can process at once",
+              "The training dataset",
+              "A chat interface"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What happens when input exceeds the context window?",
+            "options": [
+              "The model restarts",
+              "The oldest content is dropped — the model \"forgets\" it",
+              "The call is free",
+              "The output becomes longer"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which stage teaches an LLM to follow instructions?",
+            "options": [
+              "Pre-training",
+              "Fine-tuning",
+              "Tokenization",
+              "Inference"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does RLHF stand for?",
+            "options": [
+              "Really Large Human Files",
+              "Reinforcement Learning from Human Feedback",
+              "Rapid Language Handling Framework",
+              "Recursive Learning Helper Function"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Can an LLM access the internet while generating a response?",
+            "options": [
+              "Yes, always",
+              "No — it generates from its training",
+              "Only during pre-training",
+              "Only with a plugin enabled by default"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does a high temperature setting do?",
+            "options": [
+              "Makes output more random and creative",
+              "Freezes the model",
+              "Shortens responses",
+              "Enables the internet"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "What temperature is best for code generation and math?",
+            "options": [
+              "High (1.0+)",
+              "Low (0–0.3)",
+              "Temperature does not matter",
+              "Negative"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 2 — Prompting & Working with Models",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 2.1 [Unlocked]: System vs User Prompts",
+            "content": "## Introduction & Core Concepts\n\nAPI calls to LLMs send a list of messages. Two roles matter most: **system** — the invisible instructions setting the model's behavior — and **user** — what the user actually asked.\n\n```js\nconst messages = [\n    {\n        role: \"system\",\n        content:\n            \"You are a strict math tutor. Explain step by step. \" +\n            \"Never give the answer directly — guide the student. \" +\n            \"Keep answers under 150 words.\",\n    },\n    {\n        role: \"user\",\n        content: \"Solve: 3x + 5 = 20. What is x?\",\n    },\n];\n```\n\n**Explanation:** The system prompt is the constitution of the conversation: it defines persona, rules, tone, format, and constraints. The user message is the actual task. Everything the model \"knows\" about how to behave comes from system instructions.\n\n### What Goes in a System Prompt\n\n| Element | Example |\n|---|---|\n| Role/persona | \"You are a professional career advisor\" |\n| Task rules | \"Answer only from the provided document\" |\n| Format | \"Respond as a numbered list with headers\" |\n| Tone | \"Use simple language for beginners\" |\n| Constraints | \"Never invent statistics\" |\n| Safety | \"Refuse harmful requests politely\" |\n\n### How Roles Differ\n\n- **system** — persistent instructions, first in the list\n- **user** — the question/task (real user or your app's data)\n- **assistant** — the model's own past responses (history for follow-ups)\n\n**Real-world analogy:** The system prompt is the job briefing given to a new employee on day one: the role, the rules, the format, the no-go areas. The user prompt is each customer request that walks in afterward. The employee responds differently to the same request depending on the briefing they received.\n\n### Real-World Use Cases & Rules\n\n- Put durable rules in system, variable tasks in user\n- Repeating the same rule in every user message wastes tokens\n- System instructions are tampered with only by developers — that's the point\n- Persona + rules + format + constraints = the complete briefing\n\n### Key Takeaways\n\n- system = the model's standing instructions\n- user = the specific request\n- assistant = history\n- A strong system prompt beats a thousand reworded user prompts"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 2.2 [Locked — Requires 2.1 Completion]: Prompt Design & Clarity",
+            "content": "## Introduction & Core Concepts\n\n**Prompting** is the skill of writing instructions an LLM follows well. Small wording changes produce dramatically different results — this is the single most practical skill in this course.\n\n### The Recipe: Context → Task → Constraints → Format\n\n```\nContext:  what the model needs to know (data, audience, situation)\nTask:     the exact job (in imperative verbs)\nConstraints: limits (length, tone, no-X, only-from-document)\nFormat:   how to shape the answer (JSON, list, table, headings)\n```\n\n### Weak vs Strong\n\n```\n❌ Weak: \"Write about React.\"\n\n✅ Strong: \"You are a technical writer. Write a 120-word\nintroduction to React for absolute beginners with no coding\nbackground. Explain what React is and why companies use it.\nUse everyday language, avoid jargon, and end with a single\nsentence on where to learn more.\"\n```\n\n### The Power of Examples (Few-Shot)\n\n```\nTask: Classify the sentiment of product reviews as Positive,\nNeutral, or Negative.\n\nExample 1: \"Battery dies in an hour.\" → Negative\nExample 2: \"Great value for the price.\" → Positive\n\nNow classify: \"It's okay, does the job.\" →\n```\n\n**Explanation:** One or two worked examples teach the model the exact output shape — often beating long verbal descriptions. This technique is called **few-shot prompting**.\n\n**Real-world analogy:** A vague prompt is like telling a taxi driver \"take me somewhere nice.\" A strong prompt is \"take me to the airport, departures, via the highway, no tunnels, and I need to be there by 6 PM\" — context, task, constraints, and format in one briefing.\n\n### Real-World Use Cases & Rules\n\n- Imperative verbs: \"Summarize\", \"List\", \"Convert\"\n- Specify the audience: \"for a 10-year-old\", \"for a senior engineer\"\n- Give the exact format: JSON schema, markdown table, bullet count\n- Add examples when precision matters (few-shot)\n- If output is wrong, tighten the prompt before blaming the model\n\n### Key Takeaways\n\n- Recipe: Context → Task → Constraints → Format\n- Specify audience, length, and format explicitly\n- Examples (few-shot) teach exact output shapes\n- Prompt quality drives output quality"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 2.3 [Locked — Requires 2.2 Completion]: Output Formats & JSON Mode",
+            "content": "## Introduction & Core Concepts\n\nFor APIs, free-form prose is rarely enough — applications need **structured output**. Modern LLMs support guaranteed **JSON mode** (or structured outputs): the response is valid JSON matching a schema you define.\n\n### JSON Mode\n\n```js\nconst response = await client.chat.completions.create({\n    model: \"gpt-5\",\n    messages: [\n        {\n            role: \"system\",\n            content:\n                \"Extract the information and return valid JSON \" +\n                \"matching this schema exactly: \" +\n                '{\"title\": string, \"author\": string, \"year\": number}',\n        },\n        {\n            role: \"user\",\n            content: \"The Great Gatsby, by F. Scott Fitzgerald, 1925.\",\n        },\n    ],\n    response_format: { type: \"json_object\" },\n});\n```\n\n**Expected output:**\n```json\n{ \"title\": \"The Great Gatsby\", \"author\": \"F. Scott Fitzgerald\", \"year\": 1925 }\n```\n\n**Explanation:** JSON mode guarantees a parseable JSON response, so your code can reliably extract fields instead of parsing prose. You still specify the schema in the prompt — the model follows it because it's constrained to valid JSON.\n\n### Why Structured Output Matters\n\n- Directly feed results into databases and code — no fragile text parsing\n- Catch errors in your app, not in free-form text\n- Build LLM features that feel like normal software\n\n### Beyond JSON: Other Formats\n\n| Format | Use Case |\n|---|---|\n| JSON | API data extraction, app integration |\n| Markdown | Documentation, chat rendering |\n| CSV/table | Spreadsheet-style data |\n| XML | Legacy systems, structured documents |\n\n### Real-World Use Cases & Rules\n\n- Enable JSON mode when the app consumes the output programmatically\n- Define the schema in the system prompt and repeat it in the format instruction\n- Validate the parsed JSON in code — models still make mistakes\n- Give examples of valid output when the schema is complex\n\n### Key Takeaways\n\n- Structured output (JSON mode) = parseable, reliable results\n- Schema is defined by you in the prompt\n- Always validate JSON in your application code\n- Prose for humans, structured output for machines"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 2.4 [Locked — Requires 2.3 Completion]: Iterating on Prompts",
+            "content": "## Introduction & Core Concepts\n\nPrompting is an **iteration loop**, not a single shot. Professionals refine prompts until behavior is correct — the same discipline as debugging code.\n\n### The Iteration Loop\n\n```\nWrite prompt\n   │\n   ▼\nTest with real inputs (several of them!)\n   │\n   ▼\nObserve failures & close calls\n   │\n   ▼\nDiagnose: what is ambiguous? what is missing?\n   │\n   ▼\nRefine: clarify, add constraint, add example\n   │\n   ▼\nRe-test → repeat until consistent\n```\n\n### Common Fixes\n\n| Problem | Fix |\n|---|---|\n| Answer too long | \"Respond in exactly 3 sentences\" |\n| Wrong format | Add an example of the exact format |\n| Hallucinated facts | \"Only use information provided below\" + attach the source text |\n| Inconsistent tone | Add a tone rule: \"casual and friendly\" |\n| Ignores a rule | Move the rule to the system prompt, restate it clearly |\n| Edge cases missed | Add an example covering each case |\n\n### A Real Refinement Sequence\n\n```\nv1: \"Summarize this article.\" \n    → \"Summary is 400 words. Too long.\"\n\nv2: \"Summarize this article in exactly 3 sentences, in your own words.\"\n    → \"Three sentences, but mentions a statistic not in the article.\"\n\nv3: \"Using ONLY the article below, summarize it in exactly 3\nsentences. Do not add information that is not in the article.\nArticle: ...\"\n    → \"Three sentences, article-only facts. Good.\"\n```\n\n**Real-world analogy:** Prompt iteration is tuning a guitar: each pass checks the strings (outputs), finds which is off (diagnosis), and adjusts one knob at a time (single-change refinements) until the chord rings true across all test notes.\n\n### Real-World Use Cases & Rules\n\n- Change ONE thing per iteration — combined edits hide the cause\n- Test with multiple inputs, including edge cases\n- Keep a version history of prompts (git!) — regressions happen\n- If it still fails, simplify the task instead of lengthening the prompt\n- Treat prompt quality like code quality: reviewed, tested, versioned\n\n### Key Takeaways\n\n- Prompting = iterate: test, diagnose, refine, re-test\n- One change per iteration\n- Examples and constraints fix the most common failures\n- Version and review prompts like code"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 2,
+      "quiz": {
+        "title": "Module 2 Quiz — Pass to Unlock Module 3",
+        "questions": [
+          {
+            "q": "Which message role holds the model's standing instructions?",
+            "options": [
+              "user",
+              "system",
+              "assistant",
+              "tool"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Where does the actual task belong in an API call?",
+            "options": [
+              "In the system prompt",
+              "In the user message",
+              "In the model name",
+              "In the temperature"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the recommended prompt recipe?",
+            "options": [
+              "Task → Format → Task again",
+              "Context → Task → Constraints → Format",
+              "Greeting → Joke → Question",
+              "Format → Context → Joke"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why specify the audience in a prompt?",
+            "options": [
+              "It is a tradition",
+              "It shapes tone, vocabulary, and depth of the response",
+              "The model needs a target to sound human",
+              "It saves tokens"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is few-shot prompting?",
+            "options": [
+              "Sending multiple prompts at once",
+              "Including worked examples in the prompt to teach the output shape",
+              "Retrying failed calls",
+              "Using a small model"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does JSON mode guarantee?",
+            "options": [
+              "Shorter responses",
+              "A valid JSON response matching the schema you specify",
+              "Lower cost",
+              "Faster responses"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why do apps use structured output instead of prose?",
+            "options": [
+              "Prose is invalid JSON",
+              "Structured output is directly usable by databases and code",
+              "Models cannot write prose",
+              "It doubles the token budget"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What should you change per iteration when refining a prompt?",
+            "options": [
+              "Everything at once",
+              "One thing at a time",
+              "The model",
+              "Nothing — prompts never change"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "How do you stop a model from inventing facts?",
+            "options": [
+              "Raise temperature to 2.0",
+              "Instruct it to use only the provided source text and attach that text",
+              "Ask it politely",
+              "Use longer prompts"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "How should prompts be managed in a team?",
+            "options": [
+              "Emailed around",
+              "Versioned and reviewed like code",
+              "Kept in chat history",
+              "Deleted after use"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 3 — Capabilities, Limitations & API Basics",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 3.1 [Unlocked]: Capabilities & Use Cases",
+            "content": "## Introduction & Core Concepts\n\nLLMs are general-purpose tools, but their sweet spot is **language tasks**: anything that turns input text into better text. Knowing where they shine — and where they don't — is the difference between shipping real features and forcing square pegs.\n\n### Where LLMs Excel\n\n| Capability | Example |\n|---|---|\n| Summarization | Contract summaries, meeting notes, article digests |\n| Generation | Drafts, emails, marketing copy, blog posts |\n| Translation | Cross-language text, preserving tone |\n| Rewriting | Simplify, formalize, shorten, expand |\n| Code | Generate, explain, review, convert languages |\n| Extraction | Pull names, dates, amounts from documents |\n| Classification | Sentiment, intent, topic tagging |\n| Chat/QA | Support bots, tutors, document Q&A |\n| Structuring | Unstructured text → tables, JSON |\n\n### Where LLMs Fail\n\n| Weakness | Why |\n|---|---|\n| Exact arithmetic | Word-prediction isn't computation |\n| Current events | Knowledge cutoff |\n| Precision facts | Hallucination risk |\n| Sensitive data | Privacy — data enters the provider's systems |\n| Arbitrary rules | \"Count the letter r in strawberry\" — attention limits |\n\n### The Capability-Confidence Scale\n\n```\nWhat you can trust with care:\nSummaries, drafts, explanations, first-draft code\n\nWhat you must verify:\nNumbers, quotes, references, legal/medical advice, exact counts\n\nWhat you should never delegate:\nPasswords, decisions with real-world consequences\n```\n\n**Real-world analogy:** An LLM is like a brilliant, fast-reading intern: superb at first drafts, digests, and rephrasing — but you'd never let the intern alone sign a contract, quote a price, or handle the safe combination. You review their work because they occasionally get details wrong with total confidence.\n\n### Real-World Use Cases & Rules\n\n- Match the task to the model: language tasks = LLM territory\n- For facts, give the source text in the prompt (RAG, next module)\n- For math/logic, use tools (code, calculators) instead of the model\n- Never process unapproved sensitive data\n\n### Key Takeaways\n\n- Excel: summarize, generate, translate, rewrite, code, extract, classify\n- Fail: exact math, live facts, precision counts\n- Draft-grade output needs human verification for anything consequential\n- Capability awareness prevents embarrassing features"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 3.2 [Locked — Requires 3.1 Completion]: Hallucinations & How to Reduce Them",
+            "content": "## Introduction & Core Concepts\n\n**Hallucination** is when a model generates plausible-sounding content that is wrong — made-up facts, fake citations, invented statistics. It happens because models optimize for fluent continuation, not truth.\n\n### Why It Happens\n\n- The model predicts likely text — and wrong facts can be \"likely\"\n- Ambiguous or empty context forces confident guessing\n- No verification step exists at generation time\n- Training data itself contains errors\n\n### The Severity Spectrum\n\n```\nMade-up example that clearly didn't happen   → caught by humans\nFake citation (looks real, doesn't exist)    → dangerous in research\nConfident wrong number in an otherwise perfect answer → worst kind\n```\n\n**Real-world analogy:** Hallucination is the guest at a party who tells fascinating stories with total conviction — some true, some embellished, some entirely invented. The stories are compelling because the storyteller believes them. Your job is to fact-check the storyteller, never to quote them as a source.\n\n### The Anti-Hallucination Toolkit\n\n| Technique | How It Works |\n|---|---|\n| Ground the model | \"Answer ONLY from the text below\" + attach source (RAG) |\n| Few-shot with correct answers | Model imitates verified examples |\n| Lower temperature | Reduces wilder sampling |\n| Ask for hedging | \"If unknown, say 'not found in the provided text'\" |\n| Ask for evidence | \"Quote the exact sentence supporting this\" |\n| Verify in code | Check citations exist; validate JSON fields |\n| Human review loop | Flag uncertain answers for a person |\n\n### Real-World Use Cases & Rules\n\n- RAG (grounding with sources) is the #1 mitigation\n- Explicitly allow \"I don't know\" — models need permission to abstain\n- Critical outputs: always verify before acting\n- Never present model output as authoritative without review\n\n### Key Takeaways\n\n- Hallucination = fluent, confident, wrong content\n- Ground with source text; allow \"I don't know\"\n- Lower temperature; demand quotes/evidence\n- Consequential outputs always get human verification"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 3.3 [Locked — Requires 3.2 Completion]: Making Your First API Call",
+            "content": "## Introduction & Core Concepts\n\nLLMs are consumed through **APIs** — the same HTTP/JSON concepts you learned in the API course. This topic covers the universal shape of an LLM API call.\n\n### The Universal Pattern\n\n```js\n// Pseudocode — every provider (OpenAI, Anthropic, DeepSeek...) follows this shape\nconst response = await client.chat.completions.create({\n    model: \"gpt-5\",                    // which model\n    messages: [                        // the conversation\n        { role: \"system\", content: \"You are a helpful tutor.\" },\n        { role: \"user\", content: \"Explain REST APIs simply.\" },\n    ],\n    temperature: 0.7,                  // creativity control\n    max_tokens: 500,                   // output cap\n});\n```\n\n### Anatomy of the Request\n\n| Field | Meaning |\n|---|---|\n| model | Which model to use (pricing and quality vary) |\n| messages | Ordered list: system, user, assistant... |\n| temperature | Randomness (0–1+ typical) |\n| max_tokens | Response length cap |\n| response_format | JSON mode when needed |\n\n### Anatomy of the Response\n\n```json\n{\n    \"id\": \"chatcmpl-9x...\",\n    \"model\": \"gpt-5\",\n    \"choices\": [\n        {\n            \"message\": {\n                \"role\": \"assistant\",\n                \"content\": \"REST is an API style where...\"\n            }\n        }\n    ],\n    \"usage\": {\n        \"prompt_tokens\": 45,\n        \"completion_tokens\": 89,\n        \"total_tokens\": 134\n    }\n}\n```\n\n**Explanation:** The answer lives in `response.choices[0].message.content`. The `usage` object reports exactly how many tokens were consumed — this is your billing receipt.\n\n### The API Key\n\n```\nPOST https://api.openai.com/v1/chat/completions\nAuthorization: Bearer sk-...\nContent-Type: application/json\n```\n\n- Keys are issued per account from the provider's dashboard\n- Send them in the Authorization header — never in code you commit\n- Keys are secret: rotate on leak, scope per project\n\n**Real-world analogy:** The LLM API is a power socket: the model (power station) is far away; the API (socket) is the standard connection any device can use. The API key is your electricity bill account — without it, no power; misused, it's your name on the bill.\n\n### Real-World Use Cases & Rules\n\n- The chat-completions pattern is the industry standard\n- Answer = choices[0].message.content; cost = usage.total_tokens\n- Temperature by task: low for facts, higher for creativity\n- Protect API keys like passwords — env variables, never git\n\n### Key Takeaways\n\n- LLM APIs follow one universal pattern: model + messages + parameters\n- Response: choices[0].message.content; usage = tokens/cost\n- Authorization: Bearer header with your key\n- Handle errors and retries in production code"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 3.4 [Locked — Requires 3.3 Completion]: RAG: Grounding Models in Your Data",
+            "content": "## Introduction & Core Concepts\n\n**RAG (Retrieval-Augmented Generation)** is the standard way to make an LLM answer from YOUR documents instead of its training data: retrieve relevant text, inject it into the prompt as context, and instruct the model to answer only from it.\n\n### The RAG Pipeline\n\n```\nUser question: \"What are the prerequisites for the React course?\"\n        │\n        ▼\n1. Embed the question (convert to numbers via an embedding model)\n        │\n        ▼\n2. Search your document store for similar text\n   (vector database, or keyword search — embeddings are better)\n        │\n        ▼\n3. Retrieve top chunks (e.g., 3–5 most relevant passages)\n        │\n        ▼\n4. Build the prompt: system instructions + retrieved chunks + question\n        │\n        ▼\n5. LLM answers ONLY from the provided chunks\n```\n\n### The Prompt in RAG\n\n```\nSystem: \"Answer the question using ONLY the provided context.\nIf the answer is not in the context, say 'I could not find\nthis in the provided material.'\"\n\nContext:\n[Course syllabus excerpt 1...]\n[Course syllabus excerpt 2...]\n\nUser: \"What are the prerequisites for the React course?\"\n```\n\n### Why RAG Beats Raw Models for Business Data\n\n- Fresh, private, specific data — documents change daily\n- Answers are traceable: every claim links to a source chunk\n- Hallucination drops sharply (the answer must come from the context)\n- Your data never needs to be part of the model's training\n\n**Real-world analogy:** RAG is the librarian-assisted reference desk: the librarian (retriever) runs to the stacks, pulls the three most relevant books (chunks), opens them to the right pages, and only then does the assistant (LLM) answer — reading from the open pages, not from memory. The answer is accurate because it's read, not recalled.\n\n### Real-World Use Cases & Rules\n\n- RAG = retrieve relevant text → inject into prompt → answer from it\n- Embeddings turn text into numbers for similarity search\n- Retrieval quality limits answer quality — index good chunks\n- Always instruct the model to answer only from context, and to abstain otherwise\n- RAG powers the document Q&A bots used by enterprises everywhere\n\n### Key Takeaways\n\n- RAG grounds answers in your documents\n- Pipeline: embed → retrieve → prompt with context → answer from it\n- Traceability + freshness + fewer hallucinations\n- The dominant pattern for real-world LLM products"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 3,
+      "quiz": {
+        "title": "Module 3 Quiz — Pass to Unlock Module 4",
+        "questions": [
+          {
+            "q": "Which task is an LLM best at?",
+            "options": [
+              "Exact arithmetic",
+              "Summarizing documents",
+              "Live sports scores",
+              "Password generation"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is a hallucination?",
+            "options": [
+              "A model that refuses to answer",
+              "Plausible but wrong content generated confidently",
+              "A slow response",
+              "A token limit error"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the #1 technique to reduce hallucinations?",
+            "options": [
+              "Higher temperature",
+              "Grounding the model with source text (RAG)",
+              "Longer prompts",
+              "Using a bigger model"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why should models be explicitly allowed to say \"I don't know\"?",
+            "options": [
+              "It saves tokens",
+              "They otherwise guess rather than abstain",
+              "It is a UI requirement",
+              "It speeds up responses"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Where does the assistant's answer live in an API response?",
+            "options": [
+              "response.choices[0].message.content",
+              "response.model",
+              "response.id",
+              "response.usage"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "What does the usage object in a response tell you?",
+            "options": [
+              "The model's version",
+              "The number of tokens consumed",
+              "The request time",
+              "The API key"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "How should API keys be handled?",
+            "options": [
+              "Hardcoded in the repo",
+              "Stored in environment variables, never committed",
+              "Sent in the URL",
+              "Shared in chat"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does RAG stand for?",
+            "options": [
+              "Rapid API Generation",
+              "Retrieval-Augmented Generation",
+              "Random Access Generator",
+              "Real-time Answer Gateway"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "In RAG, what does the retrieval step do?",
+            "options": [
+              "Trains the model",
+              "Finds the most relevant chunks of your documents",
+              "Sends emails",
+              "Generates embeddings for the whole dataset each call"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why is RAG better than raw model answers for business data?",
+            "options": [
+              "It is cheaper in all cases",
+              "Answers are traceable to sources and stay current",
+              "It removes the need for databases",
+              "It always works without prompts"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 4 — Best Practices, Ethics & Real-World Use",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 4.1 [Unlocked]: Costs & Model Selection",
+            "content": "## Introduction & Core Concepts\n\nLLM features have real operating costs — every API call burns tokens. Choosing the right model and optimizing usage is an engineering skill, not an afterthought.\n\n### How Pricing Works\n\n```\ncost = (input_tokens × input_price) + (output_tokens × output_price)\n```\n\n- Input tokens are cheap; **output tokens cost several times more** per token\n- Prices vary by model tier: frontier models cost more per token than small models\n- Long system prompts and history are paid on EVERY call — they add up\n- Caching exists: some providers discount repeated input prefixes\n\n### The Model Tier Ladder\n\n| Tier | Best For | Example Families |\n|---|---|---|\n| Small/fast | Classification, extraction, high volume, low latency | gpt-mini, llama small, claude-haiku |\n| Mid | General assistance, summarization, chat | gpt, claude-sonnet, gemini |\n| Large/frontier | Hard reasoning, long documents, complex code | gpt-5, claude-opus, deepseek-reasoner |\n\n**Rule of thumb:** use the smallest model that passes your quality tests — most workloads don't need frontier models.\n\n### Cost Control Playbook\n\n| Technique | Effect |\n|---|---|\n| Right-size the model | Large savings vs frontier tier |\n| Trim system prompts | Saved on EVERY call |\n| Cap max_tokens | No surprise long answers |\n| Shorten history | Keep only recent relevant turns |\n| Batch low-priority jobs | Cheaper offline paths |\n| Cache prompts | Discounted repeated prefixes |\n| Monitor usage | Dashboard + budget alerts |\n\n**Real-world analogy:** Model selection is vehicle choice: a cargo van (small model) delivers most goods cheaply; a sports car (frontier model) is exciting but burns money per trip. Fleet managers pick the vehicle per route — smart teams do the same per task.\n\n### Real-World Use Cases & Rules\n\n- Track tokens per feature; measure cost per successful action\n- Test small models before upgrading tier\n- Cache and reuse where possible\n- Set hard budget alerts before shipping\n\n### Key Takeaways\n\n- Output tokens dominate cost\n- Smallest model that passes tests wins\n- Trim prompts, cap outputs, shorten history\n- Monitor and alert on spend"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 4.2 [Locked — Requires 4.1 Completion]: Privacy, Security & Responsible AI",
+            "content": "## Introduction & Core Concepts\n\nLLM features handle real user data. The responsible pattern: **minimize data, protect secrets, design for safety.**\n\n### Data Minimization\n\n- Send only what the task needs — not the whole conversation, not the whole database\n- Prompt-injectable data (emails, documents) is a vector — treat it as untrusted input\n- Understand the provider's data policy: what is retained, what is used for training? Enterprise tiers offer zero-retention options\n\n### Secrets & Leaks\n\n```\n❌ Never:\n  - Put API keys in prompts or code\n  - Log raw prompts or responses with sensitive content\n  - Let model output be rendered as HTML without escaping\n     (the model can output <script> tags!)\n\n✅ Always:\n  - Keys in environment variables\n  - Redact PII in logs\n  - Sanitize model output before rendering\n```\n\n### The Safety Layer: System Prompts\n\n```\n\"You are a helpful tutor. Refuse requests to produce harmful\ncontent: violence instructions, fraud, harassment, or\nmisleading dangerous advice. Politely decline and offer a\nsafe alternative.\"\n```\n\n**Explanation:** Safety instructions in the system prompt shape behavior — but never rely on them alone. Add application-level guardrails: input filtering, output checks, human review for sensitive actions.\n\n### The Four Pillars of Responsible LLM Apps\n\n| Pillar | Practice |\n|---|---|\n| Transparency | Tell users they're talking to AI |\n| Accuracy | Ground with sources; flag uncertainty |\n| Privacy | Minimize data; secure storage |\n| Oversight | Human review for consequential outputs |\n\n**Real-world analogy:** Responsible AI is a teenager's first job: the teenager (model) is capable but needs rules (system safety), supervision (review loops), and a safe cash box (key management). The store's reputation depends on how carefully the system is designed — not on the teenager's good intentions.\n\n### Real-World Use Cases & Rules\n\n- Minimize data; know your provider's retention policy\n- Keys in env; redact logs; escape model output in HTML\n- Safety prompts + application-level guardrails together\n- Transparency and human oversight for anything consequential\n\n### Key Takeaways\n\n- Send minimum data; treat injected text as untrusted\n- Protect keys; sanitize output; scrub logs\n- Safety = system prompt + app guardrails + review\n- Design for transparency and oversight"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 4.3 [Locked — Requires 4.2 Completion]: Evaluating LLM Outputs",
+            "content": "## Introduction & Core Concepts\n\n\"How do I know the model is doing a good job?\" — **evaluation** answers that with measurements instead of vibes. Teams that ship reliable AI features evaluate systematically.\n\n### The Evaluation Dimensions\n\n| Dimension | Measures |\n|---|---|\n| Accuracy | Does the output match ground truth? |\n| Faithfulness | Does it stay within the provided context? |\n| Format compliance | Does it follow the requested JSON/schema? |\n| Relevance | Does it answer the actual question? |\n| Safety | Does it refuse harmful requests? |\n| Latency/cost | Is it fast and affordable enough? |\n\n### The Evaluation Loop\n\n```\n1. Build a golden set: 50–200 realistic inputs with expected outputs\n2. Run the pipeline on the set\n3. Score automatically (exact match, schema check, LLM-as-judge)\n   + spot-check by humans\n4. Change prompt/model/parameters\n5. Re-run and compare scores\n6. Accept the change only if scores hold or improve\n```\n\n### Practical Techniques\n\n- **Golden set**: curated Q&A pairs — the backbone of LLM evaluation\n- **LLM-as-judge**: a second model grades outputs against rubrics (fast, scalable)\n- **A/B testing**: compare prompt versions on live traffic\n- **Regression guard**: re-run the golden set on every change — prompts degrade silently\n\n**Real-world analogy:** Evaluation is a chef's tasting panel: you don't ship a new menu on a single taste test. A panel (golden set), scoring rubrics (criteria), and regular blind tastings (regression runs) decide what reaches customers — and the panel catches a bad batch before the public does.\n\n### Real-World Use Cases & Rules\n\n- Golden sets + automated scoring = the baseline\n- Every prompt change re-runs the evaluation\n- Track scores over time — model updates can change behavior\n- Human review of samples catches what automation misses\n\n### Key Takeaways\n\n- Evaluate on accuracy, faithfulness, format, safety, cost\n- Golden set + automated scoring + regression runs\n- LLM-as-judge scales review; humans spot-check\n- Any prompt change requires re-evaluation"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 4.4 [Locked — Requires 4.3 Completion]: Real-World Usage & Capstone",
+            "content": "## Introduction & Core Concepts\n\nLLMs power products you use daily: ChatGPT, Claude, Gemini — and embedded features everywhere: email autocomplete, support bots, code assistants (Copilot), document Q&A, translation, meeting summaries, and this platform's future AI tutor. The pattern is always the same: prompt design, model selection, grounding, evaluation, and cost control.\n\n### Capstone: Course Q&A Assistant with RAG\n\nThis project combines every module: system prompts, structured output, API calls, and RAG grounding:\n\n```js\n// assistant.js — RAG-powered Q&A for a course catalog\nimport { readFileSync } from \"node:fs\";\n\n// 1. Pretend retrieval: our \"vector search\" returns these chunks\nconst chunks = [\n    \"The React course requires JavaScript fundamentals.\",\n    \"REST APIs return JSON over HTTP.\",\n    \"Git is used to track changes in code.\",\n];\n\n// 2. Build the grounded prompt\nconst question = \"What do I need before starting React?\";\n\nconst systemPrompt = `\nYou are the IH Academy study assistant.\nAnswer ONLY from the context below.\nIf the answer is not in the context, reply:\n\"I could not find this in the provided material.\"\nKeep answers under 60 words.\n`;\n\nconst userPrompt = `\nContext:\n${chunks.join(\"\\n\")}\n\nQuestion: ${question}\n`;\n\n// 3. Call the LLM API (pseudocode — use your provider's SDK)\nconst response = await client.chat.completions.create({\n    model: \"gpt-5\",\n    messages: [\n        { role: \"system\", content: systemPrompt },\n        { role: \"user\", content: userPrompt },\n    ],\n    temperature: 0.2,   // low: grounded, factual answers\n    max_tokens: 150,\n});\n\nconst answer = response.choices[0].message.content;\nconsole.log(\"Assistant:\", answer);\n// Expected: mentions JavaScript fundamentals, drawn only from context\n```\n\n**Explanation:** The question is answered ONLY from the provided chunks — the system prompt forbids outside knowledge, temperature is low for factual stability, and the \"I don't know\" instruction covers gaps. Swap the fake chunks for a real vector search (an embeddings API + vector store) and you have a production RAG assistant.\n\n### Your Next Steps\n\n1. Replace the fake retrieval with real embeddings + vector search\n2. Add an evaluation set of 20 Q&A pairs and score the system\n3. Add cost tracking and a budget alert\n4. Compare a small and a frontier model on the golden set\n5. Build a chat UI on top (React, of course)\n\n### Key Takeaways\n\n- LLM products follow one pattern: prompt + model + grounding + evaluation\n- The capstone is a production RAG assistant in miniature\n- Next: embeddings, vector stores, fine-tuning, agent tool use\n- You now understand how ChatGPT-class features are actually built"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 4,
+      "quiz": {
+        "title": "Module 4 Quiz — Pass to Complete the Course",
+        "questions": [
+          {
+            "q": "Which tokens are the most expensive per token?",
+            "options": [
+              "Input tokens",
+              "Output tokens",
+              "System tokens",
+              "They all cost the same"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which model tier is right for high-volume classification?",
+            "options": [
+              "Frontier model",
+              "Small/fast model",
+              "The most expensive model",
+              "There is no right tier"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the rule of thumb for model selection?",
+            "options": [
+              "Always the largest model",
+              "The smallest model that passes your quality tests",
+              "The most popular model",
+              "Any model works"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Where should API keys live?",
+            "options": [
+              "In the prompt",
+              "In environment variables",
+              "In the database",
+              "In logs"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why must model output be escaped before rendering as HTML?",
+            "options": [
+              "It is prettier",
+              "The model can output <script> tags that would execute",
+              "It makes the page load faster",
+              "It is a CSS requirement"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the first step of building an evaluation set?",
+            "options": [
+              "Deploying to production",
+              "Collecting realistic inputs with expected outputs",
+              "Buying more GPUs",
+              "Asking the model"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is LLM-as-judge?",
+            "options": [
+              "A court for AI disputes",
+              "Using a second model to grade outputs against rubrics",
+              "A legal requirement",
+              "A debugging tool"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why re-run the golden set after every prompt change?",
+            "options": [
+              "To spend tokens",
+              "Prompt changes can silently degrade quality",
+              "It is a formality",
+              "The set changes itself"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "In the capstone, what keeps the answer grounded in the context?",
+            "options": [
+              "A high temperature",
+              "The system prompt forbidding outside knowledge",
+              "The question length",
+              "The model name"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does the assistant reply when the answer is not in the context?",
+            "options": [
+              "A random guess",
+              "\"I could not find this in the provided material.\"",
+              "Nothing",
+              "It crashes"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,548 @@
+{
+  "title": "API Fundamentals for Absolute Beginners",
+  "description": "Understand how software talks to software: HTTP methods, endpoints, status codes, JSON, authentication, rate limits, and REST.",
+  "category": "Fundamentals",
+  "level": "Beginner",
+  "pricing_type": "Free",
+  "price": 0,
+  "xp_reward": 100,
+  "thumbnail_url": null,
+  "lessons": [
+    {
+      "title": "Module 1 — HTTP & The Web Foundation",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 1.1 [Unlocked]: What is an API?",
+            "content": "## Introduction & Core Concepts\n\nAn **API (Application Programming Interface)** is a set of rules that lets software talk to software. On the web, APIs are how your app gets data from a server, sends data to it, or triggers actions — without showing the app's internal code.\n\n**Explanation:** When you use a weather app, the app calls a weather API: it sends a request, the server replies with JSON data (temperature, forecast), and the app renders it. The API is the messenger, not the data owner.\n\n**Real-world analogy:** An API is like a restaurant menu. You (the app) don't go into the kitchen and cook (access the database). You order from the menu (the API) — a defined list of things you're allowed to ask for — and the waiter (API server) brings back your dish (the data).\n\n### Real APIs You Already Use\n\n- Google Maps API — embedded maps everywhere\n- Stripe API — payments on shopping sites\n- GitHub API — stars, repos, contributions shown on profiles\n- X (Twitter) API — feeds and posts\n- ChatGPT API — AI features in apps\n\n### How a Web API Call Works\n\n```\nYour app ──(HTTP request)──► API server\n              GET /courses\n                              │\n                              ▼\n                        Server queries\n                        its database\n                              │\n                              ▼\nYour app ◄──(JSON response)── API server\n              [ { id: 1, ... }, ... ]\n```\n\n### API Vocabulary\n\n| Term | Meaning |\n|---|---|\n| Endpoint | A specific URL where a resource lives (`/courses`) |\n| Request | The call your app makes |\n| Response | The data (usually JSON) returned |\n| Client | The app making the request |\n| Server | The computer holding the data/API |\n\n### Real-World Use Cases & Rules\n\n- APIs are contracts: the client asks, the server answers, both agree on the format\n- Most modern web APIs return JSON\n- The same API can power a website, a mobile app, and a smartwatch — one API, many clients\n- APIs hide implementation: clients never see the database\n\n### Key Takeaways\n\n- API = defined rules for software-to-software communication\n- Client → request → server → response (usually JSON)\n- Real products: maps, payments, weather, AI, social\n- One API can serve many client apps"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 1.2 [Locked — Requires 1.1 Completion]: HTTP: The Language of the Web",
+            "content": "## Introduction & Core Concepts\n\n**HTTP (HyperText Transfer Protocol)** is the protocol APIs use: a request/response language spoken between clients and servers. An API request is made of a **method** (what to do), a **URL** (what resource), and optional **headers** and **body** (extra info and data).\n\n### The Request-Response Cycle\n\n```\nClient sends:  METHOD  URL  HTTP/Version\n               Headers\n               (Body for POST/PUT)\n\nServer answers:  Status line  (HTTP/1.1 200 OK)\n                 Headers\n                 Body (JSON)\n```\n\n### The Five Core Methods\n\n| Method | Purpose | Analogy |\n|---|---|---|\n| GET | Read data — no side effects | Looking at a menu |\n| POST | Create something new | Placing an order |\n| PUT | Replace/update something | Correcting the order |\n| PATCH | Partial update | Adding extra sauce |\n| DELETE | Remove something | Cancelling the order |\n\n### Anatomy of a URL\n\n```\nhttps://api.example.com/v2/courses/42?page=1&limit=10\n│      │                │  │      │       └─ query string\n│      │                │  │      └────────── resource id\n│      │                │  └───────────────── version\n│      │                └──────────────────── base path\n│      └───────────────────────────────────── host\n└──────────────────────────────────────────── scheme\n```\n\n### Real-World Use Cases & Rules\n\n- GET must not change data — that's what POST/PUT/DELETE are for\n- Read operations: GET; create: POST; update: PUT/PATCH; delete: DELETE\n- The URL identifies the resource; the method says what to do with it\n- HTTP is stateless: each request carries everything it needs (that's where headers and tokens come in, later in this course)\n\n### Key Takeaways\n\n- HTTP = request/response protocol of the web\n- Five methods: GET, POST, PUT, PATCH, DELETE\n- Method + URL = the request; status + body = the response\n- URLs have structure: scheme, host, path, id, query string"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 1.3 [Locked — Requires 1.2 Completion]: Status Codes & Headers",
+            "content": "## Introduction & Core Concepts\n\nThe server always answers with a **status code** — a three-digit number that tells the client what happened. Codes are grouped by the first digit.\n\n### The Groups\n\n| Code | Group | Meaning |\n|---|---|---|\n| 2xx | Success | It worked |\n| 3xx | Redirection | The resource moved |\n| 4xx | Client error | The request was wrong |\n| 5xx | Server error | The server failed |\n\n### Codes You Must Know\n\n| Code | Meaning | When It Happens |\n|---|---|---|\n| 200 | OK | Successful GET/PUT |\n| 201 | Created | Successful POST |\n| 204 | No Content | Successful DELETE (nothing to return) |\n| 301/302 | Moved/Redirect | URL changed |\n| 400 | Bad Request | Missing/invalid input |\n| 401 | Unauthorized | Not logged in / bad credentials |\n| 403 | Forbidden | Logged in but no permission |\n| 404 | Not Found | Wrong URL or missing resource |\n| 429 | Too Many Requests | Rate limited |\n| 500 | Internal Server Error | Server crashed/unknown failure |\n\n### Headers: The Envelope\n\nHeaders are metadata sent with requests and responses:\n\n```\nRequest headers:      Response headers:\nAuthorization: ...    Content-Type: application/json\nContent-Type: ...     Cache-Control: ...\nAccept: ...           RateLimit-Remaining: 50\n```\n\n| Header | Used For |\n|---|---|\n| `Content-Type: application/json` | Tells the server the body is JSON |\n| `Authorization: Bearer <token>` | Proves who you are |\n| `Accept: application/json` | I want JSON back |\n| `Cache-Control` | How long to cache the response |\n\n**Real-world analogy:** The status code is the parcel's tracking status: \"delivered\" (200), \"held at customs\" (403), \"returned to sender\" (400). Headers are the packing slip and customs forms — metadata about what's inside and who sent it.\n\n### Real-World Use Cases & Rules\n\n- Always check status codes before trusting a response body\n- 4xx = fix the request; 5xx = server problem, retry later\n- 401 vs 403: 401 = who are you? 403 = you don't have permission\n- Content-Type tells both sides how to read the body\n\n### Key Takeaways\n\n- Status codes: 2xx success, 4xx your fault, 5xx server fault\n- Know the top 10 codes by heart\n- Headers carry metadata and credentials\n- Check codes before parsing the body"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 1.4 [Locked — Requires 1.3 Completion]: Making Your First Requests",
+            "content": "## Introduction & Core Concepts\n\nYou can talk to APIs without writing a whole app — with `fetch` in the browser/Node, or a tool like Postman. Let's explore a public API.\n\n```js\n// Public example: fetch a cat fact (real public API)\nasync function getCatFact() {\n    const res = await fetch(\"https://catfact.ninja/fact\");\n    console.log(\"Status:\", res.status);\n\n    if (!res.ok) {\n        throw new Error(`Request failed: ${res.status}`);\n    }\n\n    const data = await res.json();\n    console.log(\"Fact:\", data.fact);\n}\n\ngetCatFact();\n```\n\n**Explanation:**\n- `fetch(url)` performs a GET request and returns a promise of a Response\n- `res.status` — check it before trusting the body\n- `res.json()` parses the response body into a JavaScript object\n- Public APIs like catfact.ninja, jsonplaceholder.typicode.com, and OpenWeatherMap are perfect playgrounds\n\n### The fetch Cheat Sheet\n\n```js\n// GET with headers\nfetch(\"https://api.example.com/courses\", {\n    headers: { Accept: \"application/json\" },\n});\n\n// POST with a JSON body\nfetch(\"https://api.example.com/courses\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify({ title: \"API Basics\", level: \"Beginner\" }),\n});\n```\n\n### Practice Endpoints\n\n- `https://jsonplaceholder.typicode.com/todos` — fake todo data\n- `https://api.github.com/users/octocat` — GitHub user info\n- `https://catfact.ninja/fact` — random cat facts\n\n### Real-World Use Cases & Rules\n\n- Check res.ok / res.status before parsing\n- GET = no body; POST/PUT carry JSON.stringify(body)\n- Async/await keeps the code readable\n- Use the browser DevTools Network tab to watch every request live\n- Start with public APIs — zero setup, instant practice\n\n### Key Takeaways\n\n- fetch = the standard HTTP client for JS\n- Check status, then parse JSON\n- POST needs method + headers + JSON body\n- Practice on public test APIs"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 1,
+      "quiz": {
+        "title": "Module 1 Quiz — Pass to Unlock Module 2",
+        "questions": [
+          {
+            "q": "What is an API?",
+            "options": [
+              "A type of database",
+              "A defined set of rules that lets software communicate",
+              "A programming language",
+              "A web browser"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What format do most modern web APIs return?",
+            "options": [
+              "XML only",
+              "JSON",
+              "HTML",
+              "CSV"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which HTTP method reads data?",
+            "options": [
+              "POST",
+              "GET",
+              "DELETE",
+              "PUT"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which method creates a new resource?",
+            "options": [
+              "GET",
+              "POST",
+              "PATCH",
+              "OPTIONS"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does the 4xx status group mean?",
+            "options": [
+              "The server crashed",
+              "The request was wrong (client error)",
+              "Success",
+              "Redirection"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does 404 mean?",
+            "options": [
+              "Bad request",
+              "Not found",
+              "Created",
+              "Forbidden"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the difference between 401 and 403?",
+            "options": [
+              "No difference",
+              "401 = not authenticated; 403 = authenticated but not permitted",
+              "401 = server error; 403 = success",
+              "401 = redirect; 403 = timeout"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What header tells the server the body is JSON?",
+            "options": [
+              "Accept-Language",
+              "Content-Type: application/json",
+              "User-Agent",
+              "Cache-Control"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does res.json() do in fetch code?",
+            "options": [
+              "Converts the response body into a JavaScript object",
+              "Creates a JSON file",
+              "Sends a request",
+              "Logs to console"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "What does the ?page=1 part of a URL mean?",
+            "options": [
+              "It is the API version",
+              "A query string providing extra parameters",
+              "The resource id",
+              "The protocol"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 2 — JSON, REST & Resources",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 2.1 [Unlocked]: JSON: The Data Format",
+            "content": "## Introduction & Core Concepts\n\n**JSON (JavaScript Object Notation)** is the standard data format for APIs — lightweight, human-readable, and understood by every programming language.\n\n```json\n{\n    \"id\": 1,\n    \"title\": \"API Fundamentals\",\n    \"level\": \"Beginner\",\n    \"published\": true,\n    \"tags\": [\"http\", \"rest\", \"json\"],\n    \"author\": {\n        \"name\": \"IH Academy\",\n        \"rating\": 4.9\n    }\n}\n```\n\n**Explanation:** JSON looks exactly like a JavaScript object — because it grew out of JavaScript. But it's just text: any language can read it. Objects (`{ }`), arrays (`[ ]`), strings, numbers, booleans, and null are the only building blocks.\n\n### JSON vs JavaScript Objects\n\n| Rule | JSON | JS Object Literal |\n|---|---|---|\n| Keys must be quoted | Yes (\"id\") | Optional (id) |\n| Trailing commas | Not allowed | Allowed |\n| Comments | Not allowed | Allowed |\n| Functions/dates | Not possible | Possible |\n\n### Converting Between Text and Objects\n\n```js\n// Response body (string) → object\nconst obj = JSON.parse('{\"title\":\"API Basics\"}');   // { title: \"API Basics\" }\n\n// Object → JSON string (for sending)\nconst str = JSON.stringify({ title: \"API Basics\" }); // '{\"title\":\"API Basics\"}'\n```\n\n**Real-world analogy:** JSON is the shared language between countries (languages): like diplomats agreeing to speak in a common tongue, every programming language can parse and produce JSON — so it's the perfect middle ground for machine communication.\n\n### Real-World Use Cases & Rules\n\n- JSON.parse() to read response text; JSON.stringify() to send bodies\n- Keys in double quotes; no comments, no trailing commas\n- Objects, arrays, strings, numbers, booleans, null — that's the whole vocabulary\n- APIs return JSON arrays for lists and objects for single items\n\n### Key Takeaways\n\n- JSON = the universal API data format\n- Same shape as JS objects, but stricter (quoted keys)\n- JSON.parse and JSON.stringify are the bridges\n- Any language can read and write JSON"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 2.2 [Locked — Requires 2.1 Completion]: REST Architecture",
+            "content": "## Introduction & Core Concepts\n\n**REST (Representational State Transfer)** is the dominant architectural style for web APIs. A REST API organizes everything as **resources** (nouns) addressed by URLs, manipulated with HTTP methods (verbs).\n\n### Resources and Their Endpoints\n\n```\n/courses            → collection of courses\n/courses/42         → one course (id 42)\n/courses/42/lessons → lessons belonging to course 42\n/users              → collection of users\n```\n\n### The REST Verb-URL Table\n\n| URL | GET | POST | PUT | DELETE |\n|---|---|---|---|---|\n| /courses | List all | Create new | Replace all (unusual) | Delete all (dangerous) |\n| /courses/42 | Get one | — | Replace course 42 | Delete course 42 |\n\n### The 5 REST Rules in Practice\n\n| Rule | Example |\n|---|---|\n| 1. Resources are nouns, never verbs | `/courses`, not `/getAllCourses` |\n| 2. Plural names for collections | `/courses` not `/course` |\n| 3. IDs identify single resources | `/courses/42` |\n| 4. HTTP methods carry the action | GET, POST, PUT, DELETE |\n| 5. Nested paths express ownership | `/courses/42/lessons` |\n\n### REST in Action\n\n```\nGET    /courses            → 200 [all courses]\nPOST   /courses            → 201 new course\nGET    /courses/42         → 200 one course | 404 if missing\nPUT    /courses/42         → 200 updated course\nDELETE /courses/42         → 204 nothing\n```\n\n**Real-world analogy:** REST is a library's classification system. The shelves (resources: /books, /authors) are fixed, the catalog numbers (IDs: /books/42) are stable, and the actions (check out, return, reserve) are the HTTP methods. A well-organized library never asks you to \"do-getting-book-by-subject\" URLs — the structure IS the organization.\n\n### Real-World Use Cases & Rules\n\n- Nouns in URLs, verbs in methods\n- Nested paths for ownership: /authors/7/books\n- REST is a style, not a law — but consistency is what makes APIs usable\n- Versioning later: /v1/courses, /v2/courses\n\n### Key Takeaways\n\n- Resources = nouns, methods = verbs\n- REST maps GET/POST/PUT/DELETE onto resources\n- Predictable URL structure = usable API\n- REST is the industry default for web APIs"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 2.3 [Locked — Requires 2.2 Completion]: CRUD Operations in Practice",
+            "content": "## Introduction & Core Concepts\n\nREST APIs implement **CRUD** — the four fundamental data operations — with HTTP methods against resources. This topic walks each one with real fetch code.\n\n```js\n// CREATE — POST\nconst createCourse = async () => {\n    const res = await fetch(\"https://api.example.com/courses\", {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify({ title: \"REST in Depth\", level: \"Intermediate\" }),\n    });\n    if (res.status === 201) {\n        console.log(\"Created:\", await res.json());\n    }\n};\n\n// READ — GET\nconst listCourses = async () => {\n    const res = await fetch(\"https://api.example.com/courses\");\n    const courses = await res.json();\n    console.log(courses);\n};\n\n// UPDATE — PUT\nconst updateCourse = async (id) => {\n    const res = await fetch(`https://api.example.com/courses/${id}`, {\n        method: \"PUT\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify({ title: \"REST Masterclass\", level: \"Advanced\" }),\n    });\n    console.log(await res.json());\n};\n\n// DELETE\nconst deleteCourse = async (id) => {\n    const res = await fetch(`https://api.example.com/courses/${id}`, {\n        method: \"DELETE\",\n    });\n    console.log(res.status === 204 ? \"Deleted\" : \"Failed\");\n};\n```\n\n### What Each Returns\n\n| Operation | Method | Success Status | Body Back |\n|---|---|---|---|\n| Create | POST | 201 | The created resource (usually with its new id) |\n| Read list | GET | 200 | Array of resources |\n| Read one | GET /id | 200 or 404 | Single object |\n| Update | PUT | 200 | The updated resource |\n| Delete | DELETE | 204 | Empty |\n\n**Real-world analogy:** CRUD is the account book of a bank: create accounts (POST), view statements (GET), update details (PUT), close accounts (DELETE). Every screen in every app is some combination of these four actions against the back end.\n\n### Real-World Use Cases & Rules\n\n- PUT sends the FULL resource; PATCH sends only changed fields\n- Never DELETE collections casually (`DELETE /courses` without id)\n- Handle the missing-resource case: 404, not a crash\n- The response body of a create tells you the new resource's id\n\n### Key Takeaways\n\n- CRUD ↔ POST/GET/PUT/DELETE\n- 201 for creates, 204 for deletes\n- PUT replaces fully, PATCH partially\n- Check status codes before trusting bodies"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 2.4 [Locked — Requires 2.3 Completion]: Filtering, Pagination & Sorting",
+            "content": "## Introduction & Core Concepts\n\nReal APIs serve thousands of records — so they offer **filtering**, **pagination**, and **sorting** through query strings.\n\n```js\n// Filtering: only courses with level=Beginner\n// Sorting: newest first\n// Pagination: page 2, 20 items per page\nfetch(\"https://api.example.com/courses?level=Beginner&sort=-created_at&page=2&limit=20\");\n```\n\n### Query String Conventions\n\n| Parameter | Example | Meaning |\n|---|---|---|\n| Filter field | `level=Beginner` | Only Beginner courses |\n| Sort | `sort=title` or `sort=-created_at` | Ascending, or descending with minus |\n| Pagination | `page=2&limit=20` | Page number and page size |\n| Search | `q=react` | Full-text search |\n\n### The Paginated Response Shape\n\n```json\n{\n    \"data\": [ { \"id\": 1, \"title\": \"...\" } ],\n    \"pagination\": {\n        \"page\": 2,\n        \"limit\": 20,\n        \"total\": 145,\n        \"total_pages\": 8\n    }\n}\n```\n\n**Explanation:** Instead of returning a bare array, paginated APIs wrap data in an envelope with metadata — so clients can render \"Page 2 of 8\" and fetch the next page.\n\n**Real-world analogy:** Pagination is like a bookstore's shelf layout: you don't dump all 100,000 books on one table (that's a raw unfiltered list). The store organizes by aisle (filter), alphabetizes (sort), and holds a manageable number per display (limit) — you page through the results.\n\n### Real-World Use Cases & Rules\n\n- Clients build query strings with URLSearchParams to avoid manual encoding\n- limit defaults are common (e.g., 10–25); huge limits cost the server\n- Always handle empty results gracefully (empty array, not an error)\n- Consistency matters more than the exact parameter names — but `page`/`limit` are near-universal\n\n### Code Example / Implementation\n\n```js\nconst url = new URL(\"https://api.example.com/courses\");\nurl.searchParams.set(\"level\", \"Beginner\");\nurl.searchParams.set(\"sort\", \"-created_at\");\nurl.searchParams.set(\"page\", \"2\");\nurl.searchParams.set(\"limit\", \"20\");\n\nconst res = await fetch(url);\nconst data = await res.json();\nconsole.log(data.pagination.total_pages); // \"8\" → render 8 pages\n```\n\n### Key Takeaways\n\n- Query strings drive filtering, sorting, and pagination\n- Envelope shape: data + pagination metadata\n- URLSearchParams builds clean URLs\n- Design responses for scale from day one"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 2,
+      "quiz": {
+        "title": "Module 2 Quiz — Pass to Unlock Module 3",
+        "questions": [
+          {
+            "q": "What does JSON stand for?",
+            "options": [
+              "Java Simple Object Notation",
+              "JavaScript Object Notation",
+              "Joint System Operation Network",
+              "Java Standard Output Namespace"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which of these is valid JSON?",
+            "options": [
+              "{ title: \"API\" }",
+              "{\"title\": \"API\"}",
+              "{ title = \"API\" }",
+              "<title>API</title>"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does JSON.parse do?",
+            "options": [
+              "Converts a JSON string into an object",
+              "Converts an object into a JSON string",
+              "Validates a URL",
+              "Formats HTML"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "In REST, what should URLs contain?",
+            "options": [
+              "Verbs like /getAllCourses",
+              "Nouns like /courses",
+              "Only numbers",
+              "SQL queries"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which method + URL updates course 42?",
+            "options": [
+              "POST /courses/42",
+              "PUT /courses/42",
+              "GET /courses/42",
+              "DELETE /courses"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does POST /courses return on success?",
+            "options": [
+              "204 with no body",
+              "201 with the created resource",
+              "404",
+              "301"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What status code does a successful DELETE return?",
+            "options": [
+              "200",
+              "201",
+              "204",
+              "400"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "What is the difference between PUT and PATCH?",
+            "options": [
+              "No difference",
+              "PUT replaces the full resource; PATCH updates parts",
+              "PATCH is for GET",
+              "PUT deletes resources"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which query parameters paginate results?",
+            "options": [
+              "sort=title",
+              "page=2&limit=20",
+              "q=react",
+              "level=Beginner"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why do APIs wrap lists in { data, pagination }?",
+            "options": [
+              "To confuse clients",
+              "To include metadata like totals and page counts",
+              "Because arrays are invalid",
+              "It is required by JSON"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 3 — Authentication, Security & Rate Limits",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 3.1 [Unlocked]: API Keys & Authentication",
+            "content": "## Introduction & Core Concepts\n\nMost real APIs are not public: they require proof of who you are (**authentication**) and often proof of what you're allowed to do (**authorization**).\n\n### Why APIs Need Auth\n\n- Protect private user data\n- Prevent abuse: attackers flooding an endpoint with millions of requests\n- Track usage and bill customers per call\n- Identify which app is making requests\n\n### API Keys: The Simplest Form\n\nAn **API key** is a unique string identifying your account/app. You register at the provider's dashboard, get a key, and send it with every request:\n\n```\nGET https://api.example.com/v1/weather?city=Lahore\nAuthorization: Bearer iha_live_9f8e7d6c5b4a\n```\n\n```js\nconst res = await fetch(\"https://api.example.com/v1/weather?city=Lahore\", {\n    headers: {\n        Authorization: \"Bearer iha_live_9f8e7d6c5b4a\",\n    },\n});\n```\n\n### Common Auth Methods\n\n| Method | How It Works | Used By |\n|---|---|---|\n| API key | Single secret string per client | Weather, maps, AI services |\n| Bearer token (OAuth2) | Short-lived tokens issued at login | GitHub, Google, Stripe |\n| Basic auth | username:password base64-encoded | Legacy/internal systems |\n| OAuth2 (social login) | \"Sign in with Google\" — grants scoped access | Almost every modern app |\n\n**Real-world analogy:** An API key is the ID badge at an office building: you swipe it at every door (request), and the security system (server) checks whether your badge is valid and which rooms (endpoints) you may enter.\n\n### Real-World Use Cases & Rules\n\n- Keys/tokens go in the Authorization header, never in the URL (URLs get logged)\n- Store keys in environment variables — never hardcode or commit them\n- Restrict keys: scope (which endpoints), IP limits, expiry\n- 401 = bad/missing credentials; 403 = valid credentials, insufficient scope\n\n### Key Takeaways\n\n- Auth proves who you are; authorization controls what you can do\n- API keys = simple secrets per client; tokens = short-lived credentials\n- Send secrets in Authorization headers\n- Keep secrets in environment variables"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 3.2 [Locked — Requires 3.1 Completion]: Tokens, Sessions & OAuth",
+            "content": "## Introduction & Core Concepts\n\nSessions and tokens are how apps keep you logged in across many requests.\n\n### Sessions (Server-Side State)\n\n1. Client logs in with username + password\n2. Server stores a session record, returns a session cookie\n3. Client sends the cookie with every request\n4. Server checks its session store — logged in!\n\n### Tokens (Stateless)\n\nThe modern alternative: the server signs a **JWT (JSON Web Token)** containing the user's identity and expiry, and the client sends it on every request. The server verifies the signature — no server-side session storage needed.\n\n```\nheader.payload.signature\neyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQyfQ.x0p7V...\n```\n\n```js\nconst login = async () => {\n    const res = await fetch(\"https://api.example.com/login\", {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify({ email: \"student@ihacademy.com\", password: \"...\" }),\n    });\n    const { token } = await res.json();\n    localStorage.setItem(\"token\", token);\n};\n\nconst getUser = async () => {\n    const res = await fetch(\"https://api.example.com/me\", {\n        headers: { Authorization: `Bearer ${localStorage.getItem(\"token\")}` },\n    });\n    return res.json();\n};\n```\n\n**Explanation:** The login endpoint validates credentials and returns a signed token. Subsequent requests attach `Bearer <token>`; the server verifies the signature, reads the expiry, and knows who the caller is — no session database required.\n\n### OAuth: Sign In With Google\n\n**OAuth** lets users log in with an existing account (Google, GitHub, Facebook):\n\n```\nUser clicks \"Sign in with Google\"\n   → redirected to Google's login page\n   → Google asks user to grant scopes (email, profile)\n   → user approves\n   → Google returns a code to the app\n   → app exchanges code for an access token\n   → app uses token to fetch user info\n```\n\n**Real-world analogy:** A token is like a stamped concert wristband: the band (signature) proves you paid, it expires at midnight (expiry), and staff at every gate just check the band — no central list needed. OAuth is like letting a trusted venue's membership card get you into partner venues: you use your existing identity elsewhere.\n\n### Real-World Use Cases & Rules\n\n- Tokens are signed — verify, don't trust: check expiry and signature server-side\n- Never store secrets in localStorage for production; use httpOnly cookies or secure vaults\n- JWTs contain identity claims: userId, roles, exp (expiry)\n- OAuth = delegated authorization: users grant specific scopes, nothing more\n\n### Key Takeaways\n\n- Sessions: server-side state via cookies; Tokens: stateless signed JWTs\n- Authorization: Bearer <token> on every protected request\n- OAuth lets users sign in with existing accounts and scoped permissions\n- Verify tokens server-side; respect expiry"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 3.3 [Locked — Requires 3.2 Completion]: Security Essentials",
+            "content": "## Introduction & Core Concepts\n\nAPIs are attacked constantly. The most important defenses every API developer must know:\n\n### SQL Injection — Your #1 Threat\n\n```sql\n-- Attacker input: 1; DROP TABLE users--\nSELECT * FROM users WHERE id = 1; DROP TABLE users--\n```\n\n**Defense:** Never build SQL by string concatenation. Always parameterized queries (`$1` placeholders in pg, or ORM query builders) — the driver escapes the input so it can never become SQL.\n\n### HTTPS Always\n\n- HTTPS encrypts everything in transit; without it, anyone on the network can read tokens and passwords\n- Production APIs must be HTTPS-only; redirect HTTP and reject mixed content\n\n### The Security Checklist\n\n| Threat | Defense |\n|---|---|\n| SQL injection | Parameterized queries only |\n| Stolen tokens | HTTPS, short expiry, rotation |\n| Data exposure | Never return passwords/hashes; return only needed fields |\n| Rate abuse | Rate limiting (next topic) |\n| CORS abuse | Restrict allowed origins on the server |\n| Secrets in code | Environment variables, never commit .env |\n| Mass assignment | Accept only whitelisted fields in bodies |\n\n### Input Validation: The Front Line\n\n```js\n// Accept exactly what the API expects — nothing more\nconst { title, level } = req.body;   // whitelist, don't spread all fields\nif (!title || typeof title !== \"string\" || title.length > 200) {\n    return res.status(400).json({ error: \"invalid title\" });\n}\n```\n\n**Real-world analogy:** Security is a bank vault: the vault door (HTTPS) protects the corridor, the guards (auth) check every visitor, the teller windows (input validation) only accept deposit slips — never raw instructions. Attackers succeed only when one of these layers is missing.\n\n### Real-World Use Cases & Rules\n\n- Parameterized queries: ALWAYS, no exceptions\n- Never log secrets; mask tokens in logs\n- Return minimal data: no password hashes, no internal IDs you don't need\n- Validate and whitelist every incoming field\n- Keep dependencies updated (npm audit)\n\n### Key Takeaways\n\n- SQL injection is defeated by parameterized queries\n- HTTPS, validation, whitelisting, minimal responses\n- Secrets: env variables, never in code or logs\n- Security is layers — each one counts"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 3.4 [Locked — Requires 3.3 Completion]: Rate Limiting & CORS",
+            "content": "## Introduction & Core Concepts\n\n**Rate limiting** controls how many requests a client may make in a window. **CORS** is the browser's security policy for cross-origin requests.\n\n### Rate Limiting: Why and How\n\nWithout limits, one misbehaving client can take an API down. Common limits: 100 requests/hour, or 10/second, per client (identified by API key or IP).\n\n```\nHTTP/1.1 429 Too Many Requests\nRateLimit-Limit: 100\nRateLimit-Remaining: 0\nRetry-After: 3600\n```\n\n**Explanation:** When a client exceeds the limit, the server returns **429 Too Many Requests** with headers telling the client how long to wait (`Retry-After`). Well-behaved clients respect these headers and back off.\n\n**Real-world analogy:** Rate limiting is the velvet rope at a club: 100 guests inside at a time (the limit). The bouncer (server) counts arrivals; when capacity is reached, you wait (429 + Retry-After) until someone leaves. No rope, and the club is overrun — same with APIs.\n\n### CORS: The Browser's Rules for Cross-Origin\n\nA browser page at `https://app.example.com` fetching `https://api.example.com` is a **cross-origin** request. Browsers block reading responses unless the server allows it:\n\n```\nAccess-Control-Allow-Origin: https://app.example.com\n```\n\n**Explanation:** The server opts in via headers. Without the right CORS header, the browser silently blocks the response — the request may reach the server, but the page cannot read the data. This prevents malicious sites from reading your API's responses with your cookies.\n\n### The CORS Headers\n\n| Header | Meaning |\n|---|---|\n| Access-Control-Allow-Origin | Which origins may read responses (`*` = anyone) |\n| Access-Control-Allow-Methods | Which methods are allowed (GET, POST...) |\n| Access-Control-Allow-Headers | Which request headers are allowed (Authorization...) |\n\n### Real-World Use Cases & Rules\n\n- Rate limit by key/IP; return 429 with Retry-After\n- CORS is server-configured; browsers enforce it\n- `*` is fine for public data APIs, too loose for authenticated ones\n- Preflight requests (OPTIONS) check CORS before real requests\n\n### Key Takeaways\n\n- Rate limiting = 429 + Retry-After headers\n- CORS headers control which browsers may read your API\n- Server sets the rules; the browser enforces them\n- Design limits and origins intentionally"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 3,
+      "quiz": {
+        "title": "Module 3 Quiz — Pass to Unlock Module 4",
+        "questions": [
+          {
+            "q": "Why do most real APIs require authentication?",
+            "options": [
+              "To slow down clients",
+              "To protect data, prevent abuse, and track usage",
+              "It is a JavaScript feature",
+              "It is optional styling"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Where should an API key be sent in a request?",
+            "options": [
+              "In the URL",
+              "In the Authorization header",
+              "In the body of a GET",
+              "As a cookie named key"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does a 401 status mean?",
+            "options": [
+              "Forbidden — no permission",
+              "Unauthorized — missing or invalid credentials",
+              "Not found",
+              "Created"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is a JWT?",
+            "options": [
+              "A JavaScript web template",
+              "A signed token containing identity claims",
+              "A CSS framework",
+              "A database index"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why are tokens signed?",
+            "options": [
+              "To make them longer",
+              "So the server can verify they weren't forged and check expiry",
+              "For aesthetics",
+              "To compress them"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What defeats SQL injection?",
+            "options": [
+              "Uppercase SQL",
+              "Parameterized queries",
+              "Shorter queries",
+              "Comments in the code"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why must production APIs use HTTPS?",
+            "options": [
+              "It is faster",
+              "It encrypts traffic so secrets can't be read in transit",
+              "HTTPS is only for banks",
+              "It avoids CORS"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does a 429 response mean?",
+            "options": [
+              "Server crashed",
+              "Too many requests — rate limit exceeded",
+              "Not found",
+              "Unauthorized"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does the Retry-After header tell the client?",
+            "options": [
+              "The server's uptime",
+              "How long to wait before trying again",
+              "The token expiry",
+              "The API version"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is CORS?",
+            "options": [
+              "A database protocol",
+              "Browser security rules for cross-origin requests, enforced via server headers",
+              "A caching system",
+              "An encryption algorithm"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 4 — Best Practices & Real-World Use",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 4.1 [Unlocked]: Documentation & Versioning",
+            "content": "## Introduction & Core Concepts\n\nAn API without documentation is unusable — nobody knows what to call or what comes back. **Versioning** keeps old clients working while you improve the API.\n\n### The Two Great Standards\n\n**OpenAPI (Swagger)** — a JSON/YAML spec describing every endpoint, parameter, and response shape. Tools can read it and auto-generate documentation pages, client libraries, and mock servers.\n\n**GraphQL** — an alternative query language where clients request exactly the fields they need in one round trip, instead of fixed REST endpoints.\n\n```yaml\n# openapi.yaml (excerpt)\nopenapi: 3.0.0\ninfo:\n  title: IH Academy Courses API\n  version: 1.2.0\npaths:\n  /courses:\n    get:\n      summary: List courses\n      parameters:\n        - name: page\n          in: query\n          schema: { type: integer }\n      responses:\n        \"200\":\n          description: A paginated list of courses\n```\n\n### Versioning Strategies\n\n| Strategy | Example | Notes |\n|---|---|---|\n| URL versioning | /v1/courses, /v2/courses | Most common; clear and simple |\n| Header versioning | Accept-Version: 2 | Keeps URLs clean |\n| Breaking changes | New version | Removing/changing fields requires a major version |\n\n**Explanation:** Version the URL at the top level (`/v1/`). When you make breaking changes (removing a field, changing a response shape), publish `/v2/` and keep `/v1/` alive until clients migrate. This is why you see `https://api.github.com/v3`, `https://api.stripe.com/v1` — you've been reading versions all along.\n\n**Real-world analogy:** Versioning is like app updates: you're on iOS 17 today; when iOS 18 ships, 17 still works for a while. If the system just vanished, every app would break overnight — same with API clients.\n\n### Real-World Use Cases & Rules\n\n- Document: every endpoint, every parameter, every error\n- OpenAPI specs generate living documentation\n- Version in the URL; keep old versions alive during migration\n- Deprecate with notice: keep the old version, announce removal dates\n\n### Key Takeaways\n\n- Documentation is part of the product\n- OpenAPI = machine-readable API description\n- URL versioning keeps old clients working\n- Deprecate gently, never cut clients off"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 4.2 [Locked — Requires 4.1 Completion]: Error Formats & Consistent Responses",
+            "content": "## Introduction & Core Concepts\n\nGreat APIs fail gracefully: predictable error shapes, accurate codes, and helpful messages — on every path.\n\n### A Consistent Error Envelope\n\n```json\n{\n    \"error\": {\n        \"code\": \"COURSE_NOT_FOUND\",\n        \"message\": \"No course exists with id 42\",\n        \"details\": { \"id\": 42 }\n    }\n}\n```\n\n```json\n{\n    \"error\": {\n        \"code\": \"VALIDATION_FAILED\",\n        \"message\": \"title must be at least 3 characters\",\n        \"details\": { \"field\": \"title\", \"reason\": \"too_short\" }\n    }\n}\n```\n\n**Explanation:** The envelope has three parts: a stable machine-readable `code` (clients can branch on it), a human-readable `message`, and optional `details`. Same shape for 400, 401, 404, 500 — clients write ONE error handler for the whole API.\n\n### Design Principles\n\n| Principle | Example |\n|---|---|\n| Stable error codes | `NOT_FOUND`, `INVALID_TOKEN` — never free text as the code |\n| Accurate status codes | 400 vs 401 vs 403 vs 404 — get the semantics right |\n| No stack traces in production | Log them server-side, return generic 500 |\n| Field-level detail | Which field failed and why |\n| Consistent shape | Every error: { error: { code, message, details } } |\n\n**Real-world analogy:** Consistent errors are airline flight delays: every airline uses the same \"DELAYED / CANCELLED / BOARDING\" codes on the screens — passengers know exactly what to do without deciphering each airline's language. Your clients are the passengers.\n\n### Real-World Use Cases & Rules\n\n- One error shape across the whole API\n- Machine-readable codes + human-readable messages\n- Log the real error; never leak internals to clients\n- Test the failure paths as hard as the happy paths\n\n### Key Takeaways\n\n- Errors are data too — design their shape\n- code + message + details in a stable envelope\n- Accurate status codes and field-level details\n- Hide internals, log everything"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 4.3 [Locked — Requires 4.2 Completion]: Testing & Observability",
+            "content": "## Introduction & Core Concepts\n\n**Testing** proves your API works. **Observability** tells you what it's doing in production. Both are professional requirements, not extras.\n\n### API Testing Levels\n\n| Level | What You Test |\n|---|---|\n| Unit | One function in isolation (validation, helpers) |\n| Integration | Route + database together (real request → real response) |\n| End-to-end | The full client→API→DB journey |\n\n```js\n// Integration test with Node's built-in runner\nconst { test } = require(\"node:test\");\nconst assert = require(\"node:assert\");\n\ntest(\"GET /courses returns an array\", async () => {\n    const res = await fetch(\"http://localhost:3000/courses\");\n    assert.strictEqual(res.status, 200);\n    const body = await res.json();\n    assert.ok(Array.isArray(body));\n});\n\ntest(\"GET /courses/9999 returns 404\", async () => {\n    const res = await fetch(\"http://localhost:3000/courses/9999\");\n    assert.strictEqual(res.status, 404);\n});\n```\n\n### Observability: The Production Window\n\n| Tool | Answers |\n|---|---|\n| Logs | What happened, step by step (request, status, duration, errors) |\n| Metrics | How healthy: requests/sec, error rate, response times, uptime |\n| Health check | GET /health → 200 when the API is alive |\n| Uptime monitors | Alerts when the API goes down |\n\n### The Minimal Logging Pattern\n\n```js\napp.use((req, res, next) => {\n    const start = Date.now();\n    res.on(\"finish\", () => {\n        console.log(\n            `${req.method} ${req.originalUrl} → ${res.statusCode} (${Date.now() - start}ms)`\n        );\n    });\n    next();\n});\n```\n\n**Real-world analogy:** Testing is the dress rehearsal: every line, every prop, every entrance rehearsed until flawless. Observability is the stage manager's headset during the show — they know instantly if a light failed, a door stuck, or an actor skipped a cue, and they can fix it before the audience notices.\n\n### Real-World Use Cases & Rules\n\n- Write tests for happy paths AND failure paths (404, validation, 500)\n- Ship a /health endpoint on every API\n- Log method, path, status, and duration for every request\n- Alert on error-rate spikes, not on individual errors\n\n### Key Takeaways\n\n- Unit → integration → end-to-end testing\n- Logs, metrics, and health checks = observability\n- /health for uptime monitors\n- Test failures as carefully as successes"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 4.4 [Locked — Requires 4.3 Completion]: Real-World Usage & Capstone",
+            "content": "## Introduction & Core Concepts\n\nAPIs are the plumbing of the modern internet: payment rails (Stripe), maps (Google), identity (OAuth providers), AI (OpenAI/Anthropic), messaging, shipping, weather, banking — every product you use is a client of someone else's API, and most are APIs themselves. This platform (IH Academy) is exactly that: a React client talking to a REST-style API backed by PostgreSQL.\n\n### Capstone: Course Catalog API\n\nThis endpoint family demonstrates everything from this course — REST resources, JSON, status codes, validation, and error envelopes:\n\n```js\n// server.js — a complete mini-course catalog API\nconst express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst courses = [\n    { id: 1, title: \"HTML\", level: \"Beginner\" },\n    { id: 2, title: \"CSS\", level: \"Beginner\" },\n];\n\nconst notFound = (id) =>\n    res.status(404).json({\n        error: { code: \"NOT_FOUND\", message: `No course with id ${id}` },\n    });\n\n// GET /courses — list\napp.get(\"/courses\", (req, res) => res.json(courses));\n\n// POST /courses — create (validated)\napp.post(\"/courses\", (req, res) => {\n    const { title, level } = req.body;\n    if (!title || typeof title !== \"string\" || title.length < 3) {\n        return res.status(400).json({\n            error: {\n                code: \"VALIDATION_FAILED\",\n                message: \"title must be a string of at least 3 characters\",\n            },\n        });\n    }\n    const course = { id: courses.length + 1, title, level };\n    courses.push(course);\n    res.status(201).json(course);\n});\n\n// GET /courses/:id — one course\napp.get(\"/courses/:id\", (req, res) => {\n    const course = courses.find((c) => c.id === Number(req.params.id));\n    if (!course) return notFound(req.params.id);\n    res.json(course);\n});\n\n// PUT /courses/:id — replace\napp.put(\"/courses/:id\", (req, res) => {\n    const course = courses.find((c) => c.id === Number(req.params.id));\n    if (!course) return notFound(req.params.id);\n    course.title = req.body.title ?? course.title;\n    course.level = req.body.level ?? course.level;\n    res.json(course);\n});\n\n// DELETE /courses/:id\napp.delete(\"/courses/:id\", (req, res) => {\n    const index = courses.findIndex((c) => c.id === Number(req.params.id));\n    if (index === -1) return notFound(req.params.id);\n    courses.splice(index, 1);\n    res.status(204).send();\n});\n\napp.listen(3000, () => console.log(\"Catalog API on :3000\"));\n```\n\n**Explanation:** Run this server and exercise it with fetch or Postman: create a course (POST, check 201), fetch it (GET, check 200), request a missing id (check the consistent 404 envelope), update it (PUT), delete it (DELETE, check 204). This is a miniature version of the exact API architecture used in production everywhere.\n\n### Your Next Steps\n\n1. Add pagination and filtering to GET /courses\n2. Add an API-key middleware requiring a valid key\n3. Write integration tests for all five routes\n4. Document the API with an OpenAPI spec\n5. Consume the API from the React front end you already know\n\n### Key Takeaways\n\n- APIs power payments, maps, AI, and every modern product\n- The catalog capstone applies all four modules\n- Next: auth, versioning, testing, documentation, deployment\n- You now speak the language of every web service"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 4,
+      "quiz": {
+        "title": "Module 4 Quiz — Pass to Complete the Course",
+        "questions": [
+          {
+            "q": "What is OpenAPI (Swagger)?",
+            "options": [
+              "A database schema",
+              "A machine-readable spec describing an API's endpoints and shapes",
+              "A web browser",
+              "A CSS framework"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which versioning strategy is the most common?",
+            "options": [
+              "URL versioning like /v1/courses",
+              "Naming courses \"old\" and \"new\"",
+              "No versioning",
+              "Comment versioning"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Why keep old API versions alive after releasing new ones?",
+            "options": [
+              "To use more server space",
+              "So existing clients keep working during migration",
+              "It is legally required",
+              "To slow down attackers"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What should an error envelope contain?",
+            "options": [
+              "Only the status code",
+              "A stable machine-readable code, a message, and details",
+              "The server's IP address",
+              "A random string"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why should production error responses never include stack traces?",
+            "options": [
+              "They are too long",
+              "They leak internal details attackers can exploit",
+              "They are always empty",
+              "They crash the client"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does an integration test check?",
+            "options": [
+              "A single function",
+              "A route plus its dependencies (like the database) working together",
+              "The CSS",
+              "The documentation"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does a /health endpoint do?",
+            "options": [
+              "Returns the user list",
+              "Tells uptime monitors the API is alive",
+              "Deletes data",
+              "Rotates tokens"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which of these is NOT part of observability?",
+            "options": [
+              "Logs",
+              "Metrics",
+              "SQL comments",
+              "Health checks"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "What status code does the capstone API return for a missing course?",
+            "options": [
+              "200 with an empty body",
+              "404 with a consistent error envelope",
+              "500",
+              "204"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What should the POST route do before creating a resource?",
+            "options": [
+              "Skip validation",
+              "Validate and whitelist the input",
+              "Return everything from the body",
+              "Log the full body"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    }
+  ]
+}

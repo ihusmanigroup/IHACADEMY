@@ -1,0 +1,548 @@
+{
+  "title": "Git & GitHub for Absolute Beginners",
+  "description": "Master version control: the Git lifecycle, commits, branches, merging, remotes, and GitHub collaboration workflows.",
+  "category": "Tools",
+  "level": "Beginner",
+  "pricing_type": "Free",
+  "price": 0,
+  "xp_reward": 100,
+  "thumbnail_url": null,
+  "lessons": [
+    {
+      "title": "Module 1 — Getting Started with Git",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 1.1 [Unlocked]: What is Git & Why Use It?",
+            "content": "## Introduction & Core Concepts\n\n**Git** is a free, open-source **version control system (VCS)** — a tool that tracks every change to your files over time. Created by Linus Torvalds in 2005 (yes, the same person who built Linux), Git is now the global standard: virtually every software team on Earth uses it.\n\n**Explanation:** Git keeps a complete history of your project. You can see what changed, who changed it, when, and why — and you can travel back to any point in time. It also lets many developers work on the same project simultaneously without stepping on each other.\n\n### Why Version Control Is Non-Negotiable\n\n- **History**: every change is recorded with a message — no more \"final_v2_FINAL.txt\"\n- **Safety**: broken change? Revert to the last good version in seconds\n- **Collaboration**: many people work on the same codebase without conflicts\n- **Experimentation**: try ideas on branches without touching the main code\n- **Backup**: every clone is a full copy of the project\n\n### Git vs GitHub — The Key Distinction\n\n| Git | GitHub |\n|---|---|\n| The tool (runs locally on your machine) | A website hosting Git repositories |\n| Tracks versions on YOUR computer | Stores copies in the cloud for sharing |\n| Works fully offline | Adds: pull requests, issues, actions, code review |\n\n**Real-world analogy:** Git is your camera roll and file cabinet: it snapshots your project at every step and keeps them all organized. GitHub is the cloud backup + photo-sharing app: it stores your snapshots online so you can share, collaborate, and never lose them even if your computer dies.\n\n### Real-World Use Cases & Rules\n\n- Git is local; GitHub is the popular cloud hosting service (alternatives: GitLab, Bitbucket)\n- Git history is your project's memory — commit early, commit often\n- Every developer job assumes Git fluency — this is the prerequisite skill\n\n### Key Takeaways\n\n- Git = version control system tracking every change\n- History, safety, collaboration, experimentation\n- Git is local; GitHub hosts and adds collaboration tools\n- The standard skill for every developer"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 1.2 [Locked — Requires 1.1 Completion]: Installing Git & Your First Commit",
+            "content": "## Introduction & Core Concepts\n\nTime to get hands-on: install Git, configure it once, and make your first commit.\n\n### Installation (One Time)\n\n```\nWindows:  download from https://git-scm.com and run the installer\nmacOS:    brew install git\nLinux:    sudo apt install git\n\nVerify:   git --version   →  git version 2.4x.x\n```\n\n### Configure Your Identity (One Time)\n\n```bash\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\n```\n\n**Explanation:** Every commit is stamped with the configured name and email. `--global` sets it for all projects on this machine. GitHub links commits to accounts through this email, so use the one registered on GitHub.\n\n### Your First Repo & Commit\n\n```bash\nmkdir my-project\ncd my-project\ngit init            # create an empty repository (.git folder)\n\n# Create your first file (e.g., index.html)\n# then:\n\ngit add index.html          # stage the file\ngit commit -m \"Initial commit: add index.html\"\n```\n\n### What Just Happened\n\n```\nWorking directory ──add──► Staging area ──commit──► Repository (history)\n     (your files)          (selected changes)        (permanent snapshots)\n```\n\n**Explanation:** `git init` creates the repository. `git add` puts changes in the **staging area** (the \"to be committed\" tray). `git commit` seals them into history with a message. Files you modify but don't `add` are not committed.\n\n**Real-world analogy:** Committing is taking a photograph of your project: you arrange the scene (staging — pick exactly what's in the shot), then click (commit) to freeze the moment permanently in the album (history). Each photo has a caption (commit message) explaining what was happening.\n\n### Real-World Use Cases & Rules\n\n- Configure name and email once after installing\n- init once per project; add then commit for every change\n- Write meaningful commit messages: what changed and why\n- Commit often — small commits are easy to understand and revert\n\n### Key Takeaways\n\n- Install + configure identity (one-time)\n- git init → git add → git commit = the core flow\n- Staging area lets you choose what to commit\n- Small, frequent commits with clear messages"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 1.3 [Locked — Requires 1.2 Completion]: The Three States & Core Commands",
+            "content": "## Introduction & Core Concepts\n\nEvery file in a Git project lives in one of three states at any moment:\n\n| State | Meaning | Where It Is |\n|---|---|---|\n| Modified | Changed but not yet staged | Working directory |\n| Staged | Added, ready to be committed | Staging area |\n| Committed | Safely stored in history | Repository (.git) |\n\n### The Daily Command Set\n\n```bash\ngit status               # what's modified/staged — check before EVERYTHING\ngit add <file>           # stage a file (git add . stages everything)\ngit commit -m \"message\"  # commit staged changes\ngit log                  # view commit history (q to exit)\ngit diff                 # see unstaged changes, line by line\n```\n\n### Seeing It All in Action\n\n```bash\n# 1. File is Modified\ngit status\n#   modified:   index.html\n\n# 2. Stage it\ngit add index.html\n\n# 3. Commit it\ngit commit -m \"Update page title\"\n\n# 4. History\ngit log --oneline\n#   a1b2c3d Update page title\n#   e4f5g6h Initial commit: add index.html\n```\n\n**Explanation:** `git status` is your compass — run it constantly. `git log --oneline` shows the history one line per commit: the shortened hash (a1b2c3d) identifies each commit forever, alongside its message.\n\n**Real-world analogy:** The three states are like a photo workflow: the camera roll holds every taken photo (committed history), the editing tray holds photos chosen for the album (staged), and the folder where you're currently arranging (modified files). You decide what moves to the tray, and from the tray to the album.\n\n### Real-World Use Cases & Rules\n\n- git status before and after every action\n- Stage deliberately: related changes go in one commit\n- Commit messages: imperative, concise (\"Fix login bug\", not \"fixed stuff\")\n- git log is your time machine — learn to read it early\n\n### Key Takeaways\n\n- Three states: modified → staged → committed\n- status, add, commit, log, diff = the daily loop\n- Read git status before acting — always\n- Clear commit messages = readable history"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 1.4 [Locked — Requires 1.3 Completion]: Undoing Changes & .gitignore",
+            "content": "## Introduction & Core Concepts\n\nMistakes are normal — Git's whole point is safe recovery. And some files should never be tracked at all; that's what `.gitignore` is for.\n\n### Undoing at Each Stage\n\n| Situation | Command | Result |\n|---|---|---|\n| Modified, not staged | `git restore <file>` | Discards working-directory changes |\n| Staged, want to unstage | `git restore --staged <file>` | Back to modified |\n| Committed, want to fix last commit message | `git commit --amend` | Rewrites the last commit |\n| Want to see what a commit changed | `git show <hash>` | Full diff of that commit |\n| Want a past version | `git checkout <hash> -- <file>` | Restore file from history |\n\n**Explanation:** `git restore` returns a file to its last committed state — careful, unstaged changes are gone for good once restored. `git commit --amend` safely edits the most recent commit (not older ones — we'll handle history rewriting safely with `revert` later).\n\n### .gitignore: Files Git Should Never Track\n\n```\n# .gitignore — common entries\nnode_modules/\n.env\n*.log\ndist/\n.DS_Store\n```\n\n**Explanation:** Any file or pattern listed in `.gitignore` is invisible to Git: it won't appear in status and can't be committed by accident. Secrets (`.env`), dependencies (`node_modules/`), and build output (`dist/`) are the classic entries — never commit generated or sensitive files.\n\n### Why .gitignore Matters\n\n- Secrets in history are leaked forever — and history is permanent\n- Huge folders (node_modules) bloat every clone\n- Different machines produce different generated files — ignore them all\n\n**Real-world analogy:** .gitignore is the \"do not photograph\" list on a film set: crew members (secrets, build files) are never in the shots (commits), no matter how often the camera (git add) sweeps the room. The album stays clean and safe automatically.\n\n### Real-World Use Cases & Rules\n\n- Match the undo command to the state (modified vs staged vs committed)\n- Create .gitignore at project start — retrofitting is harder\n- Never commit .env or any secrets — ever\n- git revert (later module) is the safe way to undo published commits\n\n### Key Takeaways\n\n- restore discards working changes; --staged unstages\n- amend edits the last commit safely\n- .gitignore keeps secrets and generated files out of history\n- Always ignore node_modules and .env from day one"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 1,
+      "quiz": {
+        "title": "Module 1 Quiz — Pass to Unlock Module 2",
+        "questions": [
+          {
+            "q": "What is Git?",
+            "options": [
+              "A cloud storage service",
+              "A version control system that tracks file changes",
+              "A text editor",
+              "A package manager"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the difference between Git and GitHub?",
+            "options": [
+              "They are the same thing",
+              "Git runs locally; GitHub hosts repositories in the cloud",
+              "GitHub is a programming language",
+              "Git only works on macOS"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which command creates a new Git repository?",
+            "options": [
+              "git new",
+              "git init",
+              "git start",
+              "git create"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does git add do?",
+            "options": [
+              "Commits the changes",
+              "Moves changes to the staging area",
+              "Deletes files",
+              "Shows history"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does git commit do?",
+            "options": [
+              "Saves staged changes permanently into history",
+              "Uploads to GitHub",
+              "Checks file sizes",
+              "Starts a server"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Which command shows the current state of the repository?",
+            "options": [
+              "git log",
+              "git status",
+              "git diff",
+              "git show"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What are the three states of a file in Git?",
+            "options": [
+              "New, old, deleted",
+              "Modified, staged, committed",
+              "Open, closed, saved",
+              "Local, remote, cloud"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does git restore <file> do?",
+            "options": [
+              "Deletes the file permanently",
+              "Discards unstaged changes, returning the file to its last commit",
+              "Commits the file",
+              "Uploads the file"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which file tells Git which paths to never track?",
+            "options": [
+              "package.json",
+              ".gitignore",
+              ".gitconfig",
+              "README.md"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why must .env never be committed?",
+            "options": [
+              "It is too large",
+              "Secrets in history are leaked forever",
+              "Git cannot read it",
+              "It slows down commits"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 2 — Branching & Merging",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 2.1 [Unlocked]: Branches: Parallel Worlds of Code",
+            "content": "## Introduction & Core Concepts\n\nA **branch** is an independent line of development. The default branch is `main` — the official, deployable version. Branches let you build features, fix bugs, or experiment without touching main until you're ready.\n\n**Explanation:** Branches are pointers to commits. Creating a branch copies the pointer, so two lines of work can evolve independently from the same point — then merge back when done.\n\n```bash\ngit branch feature-login     # create a branch\ngit switch feature-login     # switch to it  (older Git: git checkout)\n```\n\n**Expected output:** Now you're on `feature-login`. Commits made here are invisible to `main` until merged.\n\n**Real-world analogy:** Branches are separate worktables in a workshop: the master's table (main) holds the finished pieces. Each apprentice gets their own table (branch) to build a part freely — the master table is only touched when a finished part is approved and brought over (merge).\n\n### Why Branching Is Essential\n\n- **Isolation**: broken experiments never touch main\n- **Parallel work**: several developers, several features, one repo\n- **Safety**: merge only what's tested and approved\n- **Standard practice**: pull requests (GitHub) are branch reviews before merging\n\n### Branch Commands\n\n```bash\ngit branch                  # list branches (* marks current)\ngit branch <name>           # create branch\ngit switch <name>           # switch to branch\ngit switch -c <name>        # create AND switch in one step\ngit branch -d <name>        # delete a merged branch\n```\n\n### Real-World Use Cases & Rules\n\n- main is sacred: never commit experimental code to it directly\n- One branch per feature/bugfix — name it clearly: feature/cart, fix/navbar\n- Create branches from main, merge back via pull requests\n- switch (or checkout) to move between branches — commits follow the branch\n\n### Key Takeaways\n\n- Branches = parallel development lines\n- main is the official line; branches isolate work\n- git switch to move; branch -c to create+switch\n- Feature branches are the professional workflow"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 2.2 [Locked — Requires 2.1 Completion]: Merging & Resolving Conflicts",
+            "content": "## Introduction & Core Concepts\n\n**Merging** brings a branch's commits into another branch. Fast-forward merges are clean; when branches diverged, Git creates a merge commit — and sometimes, **conflicts**.\n\n### The Merge\n\n```bash\ngit switch main             # go to the receiving branch\ngit merge feature-login     # bring feature-login into main\n```\n\n### Three Merge Outcomes\n\n| Outcome | When | Result |\n|---|---|---|\n| Fast-forward | Main hasn't moved since branching | Branch pointer moves forward — no extra commit |\n| Clean merge commit | Different files changed | New \"Merge branch\" commit, automatic |\n| Conflict | SAME lines changed differently | Git stops and asks YOU to decide |\n\n### Resolving a Conflict Step by Step\n\n```\n1. git merge → Git reports: CONFLICT (content) in index.html\n2. Open the file — Git marks the two versions:\n\n   <<<<<<< HEAD\n   <title>IH Academy</title>\n   =======\n   <title>IH Academy — Learn to Code</title>\n   >>>>>>> feature-login\n\n3. Decide the correct final text (keep one, both, or new)\n4. Delete the markers (<<<<<<<, =======, >>>>>>>)\n5. Stage and commit:\n\n   git add index.html\n   git commit -m \"Resolve conflict in page title\"\n```\n\n**Explanation:** `HEAD` is your current branch; the other side of the marker is the incoming branch. The resolution is whatever final content you choose — then the merge commit records it. Conflicts are normal and expected: real teams resolve them daily.\n\n**Real-world analogy:** A conflict is two editors who both rewrote the same sentence of a manuscript. The editor-in-chief (you) reads both versions, picks the best wording (or blends them), strikes the markup, and signs off the page. It's a decision, not a failure.\n\n### Real-World Use Cases & Rules\n\n- Pull the latest main BEFORE starting new work — fewer conflicts\n- Resolve conflicts in the file, remove ALL markers, then commit\n- Never rush a conflict: read both versions, understand intent\n- Small, frequent merges create fewer conflicts than big rare ones\n\n### Key Takeaways\n\n- merge brings branches together; fast-forward vs merge commit\n- Conflicts happen when the same lines changed both sides\n- Resolve: pick content, delete markers, add, commit\n- Merge often, merge small — conflicts shrink"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 2.3 [Locked — Requires 2.2 Completion]: Working with Remotes",
+            "content": "## Introduction & Core Concepts\n\nA **remote** is a Git repository hosted elsewhere — on GitHub, GitLab, or a company server. Remotes are how teams share work; the conventional name for the main remote is `origin`.\n\n### Connecting a Local Repo to GitHub\n\n```bash\n# 1. Create an empty repo on GitHub (no README — we have a repo already)\n# 2. Link it:\ngit remote add origin https://github.com/you/my-project.git\n\n# 3. Push your branch and set it as upstream (tracking):\ngit push -u origin main\n```\n\n**Explanation:** `git remote add` names the GitHub URL `origin`. `git push -u origin main` uploads your commits AND records that local `main` tracks `origin/main` — so future pushes are just `git push`.\n\n### The Remote Commands\n\n```bash\ngit clone <url>        # full copy of a remote repo (first time)\ngit fetch              # download remote info WITHOUT merging\ngit pull               # fetch + merge remote changes into your branch\ngit push               # upload your commits to the remote\ngit remote -v          # list configured remotes\n```\n\n### push vs pull vs fetch\n\n- `push`: yours → remote (upload)\n- `pull`: remote → yours (download + merge)\n- `fetch`: remote → yours (download only; you merge manually)\n\n**Real-world analogy:** Remotes are the team's shared drive: clone copies the whole project folder onto your desk, push saves your edits back to the shared drive, pull grabs the newest edits from everyone else, fetch just checks the drive without copying anything onto your desk yet.\n\n### Real-World Use Cases & Rules\n\n- clone once, then pull regularly and push your work\n- Always pull before you push — pushing without pulling causes rejections\n- origin is the convention, not a requirement\n- git remote -v shows where your repo lives\n\n### Key Takeaways\n\n- Remote = hosted copy; origin = the convention name\n- clone/pull/push = get, sync, send\n- fetch downloads without merging; pull fetches and merges\n- Pull before push, always"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 2.4 [Locked — Requires 2.3 Completion]: GitHub Collaboration Workflow",
+            "content": "## Introduction & Core Concepts\n\nGitHub's collaboration model is built on **forks, pull requests (PRs), and code review** — the same workflow used by open-source projects and companies worldwide.\n\n### The Collaboration Flow\n\n```\n1. Fork: copy the repo to YOUR GitHub account\n2. Clone your fork locally\n3. Create a feature branch\n4. Commit your changes\n5. Push the branch to your fork\n6. Open a Pull Request: fork's branch → original repo's main\n7. Maintainers review, comment, request changes\n8. Merge when approved\n```\n\n### Pull Requests Explained\n\nA **pull request** is a proposal: \"Here is a branch with changes — please review and merge it.\" PRs show:\n\n- Exactly what changed (diff)\n- Discussion and review comments per line\n- CI checks (tests, lint) passing or failing\n- Merge buttons with options (merge commit, squash, rebase)\n\n### The Golden Rules of Collaboration\n\n- **Never push to main** on a shared repo — always branch + PR\n- Write a clear PR title and description: what, why, how tested\n- Keep PRs small — hundreds of changed lines are painful to review\n- Address review comments on the same branch; push updates to the PR\n- Update your branch from main before merging (rebase or merge main in)\n\n**Real-world analogy:** The PR workflow is a school's essay submission process: you draft in your own notebook (fork/branch), submit your essay (PR), the teacher reviews and marks suggestions (code review), you revise (push updates), and only an approved essay reaches the published anthology (merge to main). No one slips essays into the anthology unread.\n\n### Real-World Use Cases & Rules\n\n- Fork → clone → branch → commit → push → PR → review → merge\n- PRs are the quality gate: review before merge\n- Small PRs, clear descriptions, never push to main\n- This exact workflow runs the world's largest projects\n\n### Key Takeaways\n\n- Fork copies to your account; PR proposes changes to the original\n- Review, comments, and CI checks happen in the PR\n- Never push to main — branch and PR\n- Small PRs with clear descriptions get merged faster"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 2,
+      "quiz": {
+        "title": "Module 2 Quiz — Pass to Unlock Module 3",
+        "questions": [
+          {
+            "q": "What is a branch in Git?",
+            "options": [
+              "A copy of the repository on GitHub",
+              "An independent line of development",
+              "A commit message",
+              "A deleted file"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which command switches to another branch?",
+            "options": [
+              "git switch <name>",
+              "git branch <name>",
+              "git log <name>",
+              "git remote <name>"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Why should experimental work never go directly on main?",
+            "options": [
+              "It is slower",
+              "Main should stay stable and deployable",
+              "Main cannot hold commits",
+              "It is only a style preference"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "When does Git report a merge conflict?",
+            "options": [
+              "When the branches are identical",
+              "When the same lines were changed differently on both branches",
+              "When files were added on both branches",
+              "When the repo is empty"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does HEAD mean in a conflict marker?",
+            "options": [
+              "The incoming branch",
+              "Your current branch's version",
+              "The remote repository",
+              "A file hash"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What must you do after editing the content of a conflict?",
+            "options": [
+              "Push immediately",
+              "Delete the conflict markers and commit the resolution",
+              "Delete the file",
+              "Run git reset"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does git push do?",
+            "options": [
+              "Downloads remote changes",
+              "Uploads your commits to the remote",
+              "Creates a branch",
+              "Shows history"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does git pull do?",
+            "options": [
+              "Fetches and merges remote changes into your branch",
+              "Uploads to GitHub",
+              "Clones the repo",
+              "Deletes the remote"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "What is the conventional name for the main remote?",
+            "options": [
+              "master",
+              "origin",
+              "main",
+              "github"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is a pull request?",
+            "options": [
+              "A command that pulls files",
+              "A proposal to review and merge a branch's changes",
+              "A way to delete a repo",
+              "A conflict resolution tool"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 3 — GitHub Essentials & Beyond Basics",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 3.1 [Unlocked]: Repositories, READMEs & Issues",
+            "content": "## Introduction & Core Concepts\n\nA GitHub **repository (repo)** is a project container: code, history, docs, and settings in one place. Three elements make a repo professional: a README, issues, and good organization.\n\n### README: Your Project's Front Door\n\nThe README (`README.md`) is the first thing visitors see on the repo page — rendered from Markdown. Every serious repo has one.\n\n```\n# Project Name\n\nOne-line description.\n\n## Features\n- What it does\n\n## Getting Started\n1. npm install\n2. npm run dev\n\n## Tech Stack\nReact, Node.js, PostgreSQL\n```\n\n| Section | Purpose |\n|---|---|\n| Title + description | What is this project? |\n| Screenshots/demo | Show, don't tell |\n| Getting started | Install + run instructions |\n| Tech stack | What's under the hood |\n| License | How others may use it |\n\n### Issues: The Task Tracker\n\n**Issues** are GitHub's built-in task tracker — bugs, features, and questions, each with a number, labels, and discussion:\n\n- Every issue gets a number: `#42`\n- Labels organize: `bug`, `enhancement`, `good first issue`, `help wanted`\n- Commits can link issues: `git commit -m \"Fix login crash (closes #42)\"`\n- Projects: issues + pull requests grouped into boards\n\n**Real-world analogy:** The README is the shop window of your repo — what's inside, how to use it, who made it. Issues are the suggestion box and complaint log: numbered slips anyone can file, tag, and track to resolution.\n\n### Real-World Use Cases & Rules\n\n- Write the README before sharing the repo — it IS the first impression\n- Use issues for every task; reference numbers in commits\n- Labels turn a pile of issues into a manageable queue\n- Good first issue labels welcome new contributors\n\n### Key Takeaways\n\n- Repo = project container; README = its front door\n- Issues = numbered, labeled task tracker\n- Commit messages link to issues with #number\n- Professional repos are documented and organized"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 3.2 [Locked — Requires 3.1 Completion]: GitHub Actions: Automating Workflows",
+            "content": "## Introduction & Core Concepts\n\n**GitHub Actions** automates tasks triggered by repo events — the standard way to run tests and builds on every push, without running anything locally.\n\n### The Workflow File\n\n```yaml\n# .github/workflows/test.yml\nname: Test\n\non:\n  push:\n    branches: [main]\n  pull_request:\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n      - run: npm ci\n      - run: npm test\n```\n\n**Explanation:** This file — committed to `.github/workflows/` — tells GitHub: \"when code is pushed to main or a PR is opened, run the test job on a fresh Ubuntu machine.\" Each `run` line is a shell command; `uses` lines pull in ready-made actions. Green checkmarks in PRs = \"tests pass.\"\n\n### What Teams Automate\n\n| Workflow | Trigger |\n|---|---|\n| Tests | Every push / PR |\n| Linting | Every push / PR |\n| Build | Every push to main |\n| Deploy | Push to main / tag release |\n| Security scan | Scheduled |\n| Docs generation | On release |\n\n### The Value\n\n- **Checks on every PR** — broken code never reaches main unnoticed\n- **Consistency** — identical environment every run (no \"works on my machine\")\n- **Deploy automation** — push to main → tests pass → deploys to production\n- **Free for public repos** — unlimited minutes on open source\n\n**Real-world analogy:** GitHub Actions is the quality-control line in a factory: every product (commit) automatically rolls past inspectors (tests), and only products that pass all checks reach the shipping dock (merge to main / deploy). The QC line never sleeps and never skips a unit.\n\n### Real-World Use Cases & Rules\n\n- Workflows live in .github/workflows/*.yml\n- Triggers: push, pull_request, schedule, manual dispatch\n- Standard starter: checkout → setup-node → install → test\n- Red X = fix before merge; that's the point\n\n### Key Takeaways\n\n- Actions = automated workflows on repo events\n- One YAML file runs tests/builds on every push/PR\n- Checks gate merges; deploys can be automated\n- Public repos get free minutes"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 3.3 [Locked — Requires 3.2 Completion]: Git Best Practices",
+            "content": "## Introduction & Core Concepts\n\nGreat teams don't just use Git — they follow habits that keep history readable and teams unblocked.\n\n### The Commit Habit Checklist\n\n| Habit | Why |\n|---|---|\n| Commit small and often | Small commits are easy to review, bisect, revert |\n| One logical change per commit | History tells one story per snapshot |\n| Write imperative messages | \"Fix login crash\" — reads like a command |\n| Follow a message convention | Conventional Commits: `feat:`, `fix:`, `docs:` |\n| Never commit generated files | node_modules, dist — keep .gitignore complete |\n| Never commit secrets | Ever. History is permanent |\n| Review your own diff | git diff before committing catches half the bugs |\n\n### Conventional Commit Messages\n\n```\nfeat: add course search\nfix: resolve quiz scoring bug\ndocs: update setup instructions\nrefactor: simplify lesson parser\ntest: add branch merge tests\nchore: bump dependencies\n```\n\n**Explanation:** A type prefix + concise description. This format is the de-facto standard: readable history, automatic changelogs, and semantic versioning tools all consume it.\n\n### The Workflow That Prevents Pain\n\n```\n1. Pull latest main           → sync\n2. Create a feature branch    → isolate\n3. Small commits with messages → communicate\n4. Push the branch            → backup\n5. Open a PR                  → review\n6. Merge when green           → ship\n```\n\n**Real-world analogy:** Good Git habits are a pilot's checklist: every item is small and individually trivial, but the combination makes every flight (merge) safe and predictable. Skipping items is possible — until the day it isn't.\n\n### Real-World Use Cases & Rules\n\n- Small commits + clear messages = readable history\n- Conventional Commits prefix types\n- Pull first, branch, commit, push, PR\n- Review your own diff before committing\n\n### Key Takeaways\n\n- Commit small, one logical change, imperative messages\n- Conventional Commits: feat:, fix:, docs:...\n- Never commit secrets or generated files\n- The pull→branch→commit→push→PR loop is the daily rhythm"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 3.4 [Locked — Requires 3.3 Completion]: Undoing & Recovering Safely",
+            "content": "## Introduction & Core Concepts\n\nHistory is permanent, but mistakes are recoverable — Git is designed for safe undo. The key: match the command to the situation, and never rewrite **published** history recklessly.\n\n### The Safe Undo Toolkit\n\n| Situation | Command | Result |\n|---|---|---|\n| Unstaged changes | `git restore <file>` | Discard working changes |\n| Staged by accident | `git restore --staged <file>` | Unstage, keep changes |\n| Fix last commit | `git commit --amend` | Edit message / add missing file |\n| Undo a PUBLISHED commit | `git revert <hash>` | New commit that reverses it — history preserved |\n| Move the branch back locally | `git reset --hard <hash>` | Discard commits after hash (local only!) |\n| Recover a deleted branch | `git reflog` | Find the hash, branch again from it |\n\n### revert vs reset — The Critical Difference\n\n```\ngit revert:  history stays — a NEW commit undoes the bad one\n             safe for pushed/shared branches ✓\n\ngit reset:   history is REWRITTEN — commits disappear\n             only safe on local, unpublished work ✗ on shared branches\n```\n\n### The reflog: Git's Recovery Net\n\n```bash\ngit reflog\n# a1b2c3d HEAD@{0}: commit: fix login crash\n# e4f5g6h HEAD@{1}: checkout: moving from feature-x to main\n```\n\n**Explanation:** The reflog records EVERY move of HEAD — even \"deleted\" commits. If you reset too far or delete a branch, the reflog reveals the hash, and `git branch <name> <hash>` brings the work back. It's the safety net under every other command.\n\n**Real-world analogy:** revert is crossing out a line in the meeting notes with a dated correction — the record shows both. reset is erasing the whiteboard — fine for drafts (local), catastrophic for the shared flipchart (remote). The reflog is the security camera footage: whatever happened, the footage (hash) exists to replay.\n\n### Real-World Use Cases & Rules\n\n- Published work: revert (never rewrite)\n- Local work: amend/reset freely\n- When lost: check reflog before panicking\n- Amending a pushed commit causes divergence — pull/force-push carefully\n\n### Key Takeaways\n\n- revert for shared history; amend/reset for local\n- reflog recovers almost anything\n- Match the tool to the state of the work\n- Never rewrite published history without a plan"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 3,
+      "quiz": {
+        "title": "Module 3 Quiz — Pass to Unlock Module 4",
+        "questions": [
+          {
+            "q": "What is a GitHub repository?",
+            "options": [
+              "A folder on your desktop",
+              "A project container with code, history, and docs",
+              "A chat room",
+              "A database table"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the README for?",
+            "options": [
+              "Storing logs",
+              "The first documentation visitors see — description and usage",
+              "Hiding secrets",
+              "Commit history"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What are GitHub issues used for?",
+            "options": [
+              "Reporting browser bugs",
+              "Tracking tasks, bugs, and feature requests with labels",
+              "Storing files",
+              "Running tests"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What triggers a GitHub Actions workflow?",
+            "options": [
+              "Manual only",
+              "Events like push or pull_request",
+              "The full moon",
+              "Actions cannot be triggered"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Where do workflow files live?",
+            "options": [
+              "src/actions/",
+              ".github/workflows/*.yml",
+              "config/",
+              "bin/"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which of these is a Conventional Commit prefix?",
+            "options": [
+              "error:",
+              "fix:",
+              "stop:",
+              "debug:"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why commit small and often?",
+            "options": [
+              "It is faster",
+              "Small commits are easier to review and revert",
+              "Git requires it",
+              "It fills the history"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does git revert do?",
+            "options": [
+              "Deletes the commit",
+              "Creates a new commit that reverses the target commit",
+              "Rewrites all history",
+              "Restores deleted files"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "When is git reset safe to use?",
+            "options": [
+              "On published shared branches",
+              "On local, unpublished work",
+              "Never",
+              "Only on GitHub"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the reflog?",
+            "options": [
+              "A log of every HEAD movement, useful for recovery",
+              "A list of files",
+              "A remote log",
+              "A configuration file"
+            ],
+            "answer": 0
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 4 — Real-World Workflows & Capstone",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 4.1 [Unlocked]: The Professional Git Workflow",
+            "content": "## Introduction & Core Concepts\n\nThe \"branch → PR → review → merge\" loop is how real teams (open source and corporate) ship every day. This topic assembles the complete professional workflow, end to end.\n\n### The Complete Daily Loop\n\n```bash\n# 1. Start from a fresh main\ngit switch main\ngit pull\n\n# 2. Create a feature branch\ngit switch -c feature/quiz-scoring\n\n# 3. Make small commits as you work\ngit add src/quiz.js\ngit commit -m \"fix: correct quiz score rounding\"\ngit add tests/quiz.test.js\ngit commit -m \"test: cover score rounding\"\n\n# 4. Push the branch and open a PR\ngit push -u origin feature/quiz-scoring\n#   → open the Pull Request on GitHub\n\n# 5. After review approval → merge on GitHub\n# 6. Sync your local main\ngit switch main\ngit pull\n```\n\n### The PR Description Template\n\n```\n## What\nShort summary of the change.\n\n## Why\nThe problem or feature this addresses.\n\n## How tested\n- [x] Unit tests pass\n- [x] Manual test on staging\n\nCloses #42\n```\n\n**Explanation:** Every step of the loop serves a purpose: fresh main avoids conflicts, named branches keep work isolated, small commits tell the story, the PR invites review before anything reaches the official line, and `Closes #42` auto-links the issue so it closes when merged.\n\n**Real-world analogy:** The workflow is the assembly line of a modern factory: each part is built on its own station (branch), inspected at quality gates (CI checks + review), and only approved parts reach the main assembly line (main). The line never stops, and no unapproved part ever reaches the finished product.\n\n### Real-World Use Cases & Rules\n\n- Pull before branching; branch per task; commit small\n- PRs include: what, why, how tested\n- Merge only when CI is green and review approves\n- Pull main right after merging — stay current\n\n### Key Takeaways\n\n- The loop: fresh main → branch → commits → push → PR → merge → pull\n- PR descriptions: what, why, how tested\n- CI + review gate every merge\n- This workflow is universal — learn it once, use it everywhere"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 4.2 [Locked — Requires 4.1 Completion]: Git Stash & Advanced Techniques",
+            "content": "## Introduction & Core Concepts\n\nReal work is interrupted constantly: a hotfix lands while your feature is half-built. **git stash** shelves your uncommitted work temporarily so you can switch context — then bring it back.\n\n### The Stash\n\n```bash\ngit stash                 # save uncommitted changes, working tree clean\ngit stash list            # show saved stashes\ngit stash apply           # restore the latest stash (keep it saved)\ngit stash pop             # restore and remove it from the list\ngit stash drop stash@{0}  # discard a stash\n```\n\n```\nHalf-finished feature (modified files)\n        │ git stash\n        ▼\nClean working tree → switch branches freely → fix the hotfix\n        │ git stash pop\n        ▼\nFeature work restored exactly where you left it\n```\n\n**Explanation:** `git stash` is a quick shelf: modified and staged changes are set aside, the working tree becomes clean, and you can switch branches. `pop` puts everything back. Stashes are identified as `stash@{0}`, `stash@{1}`... in order.\n\n### More Advanced Techniques\n\n| Technique | Command | Use Case |\n|---|---|---|\n| Stash with message | `git stash push -m \"wip cart\"` | Remember what's stashed |\n| Stash untracked files | `git stash -u` | Include new files |\n| Cherry-pick | `git cherry-pick <hash>` | Copy ONE commit to another branch |\n| Interactive rebase | `git rebase -i HEAD~3` | Squash/reorder local commits |\n| Bisect | `git bisect` | Binary-search the commit that broke something |\n| Tags | `git tag v1.0.0` | Mark release points in history |\n\n**Real-world analogy:** The stash is the \"in progress\" tray on a busy desk: when the boss needs a different project NOW, you sweep the papers into the tray (stash), handle the interruption, then lift the tray back onto the desk (pop) and continue exactly where you stopped.\n\n### Real-World Use Cases & Rules\n\n- Stash when interrupted; pop when back — never lose work\n- Cherry-pick moves a single fix without merging a whole branch\n- Rebase -i only on local, unpushed commits\n- Tags mark releases: v1.0.0, v1.1.0, v2.0.0\n\n### Key Takeaways\n\n- stash shelves and restores uncommitted work\n- cherry-pick = copy one commit; bisect = find the breaker\n- Tags mark releases; rebase only local history\n- Context switching without losing work"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 4.3 [Locked — Requires 4.2 Completion]: Your GitHub Profile & Contribution Portfolio",
+            "content": "## Introduction & Core Concepts\n\nFor beginners, GitHub is also a **portfolio**: employers look at repositories, contribution history, and how you collaborate. A maintained profile is a working resume.\n\n### Building a Profile That Opens Doors\n\n| Element | Action |\n|---|---|\n| Profile README | A pinned markdown repo introducing you |\n| Pinned repositories | Pin your 4–6 best projects |\n| Project READMEs | Every repo documented and runnable |\n| Contributions | Consistent commits across weeks |\n| Open source | Fix issues on others' repos (good first issue) |\n| Stars & follows | Engage with projects you use |\n\n### The Contribution Heatmap\n\nYour GitHub profile shows a calendar of contributions. The point is not the color of the graph — it's the **consistency** it signals: someone who ships small improvements steadily, in public, every week.\n\n```\nSample weekly pattern:\nMon ██ commit: add tests\nWed ██ commit: fix typo in README\nFri ██ commit: improve error message\n```\n\n### The Beginner Contribution Path\n\n1. Learn to read a codebase (your own projects first)\n2. Find `good first issue` labels on friendly open-source repos\n3. Fork, branch, fix, PR — the exact workflow from Module 2\n4. Accept review feedback gracefully — that's how you learn\n5. Repeat. Your PR history becomes your public learning log\n\n**Real-world analogy:** A GitHub profile is the public workshop with glass walls: employers walk past and see your projects (built pieces), your routine (consistent commits), and your collaboration skills (reviews, PRs, issue discussions) — all without an interview. It's proof of work, not promises.\n\n### Real-World Use Cases & Rules\n\n- Profile README + pinned repos = your landing page\n- Consistency beats bursts: small commits every week\n- Contribute to open source via good first issues\n- Every PR and review is a visible reference\n\n### Key Takeaways\n\n- GitHub = your public developer portfolio\n- Profile README, pinned projects, documented repos\n- Consistent contributions signal reliability\n- Open-source PRs are a learning and visibility engine"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 4.4 [Locked — Requires 4.3 Completion]: Capstone Project & Next Steps",
+            "content": "## Introduction & Core Concepts\n\nThe capstone puts every module into practice: build a small project, and take it through the complete professional workflow — this is the drill every team repeats daily.\n\n### Capstone: Your First Full Workflow\n\n```bash\n# 1. Create a project (this one: a simple course-notes repo)\nmkdir ih-notes\ncd ih-notes\ngit init\ngit config user.name \"Your Name\"          # if not set globally\ngit config user.email \"you@example.com\"\n```\n\n```bash\n# 2. First commit with essential files\n#    (create README.md and .gitignore first)\ngit add .\ngit commit -m \"feat: initial commit with README and gitignore\"\n```\n\n```bash\n# 3. Branch for a feature\ngit switch -c feature/add-notes-file\n\n# 4. Add notes.md and commit\ngit add notes.md\ngit commit -m \"feat: add study notes file\"\n\n# 5. Push and open a PR (create repo on GitHub first)\ngit remote add origin https://github.com/you/ih-notes.git\ngit push -u origin feature/add-notes-file\n#   → open the Pull Request on GitHub → merge it\n\n# 6. Sync main and delete the branch\ngit switch main\ngit pull\ngit branch -d feature/add-notes-file\n```\n\n**Explanation:** This sequence exercises: init and config (M1), commits and messages (M1/M3), branching (M2), remotes and push (M2), pull requests (M2), and cleanup (M2/M3). Run it twice — once following along, once solo — and the workflow becomes muscle memory.\n\n### The Roadmap After This Course\n\n| Skill | Where It Leads |\n|---|---|\n| Git & GitHub | The prerequisite for every team project |\n| Next: HTML/CSS/JS | The languages you'll commit |\n| React + Node + API | Full-stack projects to version and ship |\n| Open source | Real-world PRs on real projects |\n| CI/CD (Actions) | Automated tests and deployments |\n| Portfolio | Your profile IS your job application |\n\n### Real-World Use Cases & Rules\n\n- Complete the capstone twice: guided, then solo\n- Push early and often — the remote is your backup\n- Every project: README, .gitignore, clean history\n- The best next step: contribute one PR to an open-source project\n\n### Key Takeaways\n\n- The capstone drills the complete daily workflow\n- init → commit → branch → push → PR → merge → clean up\n- Git unlocks teamwork, open source, and your career\n- Keep committing: history is your growth log"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 4,
+      "quiz": {
+        "title": "Module 4 Quiz — Pass to Complete the Course",
+        "questions": [
+          {
+            "q": "What is the correct order of the professional workflow?",
+            "options": [
+              "push → branch → commit → PR",
+              "Pull main → branch → commit → push → PR → merge",
+              "commit → pull → delete → push",
+              "PR → push → pull → commit"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why pull main before creating a new branch?",
+            "options": [
+              "To delete old commits",
+              "To start from the latest code and avoid conflicts",
+              "It is optional",
+              "To speed up the computer"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What should a PR description include?",
+            "options": [
+              "What, why, and how tested",
+              "Only the branch name",
+              "The author's password",
+              "Nothing — code speaks for itself"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "What does git stash do?",
+            "options": [
+              "Deletes uncommitted changes",
+              "Shelves uncommitted work so you can switch context",
+              "Uploads to GitHub",
+              "Creates a branch"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which command restores and removes a stash?",
+            "options": [
+              "git stash apply",
+              "git stash pop",
+              "git stash list",
+              "git stash drop"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does git cherry-pick do?",
+            "options": [
+              "Merges two branches",
+              "Copies a single commit to another branch",
+              "Deletes a commit",
+              "Renames a branch"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What should be pinned on your GitHub profile?",
+            "options": [
+              "Your passwords",
+              "Your best 4–6 repositories",
+              "Only private repos",
+              "Your email address"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Where should a beginner start contributing to open source?",
+            "options": [
+              "The core of a huge project",
+              "Issues labeled \"good first issue\"",
+              "By forking the most popular repo",
+              "By emailing maintainers"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does the contribution heatmap signal to employers?",
+            "options": [
+              "Number of followers",
+              "Consistency of public work",
+              "Repository size",
+              "Account age"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "After merging a PR, what should you do locally?",
+            "options": [
+              "Nothing",
+              "Pull main and delete the merged branch",
+              "Force push",
+              "Reset the repo"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    }
+  ]
+}

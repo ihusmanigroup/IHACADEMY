@@ -1,0 +1,24 @@
+{
+  "name": "ih-academy-admin",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:deploy": "vite build && node scripts/copy-to-client.mjs",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@vitejs/plugin-react": "^6.0.3",
+    "tailwindcss": "^4.1.0",
+    "vite": "^8.1.1"
+  }
+}

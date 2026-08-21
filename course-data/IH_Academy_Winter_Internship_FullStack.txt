@@ -1,0 +1,554 @@
+IH Academy | Winter Internship 2026-27
+Page 1
+IH ACADEMY
+ Winter Internship 2026-27
+Full Stack Software Engineering
+React, Node.js, database integration, authentication, end-to-end product flows, testing and
+ deployment.
+Program length
+4 weeks
+Weekly structure
+4 track assignments + required free course(s)
+Difficulty path
+Easy -> Intermediate -> Advanced -> Capstone
+Visibility rule
+Intern sees only the track selected in the application
+Unlock rule
+Next week unlocks only after all previous-week assignments and required course proofs are
+approved
+Submission types
+GitHub repository, deployed link when applicable, notes/comments, PDF evidence report and
+optional supporting file
+Program rules
+• This document replaces the old eight-week/summer assignment bank for the Winter Internship portal.
+• Week 1 contains two required free courses; Weeks 2-4 contain one required free course each.
+• All four assignments in a week are mandatory. Course certificates are also mandatory.
+• A submission may be Draft, Submitted, Changes Requested or Approved. Only Approved items count toward
+unlocking.
+• Plagiarism, copied repositories, exposed API keys, fake deployments or fabricated screenshots result in
+rejection.
+• Deadlines, opening dates and review windows must be admin-configurable; do not hardcode them in the
+frontend.
+Standard PDF evidence report
+• Cover page: intern name, track, week, assignment, repository URL and live URL.
+• 1-2 pages of implementation summary and architecture/folder structure.
+• Screenshots of required features and important validation/error states.
+• Testing table with scenario, expected result, actual result and pass/fail.
+• Challenges, limitations and what the intern would improve next.
+
+IH Academy | Winter Internship 2026-27
+Page 2
+WEEK 1 - Foundation & Workflow
+Complete every assignment and the required free course proof. Week 2 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ EASY
+ 10-13 h
+Portfolio with Contact API
+Assignment question: Build a responsive portfolio whose contact form submits messages to an Express API
+and stores them in a database.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Validate on client and server.
+• Create an admin-only endpoint or protected page to list messages.
+• Add spam-resistant basic rate limiting.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+A valid message is stored once; invalid or repeated abusive requests are handled safely.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 2
+ EASY
+ 10-13 h
+Product Landing Page with Leads
+Assignment question: Build a product landing page with a working lead-capture API and small admin lead
+table.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Store name, email, source and timestamp.
+• Prevent duplicate active leads by email or document the chosen policy.
+• Add export-to-CSV on the admin side.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+
+IH Academy | Winter Internship 2026-27
+Page 3
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Lead submission, validation, listing and export work end to end.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 12-15 h
+Authentication Starter App
+Assignment question: Build register, login, logout, protected profile and password-change flows.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Hash passwords and use secure token/cookie handling.
+• Protect frontend routes and backend endpoints.
+• Display server validation errors clearly.
+• Provide demo credentials only through seed scripts, not hardcoded UI logic.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Unauthorized users cannot access protected data and authentication survives refresh safely.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 4
+INTERMEDIAT
+ E
+ 12-15 h
+Full-Stack Todo Application
+Assignment question: Build a multi-user todo app with projects, tasks, filters and persistent authentication.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Each user sees only their own projects/tasks.
+• Support task CRUD, due date, priority and completion.
+• Implement optimistic UI carefully or refetch after mutations.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+
+IH Academy | Winter Internship 2026-27
+Page 4
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+User isolation, CRUD and filters work across frontend, API and database.
+Evidence required
+End-to-end screenshots, API tests and commit history
+Required free course(s)
+FREE COURSE 1: Git & GitHub for Beginners
+Build clean full-stack repositories and use meaningful commits.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Mandatory Week 1 proof
+FREE COURSE 2: Web Development Foundations
+Refresh HTML, CSS, JavaScript, HTTP and client-server fundamentals.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Mandatory Week 1 proof
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 5
+WEEK 2 - Applied Development
+Complete every assignment and the required free course proof. Week 3 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+INTERMEDIAT
+ E
+ 14-18 h
+Blog Platform
+Assignment question: Build a blog platform with authentication, posts, comments, tags and author profiles.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Support draft/published status.
+• Create slug-based public routes.
+• Allow authors to manage only their posts.
+• Sanitize or safely render user content.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Public, author and comment workflows function with correct permissions.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 2
+INTERMEDIAT
+ E
+ 14-18 h
+Library Management System
+Assignment question: Build member, book, borrow and return workflows with an admin dashboard.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Track copy availability server-side.
+• Prevent duplicate active borrowing of the same copy.
+• Show overdue records and search/filter controls.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+
+IH Academy | Winter Internship 2026-27
+Page 6
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Availability and loan status stay consistent after every operation.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 14-18 h
+Expense Tracker
+Assignment question: Build a secure expense tracker with transactions, categories, budgets and dashboard
+charts.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Calculate summaries on the server or from verified user data.
+• Provide month/category filters.
+• Support export to CSV.
+• Add budget warning UI.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Totals, filters, charts and exports match stored data.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 4
+ ADVANCED
+ 13-17 h
+Movie Discovery App
+Assignment question: Build a movie discovery app using an external API plus authenticated favorites and
+reviews stored in your database.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Proxy or safely call the external API.
+• Persist favorites/reviews per user.
+• Handle API rate errors and missing data.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+
+IH Academy | Winter Internship 2026-27
+Page 7
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Search, details, favorites and reviews work without exposing external API secrets.
+Evidence required
+End-to-end screenshots, API tests and commit history
+Required free course(s)
+FREE COURSE 1: React.js & Modern Web Apps
+Build reusable routed interfaces and API-driven state.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Supports Week 2
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 8
+WEEK 3 - Integration & Quality
+Complete every assignment and the required free course proof. Week 4 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 18-24 h
+E-commerce Store
+Assignment question: Build a complete store with products, categories, cart, checkout simulation and order
+history.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Calculate totals and stock checks server-side.
+• Use authenticated carts and orders.
+• Add admin product/stock management.
+• Use a payment mock; do not collect real card data.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Customer and admin journeys work and client-side price manipulation fails.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 2
+ ADVANCED
+ 18-24 h
+Realtime Chat Application
+Assignment question: Build authenticated one-to-one chat using Socket.io with conversation history and
+unread counts.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Authorize socket connections.
+• Persist messages and conversation membership.
+• Handle reconnect and offline history.
+• Add typing state without storing it permanently.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+
+IH Academy | Winter Internship 2026-27
+Page 9
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Only conversation members receive/read messages and reconnect restores state.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 3
+ ADVANCED
+ 17-22 h
+Employee Management System
+Assignment question: Build an employee management portal with roles, departments, attendance records
+and reports.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Create admin/manager/employee permissions.
+• Add searchable tables and validated forms.
+• Store audit fields for important changes.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Permissions and reporting match the documented role matrix.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 4
+ ADVANCED
+ 18-24 h
+Learning Portal
+Assignment question: Build courses, lessons, enrollment and progress tracking with student and instructor
+views.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Model ordered course content.
+• Track lesson completion and calculate progress.
+• Restrict authoring to instructor/admin roles.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+
+IH Academy | Winter Internship 2026-27
+Page 10
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Enrollment, authoring and progress flows are consistent end to end.
+Evidence required
+End-to-end screenshots, API tests and commit history
+Required free course(s)
+FREE COURSE 1: Node.js, Express & MongoDB
+Build REST APIs, validation, authentication and database models.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Required for Week 3
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 11
+WEEK 4 - Production Challenge
+Complete every assignment and the required free course proof. Week completion review remains locked until
+mentor approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 22-28 h
+IH Academy Mini LMS
+Assignment question: Build a polished LMS with course catalog, learner dashboard, lesson viewer, progress
+and certificate-ready state.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Integrate real API and database data.
+• Add search, filters and responsive navigation.
+• Provide admin course CRUD and enrollment controls.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+All core LMS flows work from admin creation to learner progress.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 2
+ ADVANCED
+ 22-28 h
+Winter Internship Portal
+Assignment question: Build the four-week Winter Internship portal with track-specific assignments, course
+proofs, lock rules and submissions.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Users see only their selected track.
+• Week unlock depends on approved completion of the previous week.
+• Support GitHub URL, live URL, notes and PDF upload.
+• Create mentor review status and feedback display.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+
+IH Academy | Winter Internship 2026-27
+Page 12
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Track filtering and sequential approval workflow work across UI, API and database.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 3
+ ADVANCED
+ 20-26 h
+Booking Platform
+Assignment question: Build a mentor-session booking platform with availability, conflict detection,
+notifications and dashboards.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Store timestamps in UTC and display local time.
+• Prevent double booking server-side.
+• Support reschedule/cancel rules and history.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+Concurrent requests cannot reserve the same slot and dashboards remain accurate.
+Evidence required
+End-to-end screenshots, API tests and commit history
+ ASSIGNMENT 4
+ ADVANCED
+ 28-40 h
+IH Academy Full-Stack Capstone
+Assignment question: Build a production-ready IH Academy slice combining authentication, courses, Winter
+Internship, assignments, submissions and admin review.
+Required work
+• Use React for the frontend and Node.js/Express for the API.
+• Use a real database and keep secrets in environment variables.
+• Provide responsive loading, success, empty and error states.
+• Follow existing blue-white design language instead of replacing the whole platform.
+• Use RBAC, validation, file storage, notifications and logs.
+• Add automated tests for critical flows.
+• Deploy frontend, API and database with seed data and no exposed secrets.
+Expected deliverables
+• Monorepo or clearly separated client/server repository
+• Deployed frontend and backend URLs
+• README with architecture, setup and API documentation
+
+IH Academy | Winter Internship 2026-27
+Page 13
+• PDF report with schema, routes, screenshots and test results
+Submission mode
+GitHub + frontend URL + backend URL + PDF
+Acceptance check
+A reviewer can complete the full student and admin journey using the documented demo
+accounts.
+Evidence required
+End-to-end screenshots, API tests and commit history
+Required free course(s)
+FREE COURSE 1: Full-Stack Deployment & Security
+Configure environment variables, CORS, production builds, logging and cloud deployment.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Required for final approval
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved

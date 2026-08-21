@@ -1,0 +1,506 @@
+IH Academy | Winter Internship 2026-27
+Page 1
+IH ACADEMY
+ Winter Internship 2026-27
+ Frontend Engineering
+ Responsive interfaces, React fundamentals, API integration, state management,
+ accessibility and production deployment.
+Program length
+4 weeks
+Weekly structure
+4 track assignments + required free course(s)
+Difficulty path
+Easy -> Intermediate -> Advanced -> Capstone
+Visibility rule
+Intern sees only the track selected in the application
+Unlock rule
+Next week unlocks only after all previous-week assignments and required course proofs are
+approved
+Submission types
+GitHub repository, deployed link when applicable, notes/comments, PDF evidence report and
+optional supporting file
+Program rules
+• This document replaces the old eight-week/summer assignment bank for the Winter Internship portal.
+• Week 1 contains two required free courses; Weeks 2-4 contain one required free course each.
+• All four assignments in a week are mandatory. Course certificates are also mandatory.
+• A submission may be Draft, Submitted, Changes Requested or Approved. Only Approved items count toward
+unlocking.
+• Plagiarism, copied repositories, exposed API keys, fake deployments or fabricated screenshots result in
+rejection.
+• Deadlines, opening dates and review windows must be admin-configurable; do not hardcode them in the
+frontend.
+Standard PDF evidence report
+• Cover page: intern name, track, week, assignment, repository URL and live URL.
+• 1-2 pages of implementation summary and architecture/folder structure.
+• Screenshots of required features and important validation/error states.
+• Testing table with scenario, expected result, actual result and pass/fail.
+• Challenges, limitations and what the intern would improve next.
+
+IH Academy | Winter Internship 2026-27
+Page 2
+WEEK 1 - Foundation & Workflow
+Complete every assignment and the required free course proof. Week 2 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ EASY
+ 6-8 h
+Responsive Personal Portfolio
+Assignment question: Build a one-page personal portfolio for a junior developer. It must present a hero, skills,
+three projects, education/experience, contact section and working navigation.
+Required work
+• Use semantic HTML5 and separate CSS files.
+• Create mobile, tablet and desktop layouts without horizontal overflow.
+• Add an accessible navigation menu, visible focus states and meaningful alt text.
+• Use real content; placeholder lorem ipsum is not accepted.
+Expected deliverables
+• Deployed URL
+• GitHub repository with at least 5 meaningful commits
+• README containing screenshots, setup steps and feature list
+• One PDF report with desktop/mobile screenshots and a 150-word reflection
+Submission mode
+GitHub URL + deployed link + PDF report
+Acceptance check
+All sections work at 360px, 768px and 1440px; no broken links.
+Evidence required
+PDF screenshots plus repository commit history
+ ASSIGNMENT 2
+ EASY
+ 6-8 h
+Product Landing Page
+Assignment question: Create a conversion-focused landing page for a fictional technology product with a clear
+value proposition and realistic content.
+Required work
+• Include hero, feature grid, use cases, pricing preview, testimonials, FAQ and footer.
+• Create at least two reusable UI patterns using CSS classes.
+• Add a working mobile menu and client-side FAQ accordion.
+• Validate the contact/lead form fields in the browser.
+Expected deliverables
+• Source repository
+• Live deployment
+• Design decisions section in README
+• PDF showing all sections and responsive states
+Submission mode
+GitHub URL + deployed link + PDF
+Acceptance check
+CTA buttons navigate correctly; form blocks invalid input; layout is responsive.
+Evidence required
+Screenshots of desktop, mobile, menu and form validation
+
+IH Academy | Winter Internship 2026-27
+Page 3
+ ASSIGNMENT 3
+ EASY
+ 7-9 h
+Multi-Step Internship Application Form
+Assignment question: Build a four-step internship application form matching the IH Academy flow: track
+selection, skills/profile, CV upload and confirmation.
+Required work
+• Persist entered values while moving between steps.
+• Show step indicator, validation messages and a review screen.
+• Support keyboard navigation and accessible labels.
+• Store draft data in localStorage and provide Reset Draft.
+Expected deliverables
+• Live app and repository
+• Test checklist for required fields and navigation
+• PDF with screenshots of every step and validation case
+Submission mode
+GitHub + deployment + PDF test report
+Acceptance check
+No data is lost between steps; invalid submissions are blocked.
+Evidence required
+Screenshots of each form state and localStorage persistence
+ ASSIGNMENT 4
+INTERMEDIAT
+ E
+ 8-10 h
+Weather Dashboard
+Assignment question: Build a weather dashboard that searches cities and displays current conditions plus a
+five-day forecast using a public weather API.
+Required work
+• Use async/await and handle loading, empty, success and error states.
+• Display temperature, condition, humidity, wind and forecast cards.
+• Save recent searches and allow removal.
+• Keep the API key in an environment variable when the provider requires one.
+Expected deliverables
+• Repository and deployed app
+• README with API setup
+• PDF containing successful search, invalid city and loading state screenshots
+Submission mode
+GitHub + live link + PDF
+Acceptance check
+Valid cities work; errors are understandable; secret keys are not committed.
+Evidence required
+Screenshots plus .env.example file
+Required free course(s)
+
+IH Academy | Winter Internship 2026-27
+Page 4
+FREE COURSE 1: Git & GitHub for Beginners
+Learn repositories, branches, commits, pull requests and clean README writing before submitting project
+work.
+Format
+IH Academy course - lessons + short quiz
+Completion proof
+Course completion certificate PDF
+Unlock effect
+Required before Week 1 can be marked complete
+FREE COURSE 2: HTML & CSS Basics
+Refresh semantic HTML, responsive layout, forms, flexbox/grid and accessible styling.
+Format
+IH Academy course - lessons + coding checks
+Completion proof
+Course completion certificate PDF
+Unlock effect
+Required before Week 1 can be marked complete
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 5
+WEEK 2 - Applied Development
+Complete every assignment and the required free course proof. Week 3 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ EASY
+ 7-9 h
+JavaScript Todo Manager
+Assignment question: Create a task manager with add, edit, delete, complete, priority, due date and filtering
+features.
+Required work
+• Use modular JavaScript files.
+• Persist tasks in localStorage.
+• Add filters for all/active/completed and search by text.
+• Prevent empty titles and show a confirmation before deleting.
+Expected deliverables
+• Repository + live link
+• README with data model
+• PDF with feature screenshots and manual test results
+Submission mode
+GitHub + deployment + PDF
+Acceptance check
+Tasks remain after refresh; all filters and edit flows work.
+Evidence required
+Screenshots before and after refresh
+ ASSIGNMENT 2
+INTERMEDIAT
+ E
+ 9-11 h
+Expense Tracker Dashboard
+Assignment question: Build an expense tracker that records income and expenses, calculates totals and
+visualizes spending by category.
+Required work
+• Support add/edit/delete transactions.
+• Use date and category filters.
+• Render one chart without external chart screenshots.
+• Validate amount, type and date fields.
+Expected deliverables
+• Live app, repository, sample dataset
+• PDF with totals, filtered view and chart screenshots
+Submission mode
+GitHub + deployment + PDF
+Acceptance check
+Calculated totals exactly match stored records; chart updates after changes.
+Evidence required
+PDF calculations and test records
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 8-10 h
+
+IH Academy | Winter Internship 2026-27
+Page 6
+Movie Search Application
+Assignment question: Create an API-powered movie search app with search, details modal/page, pagination
+and favorites.
+Required work
+• Use a public movie API.
+• Debounce search or require explicit submission to avoid excessive calls.
+• Handle missing posters and incomplete metadata.
+• Persist favorites locally.
+Expected deliverables
+• Source and deployment
+• API usage notes
+• PDF showing results, details, empty state and favorites
+Submission mode
+GitHub + live link + PDF
+Acceptance check
+Search, pagination/details and favorites function reliably.
+Evidence required
+Screenshots and network/error-handling notes
+ ASSIGNMENT 4
+INTERMEDIAT
+ E
+ 8-10 h
+Accessible Quiz Application
+Assignment question: Build a timed quiz with at least 15 questions, score calculation, progress display and
+final review.
+Required work
+• Load questions from a local JSON file.
+• Randomize answer choices without changing correctness.
+• Support keyboard selection and visible focus.
+• Show correct answer and explanation after completion.
+Expected deliverables
+• Repository and deployment
+• Question JSON
+• PDF with start, active quiz, timeout and result screens
+Submission mode
+GitHub + live link + PDF
+Acceptance check
+Scoring is correct and refresh behavior is documented.
+Evidence required
+Completed test run with expected score
+Required free course(s)
+
+IH Academy | Winter Internship 2026-27
+Page 7
+FREE COURSE 1: Modern JavaScript Essentials
+Practice DOM, modules, arrays, async/await, fetch, error handling and local storage.
+Format
+IH Academy course - lessons + quiz
+Completion proof
+Certificate PDF
+Unlock effect
+Supports Week 2 React assignments
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 8
+WEEK 3 - Integration & Quality
+Complete every assignment and the required free course proof. Week 4 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+INTERMEDIAT
+ E
+ 10-12 h
+React Portfolio with Routing
+Assignment question: Rebuild a portfolio as a React application with routed pages for Home, Projects, Project
+Details and Contact.
+Required work
+• Use React Router and reusable components.
+• Render project data from a JSON/module source.
+• Implement form validation and success state.
+• Include loading skeleton for simulated project loading.
+Expected deliverables
+• React repository + deployment
+• Component map in README
+• PDF of routes and responsive layouts
+Submission mode
+GitHub + deployment + PDF
+Acceptance check
+Direct route refresh works; project detail routes are data-driven.
+Evidence required
+Screenshots of all routes and mobile navigation
+ ASSIGNMENT 2
+INTERMEDIAT
+ E
+ 10-12 h
+React Notes App
+Assignment question: Build a React notes app with create, edit, delete, pin, tag, search and archive features.
+Required work
+• Use hooks and clear state separation.
+• Persist data in localStorage.
+• Add empty states and confirmation flow.
+• Create reusable modal and input components.
+Expected deliverables
+• Repository + live app
+• State/data model explanation
+• PDF test report
+Submission mode
+GitHub + deployment + PDF
+Acceptance check
+Search, tags, pinned and archived views remain consistent after refresh.
+Evidence required
+Screenshots of each filtered state
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 11-13 h
+
+IH Academy | Winter Internship 2026-27
+Page 9
+Shopping Cart with API Data
+Assignment question: Build a React storefront using a public products API, including product listing, detail
+view, cart and checkout summary.
+Required work
+• Use context or another justified shared-state approach.
+• Support quantity changes, remove item and total calculation.
+• Handle loading and API errors.
+• Persist cart and guard invalid quantities.
+Expected deliverables
+• Live app + repository
+• Architecture note
+• PDF showing listing, details, cart and error state
+Submission mode
+GitHub + deployment + PDF
+Acceptance check
+Totals are correct and cart persists across refresh.
+Evidence required
+Screenshots with manually verified total
+ ASSIGNMENT 4
+ ADVANCED
+ 10-12 h
+GitHub Profile Explorer
+Assignment question: Create a React app that searches GitHub users and shows profile information,
+repositories, language summaries and pagination.
+Required work
+• Use GitHub REST API responsibly.
+• Handle rate limits and not-found responses.
+• Sort/filter repositories.
+• Display accessible charts or summarized language bars.
+Expected deliverables
+• Repository + deployment
+• README with rate-limit handling
+• PDF of success, not-found and rate-limit states
+Submission mode
+GitHub + live link + PDF
+Acceptance check
+Search and repository controls work; API errors are visible and safe.
+Evidence required
+Screenshots plus API response mapping notes
+Required free course(s)
+
+IH Academy | Winter Internship 2026-27
+Page 10
+FREE COURSE 1: React.js & Modern Web Apps
+Learn components, props, hooks, routing, controlled forms and API-driven UI.
+Format
+IH Academy course - lessons + labs
+Completion proof
+Certificate PDF
+Unlock effect
+Required for Week 3 approval
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 11
+WEEK 4 - Production Challenge
+Complete every assignment and the required free course proof. Week completion review remains locked until
+mentor approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 12-15 h
+Responsive Admin Dashboard
+Assignment question: Build a production-style admin dashboard for IH Academy with sidebar, topbar, metrics,
+table, filters, notifications and dark mode.
+Required work
+• Use React and reusable layout/data components.
+• Create realistic dashboard data and at least two charts.
+• Implement responsive sidebar behavior.
+• Persist dark mode and table filter state.
+Expected deliverables
+• Repository + deployed app
+• Component inventory
+• PDF covering desktop/mobile/dark mode/table filters
+Submission mode
+GitHub + live link + PDF
+Acceptance check
+All dashboard controls are functional; no visual overflow.
+Evidence required
+Screenshots and Lighthouse report
+ ASSIGNMENT 2
+ ADVANCED
+ 14-18 h
+E-commerce Frontend
+Assignment question: Build a polished multi-page e-commerce frontend with catalog, product details,
+category filters, cart, wishlist and checkout UI.
+Required work
+• Use reusable components and route-based pages.
+• Sync URL query parameters with filters.
+• Create optimistic cart/wishlist interactions.
+• Provide loading, empty and error states.
+Expected deliverables
+• Live app + repository
+• Feature checklist
+• PDF of full purchase journey
+Submission mode
+GitHub + deployment + PDF
+Acceptance check
+Filters, route refresh, cart and wishlist work end to end.
+Evidence required
+Journey screenshots from catalog to checkout
+ ASSIGNMENT 3
+ ADVANCED
+ 12-15 h
+
+IH Academy | Winter Internship 2026-27
+Page 12
+Realtime Chat Interface Simulation
+Assignment question: Build a complete chat interface that simulates real-time messaging, conversations,
+typing state, unread counts and file previews.
+Required work
+• Use a structured mock service layer.
+• Support responsive conversation list and active chat.
+• Add message status, search and attachment preview.
+• Include accessible keyboard interactions.
+Expected deliverables
+• Repository + deployment
+• UI state diagram
+• PDF of chat scenarios
+Submission mode
+GitHub + live link + PDF
+Acceptance check
+Conversation switching, unread state and responsive layout behave consistently.
+Evidence required
+Screenshots of all major states
+ ASSIGNMENT 4
+ ADVANCED
+ 18-24 h
+IH Academy Mini LMS Frontend
+Assignment question: Build the final Winter Internship frontend: login-ready screens, course catalog, course
+detail, internship assignments, submission panel, progress and certificate page.
+Required work
+• Follow the existing IH Academy blue-white visual system.
+• Restrict the intern view to the selected track.
+• Implement Week 1-4 locked/unlocked states using mock data.
+• Create assignment detail routes and submission validation.
+• Add responsive and dark mode support without redesigning unrelated public pages.
+Expected deliverables
+• Production-ready repository and deployment
+• README with route map and data contracts
+• Final PDF report with all pages, test cases and design decisions
+Submission mode
+GitHub + deployed URL + final PDF
+Acceptance check
+Complete user flow works from internship dashboard to assignment submission.
+Evidence required
+End-to-end screenshots, Lighthouse report and test checklist
+Required free course(s)
+
+IH Academy | Winter Internship 2026-27
+Page 13
+FREE COURSE 1: Frontend Deployment & Quality
+Cover Lighthouse, accessibility checks, environment variables, build optimization and Vercel deployment.
+Format
+IH Academy course - checklist + quiz
+Completion proof
+Certificate PDF
+Unlock effect
+Required before final review
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved

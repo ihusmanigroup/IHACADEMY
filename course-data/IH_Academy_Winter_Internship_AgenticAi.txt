@@ -1,0 +1,565 @@
+IH Academy | Winter Internship 2026-27
+Page 1
+IH ACADEMY
+ Winter Internship 2026-27
+ Agentic AI Engineering
+ LLM applications, structured outputs, tools, memory, RAG, evaluation, safety and
+ production agent workflows.
+Program length
+4 weeks
+Weekly structure
+4 track assignments + required free course(s)
+Difficulty path
+Easy -> Intermediate -> Advanced -> Capstone
+Visibility rule
+Intern sees only the track selected in the application
+Unlock rule
+Next week unlocks only after all previous-week assignments and required course proofs are
+approved
+Submission types
+GitHub repository, deployed link when applicable, notes/comments, PDF evidence report and
+optional supporting file
+Program rules
+• This document replaces the old eight-week/summer assignment bank for the Winter Internship portal.
+• Week 1 contains two required free courses; Weeks 2-4 contain one required free course each.
+• All four assignments in a week are mandatory. Course certificates are also mandatory.
+• A submission may be Draft, Submitted, Changes Requested or Approved. Only Approved items count toward
+unlocking.
+• Plagiarism, copied repositories, exposed API keys, fake deployments or fabricated screenshots result in
+rejection.
+• Deadlines, opening dates and review windows must be admin-configurable; do not hardcode them in the
+frontend.
+Standard PDF evidence report
+• Cover page: intern name, track, week, assignment, repository URL and live URL.
+• 1-2 pages of implementation summary and architecture/folder structure.
+• Screenshots of required features and important validation/error states.
+• Testing table with scenario, expected result, actual result and pass/fail.
+• Challenges, limitations and what the intern would improve next.
+
+IH Academy | Winter Internship 2026-27
+Page 2
+WEEK 1 - Foundation & Workflow
+Complete every assignment and the required free course proof. Week 2 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ EASY
+ 8-10 h
+Prompt Engineering Playground
+Assignment question: Build a small app where users can compare prompt templates, parameters and
+structured-output modes.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Provide system/user prompt fields and preset templates.
+• Support JSON schema or equivalent structured output.
+• Show token/latency/error metadata where available.
+• Save experiments locally or in a simple database.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+At least ten evaluation prompts run consistently and malformed output is handled.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 2
+ EASY
+ 9-12 h
+LLM Chatbot using API
+Assignment question: Build a conversational chatbot with session history, reset and safe error states.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Separate UI/API/model service layers.
+• Implement conversation truncation or summarization strategy.
+• Add a clear disclaimer and refuse unsupported high-risk claims.
+• Do not hardcode one provider throughout the codebase.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+
+IH Academy | Winter Internship 2026-27
+Page 3
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Multiple turns work, session reset works and API failures do not crash the app.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 9-12 h
+Structured Text Summarizer
+Assignment question: Build a summarizer that produces overview, key points, actions and named entities
+from pasted text.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Validate a structured response schema.
+• Support short, medium and detailed modes.
+• Reject empty/oversized input with clear messages.
+• Create a factuality checklist using source-text matching.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Output always matches the schema and evaluation shows unsupported statements are
+minimized.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 4
+INTERMEDIAT
+ E
+ 11-14 h
+Document Q&A; Assistant
+Assignment question: Build a PDF Q&A; assistant that answers only from the uploaded document and cites
+source chunks.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Extract and chunk document text.
+• Create embeddings and retrieval.
+• Return source page/chunk references.
+• Say that the answer is not found when evidence is insufficient.
+Expected deliverables
+
+IH Academy | Winter Internship 2026-27
+Page 4
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Answers are grounded, citations point to retrieved text and unsupported questions are
+refused.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+Required free course(s)
+FREE COURSE 1: Git & GitHub for Beginners
+Use version control, branches and documented commits for AI projects.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Mandatory Week 1 proof
+FREE COURSE 2: AI Fluency & Prompt Engineering
+Learn prompt structure, model limitations, evaluation basics and safe handling of model output.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Mandatory Week 1 proof
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 5
+WEEK 2 - Applied Development
+Complete every assignment and the required free course proof. Week 3 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+INTERMEDIAT
+ E
+ 12-16 h
+RAG Chatbot with PDF
+Assignment question: Build a multi-turn RAG chatbot for one or more PDFs with conversation-aware retrieval.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Separate ingestion and chat flows.
+• Store document metadata and chunk identifiers.
+• Use retrieval filters by document.
+• Create at least 20 question-answer evaluation cases.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Evaluation demonstrates grounded answers, correct refusal and stable document filtering.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 2
+INTERMEDIAT
+ E
+ 10-13 h
+AI Email Assistant
+Assignment question: Build an assistant that drafts, rewrites and summarizes emails using user-selected tone
+and constraints.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Return structured subject/body/action fields.
+• Never send email automatically.
+• Support sensitive-information warning.
+• Add deterministic templates for common failures.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+
+IH Academy | Winter Internship 2026-27
+Page 6
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Drafts follow requested tone/length and no send action occurs without explicit user
+confirmation.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 3
+ ADVANCED
+ 12-16 h
+AI Code Reviewer
+Assignment question: Build a code-review assistant that analyzes pasted diffs and returns prioritized findings.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Use structured severity, file, line, issue and recommendation fields.
+• Avoid claiming execution unless tests were actually run.
+• Add prompt-injection resistance for code comments.
+• Evaluate on clean code and intentionally flawed examples.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Findings are traceable, prioritized and do not invent test results.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 4
+ ADVANCED
+ 13-17 h
+Tool-Calling Utility Agent
+Assignment question: Build an agent that selects and calls safe tools such as calculator, date utility and local
+knowledge lookup.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Define strict tool schemas.
+• Validate tool arguments before execution.
+• Limit loops and tool-call count.
+• Show tool trace to the user.
+Expected deliverables
+• GitHub repository with clean architecture
+
+IH Academy | Winter Internship 2026-27
+Page 7
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+The agent chooses correct tools, rejects invalid arguments and stops within configured limits.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+Required free course(s)
+FREE COURSE 1: LLM APIs & Structured Outputs
+Integrate model APIs, schemas, retries, token handling and output validation.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Supports Week 2
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 8
+WEEK 3 - Integration & Quality
+Complete every assignment and the required free course proof. Week 4 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 13-17 h
+Conversation Memory Assistant
+Assignment question: Build a chatbot with explicit short-term and user-approved long-term memory.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Separate chat history from durable memory.
+• Require user confirmation before saving personal memory.
+• Support view/edit/delete memory controls.
+• Prevent cross-user memory access.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Memory behavior is transparent, editable and user-isolated.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 2
+ ADVANCED
+ 15-20 h
+Multi-Document Research Assistant
+Assignment question: Build an assistant that searches multiple uploaded documents and produces cited
+comparative answers.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Use metadata filters and source ranking.
+• Return citations for every factual paragraph.
+• Distinguish source facts from model inference.
+• Create conflict handling when documents disagree.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+
+IH Academy | Winter Internship 2026-27
+Page 9
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Answers identify source disagreement and every claim is traceable to retrieved evidence.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 3
+ ADVANCED
+ 13-17 h
+Meeting Notes Agent
+Assignment question: Build an agent that converts a transcript into summary, decisions, actions, owners and
+due dates.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Use a validated schema.
+• Mark unknown owner/date rather than guessing.
+• Allow user corrections before export.
+• Export JSON and Markdown.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Action items are extracted accurately and unknown information is not fabricated.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 4
+ ADVANCED
+ 15-20 h
+SQL Assistant with Guardrails
+Assignment question: Build an assistant that converts questions into read-only SQL for a sample database and
+explains results.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Expose schema through a controlled tool.
+• Allow only SELECT queries.
+• Parse/check SQL before execution and enforce row limits.
+• Protect against prompt injection and destructive statements.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+
+IH Academy | Winter Internship 2026-27
+Page 10
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+No write query can execute and generated queries answer evaluation questions correctly.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+Required free course(s)
+FREE COURSE 1: RAG, Embeddings & Vector Search
+Build grounded retrieval systems and evaluate answer quality.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Required for Week 3
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 11
+WEEK 4 - Production Challenge
+Complete every assignment and the required free course proof. Week completion review remains locked until
+mentor approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 18-24 h
+Customer Support Knowledge Agent
+Assignment question: Build a support assistant grounded in a product knowledge base with escalation and
+feedback.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Use RAG with citations.
+• Collect issue category and confidence.
+• Escalate low-confidence or policy-sensitive cases.
+• Store user feedback for evaluation.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Grounded answers meet the test set and low-confidence cases escalate instead of
+hallucinating.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 2
+ ADVANCED
+ 18-24 h
+Workflow Automation Agent
+Assignment question: Build an approval-based agent that turns a request into a multi-step workflow using
+safe tools.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Create planner, executor and verifier stages or a justified equivalent.
+• Require confirmation before external side effects.
+• Persist workflow state and recover from failed steps.
+• Limit retries and total cost.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+
+IH Academy | Winter Internship 2026-27
+Page 12
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+Workflow state is auditable and no side effect occurs without approval.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 3
+ ADVANCED
+ 20-26 h
+Mini Multi-Agent System
+Assignment question: Build a small research team with planner, researcher, critic and writer agents.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Define clear agent roles and message contracts.
+• Prevent infinite delegation.
+• Cite research sources or provided documents.
+• Compare result quality against a single-agent baseline.
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+The system terminates reliably and evaluation justifies whether multiple agents add value.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+ ASSIGNMENT 4
+ ADVANCED
+ 28-40 h
+IH Academy AI Workspace Capstone
+Assignment question: Build a production-ready AI workspace for IH Academy with document RAG, tool calling,
+memory controls, evaluation and admin-visible traces.
+Required work
+• Use a provider abstraction and keep API keys in environment variables.
+• Validate model output and handle timeouts, retries and provider errors.
+• Log requests safely without storing secrets or sensitive raw content.
+• Use authentication-ready user isolation.
+• Support institutional documents and track citations.
+• Add tool limits, safety checks and cost/latency logging.
+• Create an evaluation suite for grounding, refusal and tool correctness.
+• Deploy a working demo with no hardcoded keys.
+
+IH Academy | Winter Internship 2026-27
+Page 13
+Expected deliverables
+• GitHub repository with clean architecture
+• README with setup, prompts, model choices and limitations
+• Evaluation cases with expected behavior
+• PDF report containing architecture, screenshots, examples and results
+Submission mode
+GitHub + deployed demo/API + PDF report
+Acceptance check
+The final system passes documented grounding, security, tool and reliability checks.
+Evidence required
+Prompt/output examples, failure cases, evaluation table and traces
+Required free course(s)
+FREE COURSE 1: Agentic Workflows & Evaluation
+Create tool-using agents, memory, traces, safeguards and evaluation suites.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Required for final approval
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved

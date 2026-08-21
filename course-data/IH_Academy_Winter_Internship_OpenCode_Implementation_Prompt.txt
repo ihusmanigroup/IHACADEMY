@@ -1,0 +1,176 @@
+IH Academy | Winter Internship 2026-27
+Page 1
+IH ACADEMY
+ Winter Internship 2026-27
+OpenCode Implementation Prompt
+ Use this as the master implementation instruction. Read the existing repository first;
+preserve the current IH Academy blue-white design system and repair the internship
+ system without redesigning unrelated pages.
+1. Non-negotiable objective
+• Replace the old internship assignment implementation completely with a Winter Internship 2026-27 system.
+• Do not append the new data beside old summer/eight-week data. Remove obsolete seed data, static arrays,
+mock cards, routes and UI text that can cause duplicates.
+• Five tracks only: Frontend Engineering, Backend Engineering, Full Stack Software Engineering, Machine
+Learning, Agentic AI Engineering.
+• Each track has exactly 4 weeks. Every week has exactly 4 assignments. Week 1 has 2 required free courses;
+Weeks 2-4 have 1 required free course each.
+• An intern must see only the track selected/approved during application. Never show assignments from other
+tracks.
+2. Required repository audit before coding
+• Inspect package.json files, routing, state management, API layer, database/schema, seed scripts, auth, role
+guards, file upload provider and existing internship components.
+• Search globally for summer, 8 weeks, Week 5-8, old assignment titles, hardcoded counts, old seed IDs and
+obsolete routes.
+• Create a short internal migration plan before editing. Do not guess filenames or replace stable infrastructure
+unnecessarily.
+• Keep the current visual language: white surfaces, blue/cyan primary actions, subtle borders/shadows,
+compact dashboard layout and existing dark-mode behavior. Fix contrast issues on assignment detail pages.
+3. Data model
+• InternshipSeason: id, name, slug, type=winter, year, applicationOpenAt, applicationCloseAt,
+programStartAt, programEndAt, status, isActive.
+• InternshipTrack: id, seasonId, name, slug, description, icon, order, isActive.
+• InternshipEnrollment: userId, seasonId, trackId, status, currentWeek, joinedAt, completedAt. Enforce one
+active track per season.
+• InternshipWeek: id, trackId, weekNumber 1-4, title, description, unlockRule, order. Add unique(trackId,
+weekNumber).
+• Assignment: id, weekId, title, slug, difficulty, estimatedHours, question, requirements[], deliverables[],
+submissionMode, acceptanceCriteria, evidenceRequired, order, isRequired=true. Add unique(weekId, slug).
+• CourseRequirement: id, weekId, courseId or courseSlug, title, required=true, order. Week 1 has two records;
+Weeks 2-4 one each.
+• CourseProof: enrollmentId, courseRequirementId, fileUrl, fileName, status, mentorFeedback, submittedAt,
+reviewedAt, reviewedBy.
+• AssignmentSubmission: enrollmentId, assignmentId, githubUrl, liveUrl, notes, attachmentUrl,
+attachmentName, status=draft|submitted|changes_requested|approved, mentorFeedback, submittedAt,
+reviewedAt, reviewedBy. Add unique(enrollmentId, assignmentId).
+
+IH Academy | Winter Internship 2026-27
+Page 2
+• WeekProgress: calculate from approved assignments and approved course proofs; do not trust a
+frontend-sent percentage.
+4. Seed and migration rules
+• Use the five supplied track PDFs as the source of truth for titles, questions, requirements, deliverables,
+submission modes and acceptance criteria.
+• Build an idempotent seed/migration script: running twice must not duplicate seasons, tracks, weeks,
+assignments or course requirements.
+• Archive or delete old internship assignment records depending on repository conventions, but ensure the
+active Winter season returns only the new four-week dataset.
+• Do not modify the general course catalog. Link existing free courses by stable slug/ID where possible.
+Create missing free-course catalog records only when necessary.
+• Dates must be environment/admin configurable. Display Winter Internship, Winter Cohort and Apply for
+Winter consistently where relevant.
+5. Backend/API behavior
+• GET active internship season and five tracks.
+• Application flow creates/selects one track. Once approved/enrolled, track changes require admin action.
+• GET intern portal overview returns enrollment, selected track, weeks, progress and lock state.
+• GET assignments returns only selected-track records. Server must reject cross-track assignment IDs even if
+manually requested.
+• GET assignment detail returns full question, requirements, deliverables, submission requirements, prior
+submission and mentor feedback.
+• POST/PATCH submission validates URLs, notes and attachment type/size. PDF should be supported; optional
+image or ZIP support only if existing policy permits.
+• POST course proof validates a PDF certificate.
+• Mentor/admin review endpoints set approved or changes_requested with feedback.
+• Unlock Week 1 immediately after enrollment. Unlock Week N only when all four assignments and all course
+proofs in Week N-1 are Approved. Submitted alone is not completion.
+• Return consistent error objects and protect all routes with authentication and RBAC.
+6. Frontend pages and behavior
+• Careers page: prioritize Winter Internship. Use Apply for Winter / Winter Internship consistently. Summer
+may remain as a closed/future card only if product requirements still need it; it must not connect to the active
+Winter portal.
+• Application modal: show five tracks, Winter dates/status, validation, CV upload and confirmation. Do not
+show a track not present in the new dataset.
+• Intern portal sidebar: Overview, Assignments, Submissions, Progress, Certificate and LOR if already
+supported.
+• Assignments page: show four week tabs only. Remove Week 5-8 and Capstone tabs from the old
+implementation.
+• Each week section shows required free course cards/certificate upload plus exactly four assignment cards.
+• Assignment card shows type, track, difficulty, estimated hours, due date/status and Submit Solution.
+• Assignment detail route must show the complete question. Do not use one repeated generic sentence for
+every assignment. Render requirement checklist, deliverables, acceptance criteria and submission panel.
+• Submission panel: GitHub URL, live/deployed URL when applicable, notes/comments, drag-and-drop PDF
+upload, declaration checkbox and submit/update button. Validate clearly.
+
+IH Academy | Winter Internship 2026-27
+Page 3
+• Locked weeks display why they are locked and exactly what remains unapproved.
+• Progress numbers must come from server-calculated approved items.
+7. Theme and UI constraints
+• Preserve the current IH Academy blue-white theme shown in the existing dashboard and careers
+screenshots.
+• Use white/light slate page backgrounds, cyan-to-blue primary buttons, dark navy text, green approved
+states, amber pending/locked states and red validation only.
+• Remove the dark gray low-contrast assignment-detail cards currently visible. Use accessible white or very
+light surfaces in light mode; use proper dark surfaces only in dark mode.
+• Maintain sidebar width, topbar, card radius, spacing and typography used elsewhere. Do not introduce
+purple, gold or an unrelated redesign.
+• Make all pages responsive at 360px, 768px, 1024px and desktop widths.
+8. Removal checklist
+• Delete old 8-week navigation/tabs and Week 5-8 UI.
+• Delete obsolete summer assignment arrays and generic repeated assignment descriptions.
+• Delete cross-track assignment visibility.
+• Delete hardcoded progress counts such as 0/41 when the new total is different.
+• Delete dead routes/components left by the old assignment detail implementation.
+• Delete duplicate seed records and prevent them from reappearing.
+• Do not delete unrelated course catalog, public pages, user accounts or stable authentication logic.
+9. Validation and testing
+• Test each of the five tracks with a separate enrolled user. Confirm each user sees 4 weeks, 16 assignments
+and 5 course requirements (21 required items).
+• Confirm Week 1 contains 2 courses; Weeks 2-4 contain 1 each.
+• Confirm a frontend intern cannot access a backend assignment by URL/API manipulation.
+• Confirm Week 2 stays locked until all six Week 1 items (4 assignments + 2 course proofs) are Approved.
+• Confirm changes_requested does not unlock the next week.
+• Confirm PDF validation, URL validation, draft/update, mentor feedback and resubmission.
+• Confirm active Winter terminology on careers, modal, portal and emails/notifications.
+• Run lint, type-check, tests and production build. Fix errors rather than suppressing them.
+10. Definition of done
+• No old assignment system remains visible or reachable.
+• Five Winter tracks load from persistent data, not duplicated hardcoded UI arrays.
+• Every assignment opens a dedicated detail page containing its own complete question and criteria.
+• Track isolation, week locking, submissions, course proofs, review and progress work end to end.
+• The existing IH Academy theme is preserved and light/dark contrast is fixed.
+• Seed/migration, environment setup and demo accounts are documented in README.
+• Provide a final change summary listing files changed, migrations run, test results and any remaining
+limitations.
+
+IH Academy | Winter Internship 2026-27
+Page 4
+Copy-ready master prompt for OpenCode
+Paste the following block into OpenCode after opening the IH Academy repository:
+You are working inside the existing IH Academy codebase. First inspect the entire repository and identify the
+current careers page, Winter/Summer application modal, intern portal, assignment list/detail routes, API
+services, database models, seed scripts, authentication/RBAC, file uploads and theme tokens. Do not start by
+blindly generating new files.
+Replace the old internship assignment implementation with the Winter Internship 2026-27 system described in
+the supplied five track specification PDFs. Remove obsolete 8-week/summer assignment data, Week 5-8 tabs,
+generic repeated questions, duplicate seed data and cross-track visibility. Keep unrelated features intact.
+Implement exactly five tracks: Frontend Engineering, Backend Engineering, Full Stack Software Engineering,
+Machine Learning and Agentic AI Engineering. Each track has 4 weeks and exactly 4 assignments per week.
+Week 1 also has 2 required free courses; Weeks 2, 3 and 4 each have 1 required free course. Therefore each
+track has 16 assignments, 5 course requirements and 21 required items. Use the PDFs as the source of truth for
+every unique assignment question, requirements, deliverables, submission mode, acceptance criteria and
+evidence requirement.
+An enrolled intern must see only the approved selected track. Enforce this on both server and client. Week 1 is
+unlocked after enrollment. Week N+1 unlocks only after all four assignments and all required course proofs in
+Week N are APPROVED by a mentor/admin. Draft, submitted and changes_requested do not count as
+completion.
+Create or migrate persistent models for season, tracks, enrollment, weeks, assignments, course requirements,
+course proofs, assignment submissions and review status. Make seeds idempotent. Dates and deadlines must
+be admin/environment configurable, never scattered hardcoded values.
+Build/repair APIs for active season, application/enrollment, track-scoped assignments, assignment detail,
+submission create/update, certificate proof upload, mentor review, progress and lock state. Reject cross-track
+resource access server-side. Validate GitHub/live URLs, notes and PDF attachment type/size. Use existing
+storage infrastructure. Keep secrets out of source control.
+Update UI without changing the established IH Academy blue-white theme. Careers and application areas should
+emphasize Winter Internship / Apply for Winter. The intern assignment page must show only Week 1-4. Each
+assignment card must open a dedicated route showing that assignment's complete unique brief. Replace the
+current low-contrast gray assignment detail surfaces with accessible theme-consistent cards. The submission
+panel must support GitHub URL, live URL where applicable, notes/comments, PDF drag-and-drop, declaration
+and submit/update states. Locked weeks must explain what remains incomplete.
+Do not redesign unrelated pages. Reuse existing components, routing, auth, notification and dark-mode
+architecture where sound. Remove obsolete components/routes/data only after confirming they belong to the
+old internship system.
+Test all five tracks with separate users. Verify 16 assignments + 5 course requirements per track, correct Week
+1 course count, strict track isolation, approval-based unlocks, PDF validation, mentor feedback/resubmission,
+responsive layouts, light/dark contrast and production build. Run lint/type-check/tests/build and fix actual
+failures. Finish with a concise report of files changed, migrations/seeds run, tests passed and remaining
+limitations.

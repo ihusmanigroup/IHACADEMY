@@ -1,0 +1,548 @@
+{
+  "title": "HTML for Absolute Beginners",
+  "description": "Master the structural language of the web: elements, attributes, links, images, lists, tables, forms, and semantic HTML5.",
+  "category": "Frontend",
+  "level": "Beginner",
+  "pricing_type": "Free",
+  "price": 0,
+  "xp_reward": 100,
+  "thumbnail_url": null,
+  "lessons": [
+    {
+      "title": "Module 1 — Foundations & Core Concepts",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 1.1 [Unlocked]: Introduction to HTML & A Short History",
+            "content": "## Introduction & Core Concepts\n\nHTML stands for **HyperText Markup Language**. It is the language used to build the structure of every website you have ever visited. When you open a web page and see a heading, a paragraph, a picture, or a button, HTML is the thing that put it there.\n\nThink of a website like a house. HTML is the bricks and beams — the basic structure that holds everything together. CSS (Cascading Style Sheets) is the paint, wallpaper, and furniture that make the house look nice. JavaScript is the electricity and plumbing that make things move and work. This module focuses only on the bricks and beams: HTML.\n\n```\nBrowser\n   │\n   ▼\nHTML  (structure)\n   │\n   ▼\nCSS   (style)\n   │\n   ▼\nJavaScript (behavior)\n```\n\n### Why HTML Is Not a \"Programming Language\"\n\nYou do not need any programming experience to learn HTML. It is not really a \"programming language\" in the traditional sense — it does not have loops, variables, or logic. Instead, it is a **markup language**, which means it uses tags to label and organize content so that a web browser knows how to display it.\n\n### A Short History\n\nHTML was created in 1991 by Tim Berners-Lee, a scientist working at CERN (a physics research organization in Switzerland). He needed a simple way for researchers to share documents over a network, and HTML was his solution. The very first version had only a handful of tags.\n\nOver the years, HTML evolved through several versions: HTML 2, HTML 3.2, HTML 4.01, XHTML, and finally **HTML5**, which was released around 2014 and is the version we use today. HTML5 added support for video, audio, and many new structural tags without needing extra software or plugins. Every modern website is built using HTML5.\n\n### Real-World Use Cases & Rules\n\n- Every website you use daily — social media, online shops, news sites, banking portals — has HTML at its foundation\n- Even highly interactive applications built with React or Vue ultimately produce HTML in the browser\n- HTML is the only structural language that browsers universally understand\n- Mastering HTML fundamentals is the permanent foundation beneath every front-end technology that exists today\n\n### Code Example / Implementation\n\nThe simplest possible HTML document:\n\n```html\n<!DOCTYPE html>\n<html>\n<head>\n    <title>My First Page</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>This is my first web page.</p>\n</body>\n</html>\n```\n\n### Key Takeaways\n\n- HTML is a markup language, not a programming language\n- HTML builds the structure; CSS styles it; JavaScript makes it behave\n- HTML was created in 1991 by Tim Berners-Lee at CERN\n- HTML5 (2014) is the modern standard used by every website today"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 1.2 [Locked — Requires 1.1 Completion]: How the Web Works: Browsers & Files",
+            "content": "## Introduction & Core Concepts\n\nBefore writing HTML, it helps to understand the journey your code takes to become a visible web page. A **web browser** — Chrome, Firefox, Edge, or Safari — is a program whose job is to read HTML files and display them as a rendered page. When you double-click an `.html` file on your computer, the browser reads the file, interprets every tag, and paints the result on your screen.\n\n### The Request–Response Cycle\n\nWhen you visit a website over the internet, your browser sends a **request** to a **server** — a powerful computer that stores the website's files. The server sends the files back, and your browser renders them.\n\n```\nYour browser  ──request──▶  Server\n  (client)                   (holds the website files)\n      ◀──────response────────\n```\n\nFor local files (this course), there is no server — the browser reads the file directly from your computer. Understanding this distinction matters because some HTML features (like fetching data) only work when a file is served over the internet.\n\n### Files, Extensions, and Folders\n\nEvery web page is just a text file. What makes it \"web content\" is its extension:\n\n- `.html` — a web page's structure (what you will write in this course)\n- `.css` — styling rules (covered in the CSS course)\n- `.js` — behavior and interactivity (covered in the JavaScript course)\n\n**Real-world analogy:** Think of these files like the blueprints, paint swatches, and electrical wiring plan for a house — separate documents, each describing one aspect of the same building.\n\n### Real-World Use Cases & Rules\n\n- Browsers render HTML, CSS, and JavaScript together — one page can use all three files\n- The browser's Developer Tools (F12) let you inspect exactly how a page was interpreted\n- File names should be lowercase with no spaces (`my-page.html`, not `My Page.HTML`)\n- The home page of a website is conventionally named `index.html`\n\n### Code Example / Implementation\n\nCreate a file named `index.html` with this content and open it in your browser:\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\">\n    <title>My First Web Page</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>If you can read this in your browser, your setup is working.</p>\n</body>\n</html>\n```\n\n**Expected output:** A page showing a large \"Hello, World!\" heading and a sentence below it, with the tab labeled \"My First Web Page.\"\n\n### Key Takeaways\n\n- The browser is the \"stage\" that turns HTML text into a rendered page\n- Local `.html` files need no server; internet sites are served by remote servers\n- One web page is usually built from HTML + CSS + JS files working together\n- `index.html` is the conventional name for a site's home page"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 1.3 [Locked — Requires 1.2 Completion]: Elements, Tags & Attributes",
+            "content": "## Introduction & Core Concepts\n\nAn HTML **element** is a single piece of content wrapped in tags. A **tag** is a keyword surrounded by angle brackets, like `<p>`. Most elements have an **opening tag** and a **closing tag**, with content in between.\n\n```html\n<p>This is a paragraph.</p>\n```\n\n**Explanation:**\n- `<p>` is the opening tag. It tells the browser \"a paragraph starts here.\"\n- `This is a paragraph.` is the content — the actual text shown on the page.\n- `</p>` is the closing tag. The forward slash `/` tells the browser \"the paragraph ends here.\"\n\n**Expected output:** The browser displays the sentence as regular text on the page.\n\n### Attributes: Extra Information\n\nAn **attribute** gives extra information about an element. Attributes are written inside the opening tag, as a name and a value, like `name=\"value\"`.\n\n```html\n<img src=\"dog.jpg\" alt=\"A brown dog sitting on grass\">\n```\n\n**Explanation:**\n- `src` (source) tells the browser *where* to find the image file.\n- `alt` (alternative text) is a description shown if the image fails to load, and it is also read aloud by screen readers for visually impaired users.\n\n### Void (Self-Closing) Elements\n\nSome elements do not need a closing tag because they do not wrap any content. These are called **self-closing** or **void** elements. Examples include `<br>` (line break) and `<img>` (image).\n\n### Real-World Use Cases & Rules\n\n- Attributes always go inside the opening tag, never the closing tag\n- Attribute values are almost always wrapped in quotation marks\n- Nesting means placing one element inside another — like boxes inside boxes\n- Always close elements in the reverse order you opened them (last opened, first closed)\n\n### Code Example / Implementation\n\n```html\n<p>This is <strong>important</strong> text.</p>\n<p>Line one<br>Line two, same paragraph</p>\n```\n\n**Explanation:** `<strong>` wraps \"important\" to make it bold and meaningful; `<br>` forces a line break without starting a new paragraph.\n\n### Key Takeaways\n\n- An element = opening tag + content + closing tag\n- Attributes add extra info inside the opening tag (`src`, `alt`, `href`, ...)\n- Void elements like `<br>` and `<img>` have no closing tag\n- Nesting order matters: close inner elements before outer ones"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 1.4 [Locked — Requires 1.3 Completion]: Setting Up Your Environment & The Basic Structure of an HTML Page",
+            "content": "## Introduction & Core Concepts\n\nYou do not need to install anything complicated to write HTML. You only need two things:\n\n1. **A text editor** — a program to write code. Beginners commonly use Visual Studio Code, which is free and includes helpful features like color highlighting and autocompletion.\n2. **A web browser** — Chrome, Firefox, Edge, or Safari all work fine.\n\n### The Working Folder\n\nProfessional developers keep their projects organized in a dedicated folder:\n\n```\nmy-website/\n├── index.html\n├── about.html\n├── images/\n│   └── dog.jpg\n└── css/\n    └── styles.css\n```\n\nThis organization becomes essential once a website grows beyond a few pages.\n\n### Steps to Create Your First HTML File\n\n1. Open your text editor and create a new file.\n2. Save it with the `.html` extension, for example `index.html`. The extension tells the computer and browser that this file contains HTML code.\n3. Type some HTML code (shown in the next topic).\n4. Double-click the file, or right-click and choose \"Open with Browser,\" to see the result.\n\nThere is no installation, compiler, or server required to view basic HTML — the browser reads the file directly from your computer.\n\n### Real-World Use Cases & Rules\n\n- Use a real code editor (VS Code, Sublime Text), not Word or Notepad — they insert hidden formatting that breaks HTML\n- Save files with `.html` extension, lowercase names, no spaces\n- Keep related assets (images, CSS, scripts) in organized folders\n- Test in the browser frequently — small steps are easier to debug than huge ones\n\n### Code Example / Implementation\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My Portfolio</title>\n</head>\n<body>\n    <h1>Welcome to my site!</h1>\n    <p>This is the beginning of something great.</p>\n</body>\n</html>\n```\n\n### Key Takeaways\n\n- You need only a text editor and a browser — nothing else to install\n- The `.html` extension tells the computer how to handle the file\n- Organized folders (images/, css/) keep projects manageable\n- Use VS Code's autocompletion — typing `!` and pressing Tab generates the page skeleton\n\n## The Basic Structure of an HTML Page\n\n### Anatomy of the Skeleton\n\nEvery HTML page follows the same skeleton. Beginners should memorize this structure because it is the starting point for every project.\n\n```html\n<!DOCTYPE html>\n<html>\n<head>\n    <title>My First Page</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>This is my first web page.</p>\n</body>\n</html>\n```\n\n### Line-by-Line Explanation\n\n- `<!DOCTYPE html>` — This is not a tag but a declaration. It tells the browser \"this document uses modern HTML5 rules.\" Without it, older browsers may render the page incorrectly.\n- `<html>` — The root element. Everything on the page is nested inside this tag.\n- `<head>` — Contains information *about* the page that is not directly shown as page content, such as the title, links to style sheets, and metadata.\n- `<title>` — Sets the text shown on the browser tab.\n- `<body>` — Contains everything the visitor actually sees: text, images, buttons, and so on.\n- `<h1>` — A top-level heading.\n- `<p>` — A paragraph of text.\n\n### The Document Tree\n\nThe browser reads HTML as a **tree** of nested elements — the Document Object Model (DOM):\n\n```\n<html>\n  ├── <head>\n  │      └── <title>\n  └── <body>\n         ├── <h1>\n         └── <p>\n```\n\n**Real-world analogy:** This is like a family tree or an outline for a report — every element knows its parent (the element containing it) and its children (elements inside it).\n\n### Real-World Use Cases & Rules\n\n- Always start with `<!DOCTYPE html>` — it prevents inconsistent rendering\n- Put metadata and styles in `<head>`, visible content in `<body>`\n- Use exactly one `<h1>` per page for the main title\n- Indent nested elements so the structure is easy to read\n\n### Code Example / Implementation\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My First Page</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>This is my first web page.</p>\n</body>\n</html>\n```\n\n**Expected output:** A browser tab labeled \"My First Page,\" showing a large heading \"Hello, World!\" followed by a line of text below it.\n\n### Key Takeaways\n\n- Every HTML page shares the same skeleton: doctype, html, head, body\n- `<head>` holds page info; `<body>` holds visible content\n- `<!DOCTYPE html>` triggers modern HTML5 rendering\n- Understanding the document tree (DOM) prepares you for CSS and JavaScript"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 1,
+      "quiz": {
+        "title": "Module 1 Quiz — Pass to Unlock Module 2",
+        "questions": [
+          {
+            "q": "What does HTML stand for?",
+            "options": [
+              "Hyperlinks and Text Markup Language",
+              "HyperText Markup Language",
+              "High-Text Machine Language",
+              "Home Tool Markup Language"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Who created HTML?",
+            "options": [
+              "Steve Jobs",
+              "Bill Gates",
+              "Tim Berners-Lee",
+              "Mark Zuckerberg"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "Which best describes HTML?",
+            "options": [
+              "A programming language with loops and variables",
+              "A markup language that labels and organizes content",
+              "A styling language for colors and fonts",
+              "A database query language"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which of these is a void (self-closing) element?",
+            "options": [
+              "<p>",
+              "<div>",
+              "<img>",
+              "<h1>"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "Where do attributes like src and alt go in an element?",
+            "options": [
+              "In the closing tag",
+              "After the content",
+              "Inside the opening tag",
+              "In a separate file"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "What does the alt attribute in an <img> tag do?",
+            "options": [
+              "Changes the image size",
+              "Provides alternative text for accessibility and load failures",
+              "Aligns the image on the page",
+              "Adds a border to the image"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What file extension identifies a web page's structure file?",
+            "options": [
+              ".css",
+              ".html",
+              ".js",
+              ".txt"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the conventional name for a website's home page?",
+            "options": [
+              "home.html",
+              "start.html",
+              "main.html",
+              "index.html"
+            ],
+            "answer": 3
+          },
+          {
+            "q": "What does the <!DOCTYPE html> declaration do?",
+            "options": [
+              "Creates a comment",
+              "Tells the browser to use modern HTML5 rules",
+              "Links a CSS file",
+              "Is optional and has no effect"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "In the document tree, which element contains everything the visitor sees?",
+            "options": [
+              "<head>",
+              "<title>",
+              "<body>",
+              "<meta>"
+            ],
+            "answer": 2
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 2 — Working with Text & Media",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 2.1 [Unlocked]: Headings & Document Structure",
+            "content": "## Introduction & Core Concepts\n\nHTML provides six levels of headings, from `<h1>` (largest, most important) to `<h6>` (smallest, least important). Headings organize content the same way chapters and subheadings organize a book.\n\n```html\n<h1>Main Title</h1>\n<h2>Section Title</h2>\n<h3>Subsection Title</h3>\n```\n\n### Choosing the Right Heading Level\n\nA common beginner mistake is choosing heading levels based on font size rather than importance. Headings should reflect the *structure* of the content, not how big you want text to look. Font size should be adjusted with CSS instead.\n\n**Real-world analogy:** Think of a newspaper. The front-page headline is the `<h1>`, section titles are `<h2>`, and individual article titles within a section are `<h3>`. An editor would never use the headline font size for a tiny footnote — and a developer should never use `<h1>` just to make text big.\n\n### Why Exactly One <h1> Per Page?\n\nThe `<h1>` tells search engines and screen readers what the page is fundamentally about. Having one clear main title makes a page easier to understand, navigate, and rank in search results.\n\n### Real-World Use Cases & Rules\n\n- Use one `<h1>` per page for the main title\n- Skip heading levels only in rare cases; a document should flow naturally h1 → h2 → h3\n- Never use a heading tag purely for visual size — use CSS for that\n- Headings should describe content, like \"Chapter 3: The Box Model,\" not \"Big Text\"\n\n### Code Example / Implementation\n\n```html\n<h1>My Baking Blog</h1>\n<h2>Recipes</h2>\n<h3>Chocolate Chip Cookies</h3>\n<h3>Banana Bread</h3>\n<h2>Kitchen Tips</h2>\n<h3>How to Measure Flour</h3>\n```\n\n**Expected output:** A clear hierarchy: the blog title at the top, two main sections (Recipes, Kitchen Tips), and subsections under each.\n\n### Key Takeaways\n\n- Six heading levels exist: `<h1>` (most important) to `<h6>` (least)\n- Choose heading levels by importance, not by size\n- One `<h1>` per page improves accessibility and SEO\n- Visual sizing belongs in CSS, not in heading tags"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 2.2 [Locked — Requires 2.1 Completion]: Paragraphs & Line Breaks",
+            "content": "## Introduction & Core Concepts\n\nParagraphs are the default way to present blocks of text on a page. The `<p>` element creates a distinct block with space above and below it, while `<br>` forces a line break *within* the same paragraph.\n\n```html\n<p>This is one paragraph.</p>\n<p>This is a separate paragraph.</p>\n<p>Line one<br>Line two, same paragraph</p>\n```\n\n### When to Use <br> vs a New <p>\n\n- `<br>` is meant for things like addresses or poems, where lines belong to one block of text\n- A new `<p>` starts a new conceptual block, and browsers automatically add spacing between paragraphs\n\n**Real-world analogy:** A paragraph is like a block of text in a book. A line break is like writing an address — \"123 Main Street\" then \"Springfield\" — you press Enter between lines, but it's still one block of information.\n\n### Whitespace Collapsing\n\nThis is one of the most surprising beginner discoveries: HTML ignores extra spaces and line breaks in your code. The browser collapses multiple spaces into one.\n\n```html\n<p>Hello      world\n  with lots of     spacing</p>\n```\n\n**Expected output:** \"Hello world with lots of spacing\" — all the extra whitespace collapses to single spaces.\n\n### Real-World Use Cases & Rules\n\n- Use one `<p>` per logical block of text\n- Use `<br>` only for line breaks within the same block (addresses, poems)\n- Do not use `<br>` to create vertical spacing — use CSS margins instead\n- Extra spaces and newlines in your code are ignored by the browser\n\n### Code Example / Implementation\n\n```html\n<p>Welcome to the bakery. We bake fresh bread every morning.</p>\n<p>Visit us at:<br>123 Main Street<br>Springfield</p>\n```\n\n### Key Takeaways\n\n- `<p>` creates a new block of text with automatic spacing\n- `<br>` forces a line break inside the same paragraph\n- Browsers collapse extra whitespace — use markup, not spacing, to control layout\n- Use `<br>` sparingly; spacing between elements is CSS's job"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 2.3 [Locked — Requires 2.2 Completion]: Text Formatting Tags",
+            "content": "## Introduction & Core Concepts\n\nHTML offers tags that give text *meaning* as well as appearance. The two most important are `<strong>` and `<em>`.\n\n| Tag | Purpose | Example |\n|---|---|---|\n| `<strong>` | Marks important text (shown bold) | `<strong>Warning</strong>` |\n| `<em>` | Marks emphasized text (shown italic) | `<em>really</em> important` |\n| `<small>` | Smaller, fine-print text | `<small>Terms apply</small>` |\n| `<mark>` | Highlights text | `<mark>highlighted</mark>` |\n\n### Why <strong> and <em> Beat <b> and <i>\n\n`<strong>` and `<em>` are preferred over the older `<b>` (bold) and `<i>` (italic) tags because they describe *meaning*, not just appearance. Screen readers announce `<strong>` text with extra emphasis, while `<b>` is purely visual and carries no meaning.\n\n**Real-world analogy:** Consider a teacher who underlines important homework instructions and a student who underlines a random word because it \"looks nice.\" Both change the page visually, but only the teacher's underlining has meaning. `<strong>` is the teacher; `<b>` is the student.\n\n### Real-World Use Cases & Rules\n\n- Use `<strong>` for important content — not just to make text bold\n- Use `<em>` for emphasis — not just to italicize\n- Reserve `<b>` and `<i>` for purely visual styling when no meaning is intended\n- Combine with semantic structure: a warning inside a `<strong>` conveys urgency to both humans and screen readers\n\n### Code Example / Implementation\n\n```html\n<p><strong>Warning:</strong> The oven is hot.</p>\n<p>This is <em>really</em> important.</p>\n<p><mark>Remember</mark> to save your work.</p>\n<p><small>Terms and conditions apply.</small></p>\n```\n\n### Key Takeaways\n\n- `<strong>` = importance (bold by default); `<em>` = emphasis (italic by default)\n- Semantic tags carry meaning for screen readers and search engines\n- Use `<small>` for fine print, `<mark>` for highlighting\n- Prefer semantic tags over purely visual `<b>` and `<i>`"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 2.4 [Locked — Requires 2.3 Completion]: Links, Navigation & Images",
+            "content": "## Introduction & Core Concepts\n\nLinks are what make the web a \"web\" — they connect pages to each other. Without links, every page would be an isolated document.\n\n```html\n<a href=\"https://www.example.com\">Visit Example</a>\n```\n\n**Explanation:**\n- `<a>` stands for \"anchor.\" It creates a clickable link.\n- `href` (hypertext reference) is the attribute that holds the destination URL.\n- The text between the tags, \"Visit Example,\" is what the user clicks on.\n\n### Absolute vs Relative Paths\n\n- **Absolute URL:** a full web address — `https://www.example.com/about`\n- **Relative path:** a path within your own site — `about.html` or `pages/contact.html`\n\n```html\n<a href=\"about.html\">About Us</a>\n<a href=\"https://www.example.com\" target=\"_blank\">Visit Example</a>\n```\n\nThe `target=\"_blank\"` attribute opens the link in a new browser tab.\n\n**Real-world analogy:** An absolute path is like a full postal address (\"1600 Pennsylvania Ave, Washington DC\") that works from anywhere. A relative path is like saying \"two doors down\" when you're standing on the same street — it only works from the right location.\n\n### Common Mistake\n\nForgetting `https://` for external links causes the browser to look for a page on your own site with that name instead of the outside website.\n\n### Real-World Use Cases & Rules\n\n- Always include `https://` in absolute external URLs\n- Use relative paths for navigation between pages of your own site\n- Write meaningful link text (\"Read the pricing guide\") instead of \"click here\"\n- Use `target=\"_blank\"` only when leaving the site is intentional\n\n### Code Example / Implementation\n\n```html\n<nav>\n    <a href=\"index.html\">Home</a>\n    <a href=\"about.html\">About</a>\n    <a href=\"contact.html\">Contact</a>\n</nav>\n<a href=\"https://developer.mozilla.org\" target=\"_blank\">MDN Web Docs</a>\n```\n\n### Key Takeaways\n\n- `<a href=\"...\">text</a>` creates a clickable link\n- Absolute URLs start with https://; relative paths work within your site\n- `target=\"_blank\"` opens links in a new tab\n- Good link text helps accessibility and SEO\n\n## Images: Bringing Pages to Life\n\n### The img Element\n\nImages bring visual life to web pages. The `<img>` element is a void element — it never has a closing tag or wraps content, because the \"content\" is the image file itself.\n\n```html\n<img src=\"cat.jpg\" alt=\"A sleeping orange cat\" width=\"300\">\n```\n\n**Explanation:**\n- `src` points to the image file location, which can be a local file or a full web address.\n- `alt` describes the image for accessibility and for cases when the image cannot load.\n- `width` (optional) sets the display size, in pixels, on the page.\n\n### Why alt Text Is Not Optional\n\nThe `alt` attribute serves three critical purposes:\n\n1. **Accessibility:** screen readers announce the description to visually impaired users.\n2. **Resilience:** if the image fails to load, the alt text shows in its place.\n3. **SEO:** search engines use alt text to understand what the image depicts.\n\n**Real-world analogy:** Alt text is like a museum placard next to a painting. Visitors who can't see the painting still learn what it depicts, and even sighted visitors get context.\n\n### Common Image Formats\n\n| Format | Best For |\n|---|---|\n| JPG | Photographs — many colors, small file size |\n| PNG | Graphics with transparency — logos, icons |\n| GIF | Simple animations |\n| WebP | Modern format — excellent compression for photos and graphics |\n| SVG | Logos and icons — scales infinitely without blurriness |\n\n### Real-World Use Cases & Rules\n\n- Always include `alt` text on every meaningful image\n- Use empty `alt=\"\"` for decorative images the screen reader should skip\n- Keep file sizes small — big images slow down page loading\n- Use appropriate formats: JPG for photos, PNG/SVG for graphics\n\n### Code Example / Implementation\n\n```html\n<img src=\"images/team-photo.jpg\" alt=\"The IH Academy team standing in front of the office\" width=\"600\">\n<img src=\"logo.svg\" alt=\"IH Academy logo\">\n<img src=\"decorative-line.png\" alt=\"\">\n```\n\n### Key Takeaways\n\n- `<img>` is a void element with `src` and `alt` attributes\n- `alt` text serves accessibility, load-failure fallback, and SEO\n- Choose JPG for photos, PNG/SVG for graphics, WebP for modern performance\n- Decorative images get `alt=\"\"` so screen readers skip them"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 2,
+      "quiz": {
+        "title": "Module 2 Quiz — Pass to Unlock Module 3",
+        "questions": [
+          {
+            "q": "Which tag creates the largest heading?",
+            "options": [
+              "<h6>",
+              "<h3>",
+              "<h1>",
+              "<head>"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "How many heading levels does HTML provide?",
+            "options": [
+              "3",
+              "6",
+              "10",
+              "1"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the correct rule for choosing heading levels?",
+            "options": [
+              "Pick the level by font size you want",
+              "Pick the level by importance of the content",
+              "Always use <h1> for every section",
+              "Headings are optional"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does the <br> tag do?",
+            "options": [
+              "Starts a new paragraph",
+              "Forces a line break within the same paragraph",
+              "Adds a border to text",
+              "Creates a horizontal line"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What happens when you write many extra spaces in HTML code?",
+            "options": [
+              "They are all displayed",
+              "The page shows an error",
+              "Browsers collapse them into a single space",
+              "They create extra paragraphs"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "Which tag marks text as important for screen readers, not just bold?",
+            "options": [
+              "<b>",
+              "<i>",
+              "<u>",
+              "<strong>"
+            ],
+            "answer": 3
+          },
+          {
+            "q": "Which attribute holds the destination URL of a link?",
+            "options": [
+              "src",
+              "alt",
+              "href",
+              "target"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "What does target=\"_blank\" do on a link?",
+            "options": [
+              "Opens the link in a new browser tab",
+              "Blanks out the link",
+              "Prevents the link from working",
+              "Downloads the page"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Why is the alt attribute required on meaningful images?",
+            "options": [
+              "It makes images load faster",
+              "It provides alternative text for accessibility and load failures",
+              "It changes the image format",
+              "It is only for SEO"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which image format is best for a transparent logo?",
+            "options": [
+              "JPG",
+              "PNG",
+              "GIF (photographic)",
+              "None of the above"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 3 — Lists, Tables & Forms",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 3.1 [Unlocked]: Unordered & Ordered Lists",
+            "content": "## Introduction & Core Concepts\n\nHTML has two main types of lists: unordered (bullets) and ordered (numbers). Both use `<li>` (list item) for each entry.\n\n```html\n<ul>\n    <li>Milk</li>\n    <li>Eggs</li>\n    <li>Bread</li>\n</ul>\n\n<ol>\n    <li>Preheat the oven</li>\n    <li>Mix the ingredients</li>\n    <li>Bake for 20 minutes</li>\n</ol>\n```\n\n**Explanation:**\n- `<ul>` = unordered list (bullet points), used when order does not matter.\n- `<ol>` = ordered list (numbers), used when sequence matters, like steps in a recipe.\n- `<li>` = list item, used inside either list type.\n\n**Real-world analogy:** A shopping list is an unordered list — it doesn't matter whether you grab milk first or eggs first. A recipe is an ordered list — baking before mixing would be a disaster. The same distinction exists in HTML.\n\n### Nested Lists\n\nLists can be nested inside one another to create sub-lists, common in navigation menus and outlines:\n\n```html\n<ul>\n    <li>Fruits\n        <ul>\n            <li>Apples</li>\n            <li>Bananas</li>\n        </ul>\n    </li>\n    <li>Vegetables</li>\n</ul>\n```\n\n### Real-World Use Cases & Rules\n\n- Use `<ul>` when order doesn't matter, `<ol>` when it does\n- Every `<li>` must be inside a `<ul>` or `<ol>`\n- Nesting creates sub-lists with different bullet styles automatically\n- Lists are also the foundation of navigation menus on most websites\n\n### Code Example / Implementation\n\n```html\n<h2>Today's Tasks</h2>\n<ol>\n    <li>Review pull request</li>\n    <li>Deploy to staging</li>\n    <li>Update documentation</li>\n</ol>\n```\n\n### Key Takeaways\n\n- `<ul>` = bullets (order irrelevant), `<ol>` = numbers (order matters)\n- `<li>` wraps each list item\n- Lists nest inside each other for hierarchies\n- Navigation menus are usually built from lists"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 3.2 [Locked — Requires 3.1 Completion]: Tables",
+            "content": "## Introduction & Core Concepts\n\nTables display information in rows and columns, such as a price list or schedule.\n\n```html\n<table>\n    <tr>\n        <th>Item</th>\n        <th>Price</th>\n    </tr>\n    <tr>\n        <td>Coffee</td>\n        <td>$3</td>\n    </tr>\n    <tr>\n        <td>Tea</td>\n        <td>$2</td>\n    </tr>\n</table>\n```\n\n**Explanation:**\n- `<table>` wraps the entire table.\n- `<tr>` = table row.\n- `<th>` = table header cell (bold, centered by default).\n- `<td>` = table data cell (regular content).\n\n**Real-world analogy:** A table in HTML is like a spreadsheet: the first row is usually the header row (Item, Price), and each row below is a record (Coffee, $3).\n\n### The Golden Rule: Tables Are for Data, Not Layout\n\n**Common mistake:** Using tables to arrange a page's visual layout (like columns of a homepage). Tables should only be used for genuinely tabular data — real layout is handled with CSS. This was common in the 1990s and is now considered an anti-pattern because it creates rigid, inaccessible, hard-to-maintain pages.\n\n### Real-World Use Cases & Rules\n\n- Use `<th>` for header cells, `<td>` for data cells\n- Always place `<th>` elements in a `<tr>` header row\n- Keep tables for genuinely tabular data: schedules, pricing, statistics\n- Don't use tables for page layout — CSS is the tool for that\n\n### Code Example / Implementation\n\n```html\n<table>\n    <tr>\n        <th>Course</th>\n        <th>Level</th>\n        <th>Duration</th>\n    </tr>\n    <tr>\n        <td>HTML Basics</td>\n        <td>Beginner</td>\n        <td>3 hours</td>\n    </tr>\n    <tr>\n        <td>CSS Basics</td>\n        <td>Beginner</td>\n        <td>3 hours</td>\n    </tr>\n</table>\n```\n\n### Key Takeaways\n\n- Tables = rows (`<tr>`) + header cells (`<th>`) + data cells (`<td>`)\n- Header rows use `<th>`, data rows use `<td>`\n- Use tables for tabular data only, never for page layout\n- CSS handles layout; tables handle data"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 3.3 [Locked — Requires 3.2 Completion]: Forms & Inputs",
+            "content": "## Introduction & Core Concepts\n\nForms collect input from users, such as a login screen or a contact form. They are the gateway between your website and your users' data.\n\n```html\n<form>\n    <label for=\"name\">Name:</label>\n    <input type=\"text\" id=\"name\" name=\"name\">\n    <br>\n    <input type=\"submit\" value=\"Submit\">\n</form>\n```\n\n**Explanation:**\n- `<form>` wraps all the input fields that will be submitted together.\n- `<label>` gives a text description for an input field. The `for` attribute should match the input's `id` so clicking the label focuses the field — this also helps accessibility.\n- `<input type=\"text\">` creates a single-line text box.\n- `<input type=\"submit\">` creates a button that sends the form's data.\n\n### Common Input Types\n\n| Type | Purpose |\n|---|---|\n| `text` | Single-line text |\n| `email` | Email address (browsers validate the format) |\n| `password` | Hidden text for passwords |\n| `checkbox` | On/off toggle |\n| `radio` | Choose one option from a group |\n| `date` | Date picker |\n\n### Real-World Use Cases & Rules\n\n- Every `<input>` should have a matching `<label>` with a `for`/`id` connection\n- Use the most specific input type (`email`, `date`) — browsers provide built-in validation and mobile keyboards\n- `name` attributes are how submitted data is identified on the server\n- Processing submitted data requires a backend language (Python, PHP, Node.js) — outside the scope of this beginner course\n\n### Code Example / Implementation\n\n```html\n<form>\n    <label for=\"email\">Email:</label>\n    <input type=\"email\" id=\"email\" name=\"email\">\n    <br><br>\n    <label for=\"age\">Are you over 18?</label>\n    <input type=\"checkbox\" id=\"age\" name=\"age\">\n    <br><br>\n    <input type=\"submit\" value=\"Sign Up\">\n</form>\n```\n\n### Key Takeaways\n\n- `<form>` + `<input>` + `<label>` = the core of data collection\n- `for` on the label matches `id` on the input for accessibility\n- Use specific input types for validation and better mobile keyboards\n- Forms send data to a server, which needs a backend to process it"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 3.4 [Locked — Requires 3.3 Completion]: Nesting, Comments & Document Sections",
+            "content": "## Introduction & Core Concepts\n\nReal pages combine everything: elements nested inside other elements, organized into logical sections, with comments to explain the code.\n\n### Comments\n\nComments are notes for humans that browsers ignore entirely:\n\n```html\n<!-- This is a comment. It never appears on the page. -->\n<!-- TODO: add a profile photo upload here -->\n```\n\n### Sectioning With <div> and <span>\n\nThe `<div>` element is a generic block container — it takes a full line and groups content vertically. The `<span>` element is a generic inline container — it wraps small pieces of text within a line.\n\n```html\n<div class=\"product-card\">\n    <h2>Wireless Headphones</h2>\n    <p>Price: <span class=\"price\">$49</span></p>\n</div>\n```\n\n**Real-world analogy:** `<div>` is like a cardboard box you use to group related items on a shelf; `<span>` is like a sticker you put on a single item to mark it. Neither changes what things are — they just organize and label them (the visual styling comes later with CSS classes).\n\n### Real-World Use Cases & Rules\n\n- Use comments to explain \"why,\" not \"what\" — the code already shows what it does\n- Nest elements logically and indent consistently\n- Use `<div>` for grouping blocks, `<span>` for inline labeling\n- Add `class` attributes now — CSS (next course) will target them\n\n### Code Example / Implementation\n\n```html\n<!-- Page header -->\n<header>\n    <h1>IH Academy Store</h1>\n    <p>Welcome, <span class=\"username\">Guest</span></p>\n</header>\n\n<!-- Product listing -->\n<main>\n    <div class=\"product\">\n        <h2>Keyboard</h2>\n        <p>$39</p>\n    </div>\n    <div class=\"product\">\n        <h2>Mouse</h2>\n        <p>$19</p>\n    </div>\n</main>\n```\n\n### Key Takeaways\n\n- `<!-- comment -->` explains code without appearing on the page\n- `<div>` groups blocks; `<span>` labels inline content\n- Nesting with consistent indentation keeps HTML readable\n- Classes added now become hooks for CSS styling later"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 3,
+      "quiz": {
+        "title": "Module 3 Quiz — Pass to Unlock Module 4",
+        "questions": [
+          {
+            "q": "Which list type should you use when the order of items matters?",
+            "options": [
+              "<ul>",
+              "<ol>",
+              "<li>",
+              "<nl>"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What does <ul> stand for?",
+            "options": [
+              "Underlined List",
+              "Unordered List",
+              "Unique List",
+              "Upper List"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which tag wraps each item inside a list?",
+            "options": [
+              "<item>",
+              "<entry>",
+              "<li>",
+              "<list-item>"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "Inside a table, what does <th> represent?",
+            "options": [
+              "A table row",
+              "A table header cell",
+              "A table body",
+              "A table footer"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which pair of tags creates a table data cell?",
+            "options": [
+              "<td>...</td>",
+              "<tr>...</tr>",
+              "<th>...</th>",
+              "<table-cell>...</table-cell>"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Why should tables NOT be used for page layout?",
+            "options": [
+              "Tables cannot hold text",
+              "Browsers do not support tables anymore",
+              "Tables are meant for tabular data, not visual layout; CSS should handle layout",
+              "Tables slow down the DOCTYPE declaration"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "In a form, what does the for attribute on a <label> do?",
+            "options": [
+              "Sets the form's action URL",
+              "Links the label to a matching input's id",
+              "Styles the label in bold",
+              "Submits the form automatically"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which input type hides what the user types?",
+            "options": [
+              "text",
+              "hidden",
+              "password",
+              "secret"
+            ],
+            "answer": 2
+          },
+          {
+            "q": "What is the correct syntax for an HTML comment?",
+            "options": [
+              "// comment",
+              "<!-- comment -->",
+              "/* comment */",
+              "# comment"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which element groups content into a block that takes a full line?",
+            "options": [
+              "<span>",
+              "<em>",
+              "<div>",
+              "<a>"
+            ],
+            "answer": 2
+          }
+        ]
+      }
+    },
+    {
+      "title": "Module 4 — Semantic HTML & Professional Practice",
+      "content": {
+        "topics": [
+          {
+            "topic_id": 1,
+            "title": "Topic 4.1 [Unlocked]: Semantic HTML5 Tags",
+            "content": "## Introduction & Core Concepts\n\n\"Semantic\" means the tag name describes its meaning, not just its appearance. HTML5 introduced tags such as `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, and `<footer>` specifically so page structure is clearer to both developers and browsers.\n\n```html\n<header>\n    <h1>My Website</h1>\n    <nav>\n        <a href=\"#\">Home</a>\n        <a href=\"#\">About</a>\n    </nav>\n</header>\n<main>\n    <article>\n        <h2>Blog Post Title</h2>\n        <p>Post content goes here.</p>\n    </article>\n</main>\n<footer>\n    <p>&copy; 2026 My Website</p>\n</footer>\n```\n\n### Before Semantic Tags Existed\n\nDevelopers used generic `<div>` tags for everything, which made it hard to tell what each section of a page was for just by reading the code:\n\n```html\n<div class=\"header\">...</div>\n<div class=\"nav\">...</div>\n<div class=\"content\">...</div>\n```\n\nSemantic tags replace these vague divs with self-describing names.\n\n**Real-world analogy:** A building blueprint labeled \"KITCHEN,\" \"BATHROOM,\" \"LIVING ROOM\" is far more useful than one labeled \"ROOM 1,\" \"ROOM 2,\" \"ROOM 3.\" Semantic HTML labels the rooms of your page.\n\n### Why This Matters\n\n- **Accessibility:** screen readers can announce \"navigation\" or \"main content\" directly\n- **SEO:** search engines better understand page structure and content priority\n- **Maintainability:** future developers instantly understand the layout\n- **Consistency:** browsers apply sensible default styling\n\n### Common Semantic Tags\n\n| Tag | Purpose |\n|---|---|\n| `<header>` | Top banner — logo, site title, nav |\n| `<nav>` | Navigation links |\n| `<main>` | The main, unique content of the page |\n| `<article>` | A self-contained piece of content (blog post, news item) |\n| `<section>` | A themed grouping within a page |\n| `<aside>` | Side content — related links, ads |\n| `<footer>` | Bottom banner — copyright, contact info |\n\n### Code Example / Implementation\n\n```html\n<body>\n    <header>\n        <h1>Tech Blog</h1>\n        <nav><a href=\"#\">Home</a> <a href=\"#\">Articles</a></nav>\n    </header>\n    <main>\n        <article>\n            <h2>Why Semantic HTML Matters</h2>\n            <p>Semantic tags improve accessibility and SEO...</p>\n        </article>\n        <aside>\n            <p>Related articles</p>\n        </aside>\n    </main>\n    <footer>\n        <p>&copy; 2026 Tech Blog</p>\n    </footer>\n</body>\n```\n\n### Key Takeaways\n\n- Semantic tags describe meaning: `<header>`, `<nav>`, `<main>`, `<article>`, `<footer>`\n- They improve accessibility, SEO, and code maintainability\n- Prefer semantic tags over generic `<div>` containers\n- HTML5 (2014) made semantic structure standard"
+          },
+          {
+            "topic_id": 2,
+            "title": "Topic 4.2 [Locked — Requires 4.1 Completion]: Accessibility & SEO Basics",
+            "content": "## Introduction & Core Concepts\n\nAn accessible website works for everyone — including users with visual impairments, motor limitations, or who rely on screen readers. SEO (Search Engine Optimization) means helping search engines understand and rank your content. Good HTML serves both goals at once.\n\n### Core Accessibility Practices\n\n1. **Alt text on images** — screen readers announce it\n2. **Labels on form inputs** — every input gets a `<label>` connected by `for`/`id`\n3. **One `<h1>` per page** — clear document outline\n4. **Semantic structure** — `<nav>`, `<main>`, `<article>` give landmarks\n5. **`lang` attribute** — `<html lang=\"en\">` tells screen readers which language to pronounce\n\n### Core SEO Practices\n\n1. **Unique `<title>` per page** — the headline search engines display\n2. **Meta description** — the summary shown under the title in search results\n3. **Meaningful heading hierarchy** — content outline for crawlers\n4. **Descriptive link text** — \"Buy premium headphones\" beats \"click here\"\n5. **Semantic tags** — proper landmarks help crawlers index content\n\n**Real-world analogy:** Accessibility is like a building with ramps, braille signs, and wide doors — everyone can enter. SEO is like clear street signage so people can find the building. Good HTML provides both for free.\n\n### Code Example / Implementation\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <meta name=\"description\" content=\"Learn HTML from zero — the complete beginner's guide to web structure.\">\n    <title>HTML for Absolute Beginners | IH Academy</title>\n</head>\n<body>\n    <h1>HTML for Absolute Beginners</h1>\n    <form>\n        <label for=\"email\">Email address:</label>\n        <input type=\"email\" id=\"email\" name=\"email\">\n    </form>\n</body>\n</html>\n```\n\n### Key Takeaways\n\n- Alt text, labels, one `<h1>`, and semantic tags = accessible pages\n- Title, meta description, headings, and link text = better SEO\n- Accessibility and SEO improvements come from the same good habits\n- The `lang` attribute on `<html>` helps screen readers pronounce correctly"
+          },
+          {
+            "topic_id": 3,
+            "title": "Topic 4.3 [Locked — Requires 4.2 Completion]: Common Errors & Troubleshooting",
+            "content": "## Introduction & Core Concepts\n\nEvery beginner hits the same handful of HTML problems. Knowing them in advance saves hours of confusion.\n\n### The Five Most Common Errors\n\n| Error | Cause | Fix |\n|---|---|---|\n| Page shows raw text with < > symbols | A tag was typed incorrectly, e.g. missing `>` | Check every tag is properly closed |\n| Content appears in the wrong place | Tags are not nested properly | Ensure every opening tag has a matching closing tag in the right order |\n| Image does not appear | Wrong file path in `src` | Double-check the file name, extension, and folder location |\n| Page looks unstyled or broken | Missing `<!DOCTYPE html>` | Always start files with the doctype |\n| Link goes to the wrong place | Missing `https://` or wrong relative path | Verify the full URL or file path |\n\n### The Browser's Developer Tools\n\nA simple troubleshooting habit: open your browser's **Developer Tools** (usually F12) and check the \"Elements\" tab. It shows exactly how the browser interpreted your HTML, which quickly reveals unclosed or misplaced tags.\n\n**Real-world analogy:** Developer Tools is like an X-ray machine for your page. Instead of guessing why the \"wall\" looks wrong, you can see the internal frame — every element, every tag, exactly as the browser sees it.\n\n### Real-World Use Cases & Rules\n\n- Save the file before refreshing — editing without saving shows old content\n- Check the exact error area first: missing closing tag, wrong attribute name, bad file path\n- Validate your HTML with a tool like the W3C Markup Validator to catch hidden errors\n- One unclosed tag can \"eat\" the rest of the page — close everything\n\n### Code Example / Implementation\n\n```html\n<!-- BUG: unclosed <strong> tag eats the rest of the page -->\n<p>This is <strong>bold text.</p>\n<p>This paragraph got swallowed too!</p>\n\n<!-- FIXED -->\n<p>This is <strong>bold text</strong>.</p>\n<p>This paragraph is fine now.</p>\n```\n\n### Key Takeaways\n\n- Most HTML errors are unclosed tags, wrong paths, or missing doctype\n- Use F12 Developer Tools → Elements to see the interpreted structure\n- Save before refreshing; validate with the W3C Validator\n- One unclosed tag can break everything after it"
+          },
+          {
+            "topic_id": 4,
+            "title": "Topic 4.4 [Locked — Requires 4.3 Completion]: Best Practices & Professional Workflow",
+            "content": "## Introduction & Core Concepts\n\nThe difference between code that \"works\" and code that is a pleasure to maintain comes down to habits. These are the habits professional developers use every day.\n\n### Best Practices Checklist\n\n- **Always close your tags** — some browsers forgive mistakes, but relying on forgiveness leads to unpredictable results\n- **Indent nested elements** consistently so the structure is easy to read\n- **Use lowercase tag and attribute names** — the widely accepted convention\n- **Always include an `alt` attribute** on images for accessibility\n- **Use one `<h1>` per page**, reserving it for the main title\n- **Separate structure from style** — avoid visual styling directly in HTML; that belongs in CSS\n- **Validate your HTML** with the W3C Markup Validator to catch hidden errors\n\n### Professional Workflow\n\nProfessionals rarely write a full page by memory — they rely on editor autocompletion:\n\n1. In VS Code, type `!` and press Tab to generate the entire page skeleton\n2. Use Emmet shortcuts like `ul>li*3` to generate nested structures instantly\n3. Keep files organized in folders: `images/`, `css/`, `js/`\n4. Test across browsers (Chrome, Firefox, Safari) — small differences exist\n5. Commit early and often with version control (covered in the Git course)\n\n**Real-world analogy:** A chef doesn't re-invent every recipe from memory — they use well-organized prep stations, proven techniques, and mise en place (everything in its place). Professional developers do the same with snippets, shortcuts, and organized folders.\n\n### Code Example / Implementation\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My Project</title>\n    <link rel=\"stylesheet\" href=\"css/styles.css\">\n</head>\n<body>\n    <main>\n        <h1>My Project</h1>\n        <img src=\"images/hero.jpg\" alt=\"Project hero image\">\n        <p>Project description goes here.</p>\n    </main>\n</body>\n</html>\n```\n\n### Key Takeaways\n\n- Close tags, indent, lowercase, alt text, one `<h1>` — the five core habits\n- Use editor shortcuts: `!` + Tab for the skeleton, Emmet for nested structures\n- Organize files into folders from day one\n- Separate structure (HTML) from style (CSS) from behavior (JS)"
+          }
+        ]
+      },
+      "duration_mins": 45,
+      "lesson_order": 4,
+      "quiz": {
+        "title": "Module 4 Quiz — Pass to Complete the Course",
+        "questions": [
+          {
+            "q": "Which HTML5 tag is meant specifically for site navigation links?",
+            "options": [
+              "<nav>",
+              "<header>",
+              "<menu>",
+              "<links>"
+            ],
+            "answer": 0
+          },
+          {
+            "q": "Which tag wraps the main, unique content of a page?",
+            "options": [
+              "<body>",
+              "<main>",
+              "<content>",
+              "<center>"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is the purpose of semantic HTML tags like <article> and <section>?",
+            "options": [
+              "They add visual styling automatically",
+              "They describe the meaning of page sections for accessibility and SEO",
+              "They replace the need for CSS entirely",
+              "They are only used in older websites"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which attribute on the <html> tag helps screen readers pronounce content correctly?",
+            "options": [
+              "charset",
+              "lang",
+              "dir",
+              "meta"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Why is descriptive link text like \"Read the pricing guide\" better than \"click here\"?",
+            "options": [
+              "It is shorter",
+              "It improves accessibility and SEO",
+              "It loads faster",
+              "It is required by HTML syntax"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What is a common cause of raw text with < > symbols showing on a page?",
+            "options": [
+              "Missing <!DOCTYPE html>",
+              "A tag typed incorrectly, such as a missing >",
+              "Too many images",
+              "Using semantic tags"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "What browser tool shows exactly how HTML was interpreted?",
+            "options": [
+              "The Print dialog",
+              "Developer Tools (Elements tab)",
+              "The bookmarks bar",
+              "The history tab"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which habit helps prevent one unclosed tag from breaking the whole page?",
+            "options": [
+              "Using only <div> tags",
+              "Consistently indenting and closing all tags",
+              "Adding more comments",
+              "Using uppercase tags"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "In VS Code, what keystroke generates the entire HTML page skeleton?",
+            "options": [
+              "Ctrl+S",
+              "Typing ! and pressing Tab (Emmet)",
+              "Ctrl+Shift+P",
+              "Typing html5 and pressing Enter"
+            ],
+            "answer": 1
+          },
+          {
+            "q": "Which statement correctly separates the three web technologies?",
+            "options": [
+              "HTML styles, CSS structures, JavaScript behaves",
+              "HTML structures, CSS styles, JavaScript behaves",
+              "HTML behaves, CSS structures, JavaScript styles",
+              "All three do the same thing"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    }
+  ]
+}

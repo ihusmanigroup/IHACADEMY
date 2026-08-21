@@ -1,0 +1,28 @@
+{
+  "name": "ihacademy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "node scripts/run-migration.js",
+    "reset:all": "node scripts/reset-all-progress.js",
+    "db:setup-community": "node scripts/setup-community-db.js",
+    "db:setup-projects": "node scripts/setup-projects-db.js",
+    "server": "node server/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.111.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
+    "nodemailer": "^9.0.5",
+    "pg": "^8.22.0",
+    "uuid": "^9.0.0"
+  }
+}

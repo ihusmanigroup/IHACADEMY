@@ -1,0 +1,544 @@
+IH Academy | Winter Internship 2026-27
+Page 1
+IH ACADEMY
+ Winter Internship 2026-27
+ Machine Learning
+ Data preparation, EDA, supervised learning, evaluation, feature engineering, deployment
+ and reproducibility.
+Program length
+4 weeks
+Weekly structure
+4 track assignments + required free course(s)
+Difficulty path
+Easy -> Intermediate -> Advanced -> Capstone
+Visibility rule
+Intern sees only the track selected in the application
+Unlock rule
+Next week unlocks only after all previous-week assignments and required course proofs are
+approved
+Submission types
+GitHub repository, deployed link when applicable, notes/comments, PDF evidence report and
+optional supporting file
+Program rules
+• This document replaces the old eight-week/summer assignment bank for the Winter Internship portal.
+• Week 1 contains two required free courses; Weeks 2-4 contain one required free course each.
+• All four assignments in a week are mandatory. Course certificates are also mandatory.
+• A submission may be Draft, Submitted, Changes Requested or Approved. Only Approved items count toward
+unlocking.
+• Plagiarism, copied repositories, exposed API keys, fake deployments or fabricated screenshots result in
+rejection.
+• Deadlines, opening dates and review windows must be admin-configurable; do not hardcode them in the
+frontend.
+Standard PDF evidence report
+• Cover page: intern name, track, week, assignment, repository URL and live URL.
+• 1-2 pages of implementation summary and architecture/folder structure.
+• Screenshots of required features and important validation/error states.
+• Testing table with scenario, expected result, actual result and pass/fail.
+• Challenges, limitations and what the intern would improve next.
+
+IH Academy | Winter Internship 2026-27
+Page 2
+WEEK 1 - Foundation & Workflow
+Complete every assignment and the required free course proof. Week 2 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ EASY
+ 7-9 h
+Titanic Data Exploration and Cleaning
+Assignment question: Analyze and clean the Titanic dataset, then produce a data-quality report ready for
+modeling.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Inspect shape, types, duplicates and missing values.
+• Create at least five meaningful visualizations.
+• Handle missing Age, Cabin and Embarked values with justified choices.
+• Encode categorical variables and export a cleaned CSV.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+The cleaned dataset has documented transformations and no unexplained missing values.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 2
+ EASY
+ 9-11 h
+House Price Regression Baseline
+Assignment question: Train a baseline model to predict house prices and explain which features influence
+results.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Separate features and target without leakage.
+• Create a preprocessing pipeline for numeric and categorical data.
+• Compare a dummy baseline, linear regression and one tree-based model.
+• Report MAE, RMSE and R2 on held-out data.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+
+IH Academy | Winter Internship 2026-27
+Page 3
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+The final model beats the dummy baseline and metrics are calculated correctly.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 8-10 h
+Student Performance Analysis
+Assignment question: Investigate factors associated with student performance and build a simple prediction
+model.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Perform subgroup analysis without claiming causation.
+• Visualize relationships between study time, attendance and score.
+• Build either regression or classification with a justified target.
+• Discuss bias, limitations and data leakage risks.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+Claims remain supported by the data and the model evaluation is honest.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 4
+INTERMEDIAT
+ E
+ 9-12 h
+Interactive Data Visualization Dashboard
+Assignment question: Create a Streamlit dashboard for exploring a chosen public dataset.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Provide filters, KPI cards and at least four chart types.
+• Handle empty filter results.
+• Cache data loading appropriately.
+• Deploy the dashboard publicly.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+
+IH Academy | Winter Internship 2026-27
+Page 4
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+Dashboard filters update correctly and all charts remain readable.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+Required free course(s)
+FREE COURSE 1: Git & GitHub for Beginners
+Use version control correctly for notebooks, source code and reports.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Mandatory Week 1 proof
+FREE COURSE 2: Python for Data Analysis
+Refresh Python, NumPy, pandas, visualization and notebook workflow.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Mandatory Week 1 proof
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 5
+WEEK 2 - Applied Development
+Complete every assignment and the required free course proof. Week 3 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+INTERMEDIAT
+ E
+ 11-14 h
+Customer Churn Prediction
+Assignment question: Build a churn classifier and identify actionable drivers while handling class imbalance.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Create preprocessing pipelines.
+• Compare logistic regression and two tree-based models.
+• Report precision, recall, F1, ROC-AUC and confusion matrix.
+• Select threshold based on a stated business objective.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+The chosen model/threshold is justified rather than selected only by accuracy.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 2
+INTERMEDIAT
+ E
+ 10-13 h
+Loan Approval Prediction
+Assignment question: Predict loan approval using a public dataset while documenting fairness and leakage
+risks.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Audit sensitive or proxy attributes.
+• Compare at least three models with cross-validation.
+• Explain false-positive and false-negative consequences.
+• Produce feature importance or coefficients.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+
+IH Academy | Winter Internship 2026-27
+Page 6
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+Evaluation includes fairness/limitation discussion and correct train-test separation.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 3
+INTERMEDIAT
+ E
+ 10-13 h
+Spam Email Classifier
+Assignment question: Build a text classifier for spam detection using TF-IDF and compare multiple algorithms.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Clean text without destroying useful signals.
+• Use a Pipeline containing vectorizer and model.
+• Compare Naive Bayes, logistic regression and linear SVM or equivalent.
+• Show misclassified examples and error analysis.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+Pipeline handles unseen text and reports class-specific metrics.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 4
+ ADVANCED
+ 12-15 h
+Movie Recommendation System
+Assignment question: Build a content-based recommendation system that returns similar movies from
+metadata.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Prepare text features from genres, keywords and overview.
+• Use TF-IDF/cosine similarity or a justified embedding approach.
+• Return top-N results and exclude the query movie.
+• Evaluate qualitatively with at least ten test titles.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+
+IH Academy | Winter Internship 2026-27
+Page 7
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+Recommendations are reproducible and evaluation examples are documented.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+Required free course(s)
+FREE COURSE 1: Machine Learning Fundamentals
+Cover train/test splits, leakage, preprocessing, baseline models and core metrics.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Supports Week 2
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 8
+WEEK 3 - Integration & Quality
+Complete every assignment and the required free course proof. Week 4 remains locked until mentor
+approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 14-18 h
+Image Classification with CNN
+Assignment question: Train a CNN on a public image dataset and analyze overfitting and class errors.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Create train/validation/test splits.
+• Normalize images and apply justified augmentation.
+• Plot training history and confusion matrix.
+• Save the best model and provide an inference script.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+The saved model reproduces reported test metrics and inference works on new samples.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 2
+ ADVANCED
+ 12-16 h
+Sentiment Analysis Pipeline
+Assignment question: Build a sentiment classifier and compare a classical model with a pre-trained
+transformer or documented lightweight alternative.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Clean and split text safely.
+• Use appropriate metrics and class balance analysis.
+• Compare accuracy, latency and resource use.
+• Inspect common error categories.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+
+IH Academy | Winter Internship 2026-27
+Page 9
+Acceptance check
+Comparison is fair and includes both quality and practical tradeoffs.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 3
+ ADVANCED
+ 13-17 h
+Time-Series Forecasting
+Assignment question: Forecast a time-indexed target using walk-forward validation and compare against
+naive baselines.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Preserve temporal order.
+• Create lag/rolling features without future leakage.
+• Compare naive, statistical and ML-based approaches.
+• Report MAE/RMSE and forecast plots.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+The model is evaluated with time-aware validation and beats or honestly discusses the
+baseline.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 4
+ ADVANCED
+ 13-17 h
+Fraud Detection Challenge
+Assignment question: Build an imbalanced classification pipeline for credit-card fraud detection.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Use stratified/time-aware splitting as appropriate.
+• Do not oversample before splitting.
+• Report PR-AUC, recall, precision and confusion matrix.
+• Select a threshold based on cost assumptions.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+
+IH Academy | Winter Internship 2026-27
+Page 10
+Acceptance check
+No leakage is introduced and metric choice reflects rare-event detection.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+Required free course(s)
+FREE COURSE 1: Feature Engineering & Model Evaluation
+Cover pipelines, cross-validation, tuning and interpretation.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Required for Week 3
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
+
+IH Academy | Winter Internship 2026-27
+Page 11
+WEEK 4 - Production Challenge
+Complete every assignment and the required free course proof. Week completion review remains locked until
+mentor approval.
+ ASSIGNMENT 1
+ ADVANCED
+ 16-20 h
+End-to-End ML Pipeline
+Assignment question: Convert one earlier notebook into a reusable training and inference pipeline.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Create separate data, features, train, evaluate and predict modules.
+• Use configuration files or CLI arguments.
+• Persist preprocessing and model together.
+• Add basic automated tests for data schema and prediction shape.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+A fresh environment can train and predict using documented commands.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 2
+ ADVANCED
+ 14-18 h
+Model Deployment with FastAPI
+Assignment question: Serve a trained model through a validated FastAPI prediction service.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Define Pydantic input/output schemas.
+• Load model once at startup.
+• Add /health, /predict and /model-info endpoints.
+• Handle invalid data and log prediction errors safely.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+API returns reproducible predictions and invalid requests receive clear errors.
+
+IH Academy | Winter Internship 2026-27
+Page 12
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 3
+ ADVANCED
+ 12-16 h
+Experiment Tracking and Model Comparison
+Assignment question: Track at least eight model runs and select a production candidate using reproducible
+evidence.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Use MLflow or a lightweight documented alternative.
+• Log parameters, metrics and artifacts.
+• Create a model comparison table.
+• Register or clearly identify the selected model version.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+Acceptance check
+Runs can be reproduced and the selected model follows declared criteria.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+ ASSIGNMENT 4
+ ADVANCED
+ 22-30 h
+IH Academy ML Capstone
+Assignment question: Build a production-ready ML application using a real-world dataset, API and interactive
+dashboard.
+Required work
+• Use a reproducible notebook or src/ pipeline with fixed random seeds.
+• Document the dataset source, target and ethical/quality limitations.
+• Include data validation, preprocessing, training, evaluation and inference.
+• Expose predictions through FastAPI.
+• Create a Streamlit or React dashboard consuming the API.
+• Document ethics, limitations, monitoring signals and retraining plan.
+Expected deliverables
+• Clean repository with requirements.txt or pyproject.toml
+• Notebook/source code and saved figures
+• README with setup and results
+• PDF report containing methodology, charts, metrics and conclusions
+Submission mode
+Notebook/source + dataset reference + model artifacts + PDF report
+
+IH Academy | Winter Internship 2026-27
+Page 13
+Acceptance check
+The deployed system works end to end and all reported metrics are reproducible.
+Evidence required
+Metrics table, plots, sample predictions and reproducibility notes
+Required free course(s)
+FREE COURSE 1: ML Deployment with FastAPI
+Serve models safely, validate input and document prediction endpoints.
+Format
+IH Academy course
+Completion proof
+Certificate PDF
+Unlock effect
+Required for final approval
+Week approval checklist
+• All four assignments submitted
+• All required course certificates uploaded
+• Repository links accessible to reviewer
+• No secrets or credentials committed
+• PDF evidence reports readable
+• Mentor feedback resolved
+• All items marked Approved
