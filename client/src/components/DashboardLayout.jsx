@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext'
 import AIChatModal from './AIChatModal'
 import UserDropdown from './UserDropdown'
 import NotificationBell from './NotificationBell'
+import Logo from './Logo'
 
 const navSections = [
   {
@@ -61,11 +62,11 @@ export default function DashboardLayout() {
         {/* Sidebar Header */}
         <div className={`flex items-center h-16 shrink-0 border-b border-sky-900/40 transition-colors duration-300 ${isCollapsed ? 'justify-center px-0' : 'justify-between px-4'}`}>
           {isCollapsed ? (
-                <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-md flex items-center justify-center text-black font-bold text-sm border border-sky-500/30 shadow-lg shadow-sky-500/10">IH</div>
+                <Logo className="h-8 w-8" />
           ) : (
             <>
               <Link to="/dashboard" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-md flex items-center justify-center text-black font-bold text-sm border border-sky-500/30 shadow-lg shadow-sky-500/10">IH</div>
+            <Logo className="h-8 w-8" />
                 <span className="font-bold text-slate-100">IH Academy</span>
               </Link>
               <button

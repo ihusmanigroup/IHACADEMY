@@ -9,7 +9,7 @@ import { DEV_MODE } from '../config/devMode'
 import {
   X, Loader2, Eye, EyeOff,
   LogIn, UserPlus, ShieldAlert, Award, Handshake, BadgeCheck, Code2,
-  Zap, Star, Snowflake, Sun, Lock, CalendarClock,
+  Zap, Star, Snowflake, Sun, Lock, CalendarClock, Globe, Clock3,
   Mail, KeyRound, CheckCircle2, ArrowLeft,
 } from 'lucide-react'
 import LiveCountdown from '../components/LiveCountdown'
@@ -45,6 +45,14 @@ const TRACKS = [
     tech: 'LLM APIs, LangChain, Function Calling, Agent Workflows',
     duration: '4 Weeks', format: 'Remote / Self-Paced',
   },
+]
+
+const TRACK_GRADIENTS = [
+  'from-sky-500 to-cyan-400',
+  'from-violet-500 to-fuchsia-500',
+  'from-emerald-500 to-teal-400',
+  'from-amber-500 to-orange-500',
+  'from-rose-500 to-pink-500',
 ]
 
 const BENEFITS = [
@@ -861,15 +869,31 @@ export default function Careers() {
             <span className="text-xs text-slate-600 dark:text-slate-300">(5 options)</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {TRACKS.map((t) => (
-              <div key={t.id} className="bg-white dark:bg-[#0f1420]/80 border border-slate-200 dark:border-slate-800 rounded-xl p-5 flex flex-col hover:border-emerald-500/20 transition-all">
+            {TRACKS.map((t, i) => (
+              <SpotlightCard
+                key={t.id}
+                spotlightColor="rgba(16,185,129,0.16)"
+                className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1420]/80 p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 shadow-sm hover:shadow-xl shadow-slate-900/5"
+              >
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-2xl">{t.icon}</span>
-                  <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100">{t.label}</h3>
+                  <span className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${TRACK_GRADIENTS[i % TRACK_GRADIENTS.length]} text-white text-xl shadow-md shadow-slate-900/10`}>
+                    {t.icon}
+                  </span>
+                  <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100 leading-snug">{t.label}</h3>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed flex-1">{t.desc}</p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-3">{t.tech}</p>
-              </div>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {t.tech.split(',').map((tech) => (
+                    <span key={tech} className="rounded-full bg-slate-100 dark:bg-slate-800/70 px-2 py-0.5 text-[10px] font-semibold text-slate-600 dark:text-slate-300">
+                      {tech.trim()}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-3 flex items-center gap-3 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+                  <span className="inline-flex items-center gap-1"><Clock3 className="w-3 h-3" /> {t.duration}</span>
+                  <span className="inline-flex items-center gap-1"><Globe className="w-3 h-3" /> {t.format}</span>
+                </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>

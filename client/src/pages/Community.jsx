@@ -70,9 +70,6 @@ function MessageCard({ m, userId, isAdmin, currentUserAvatar, authorTiers, confi
   const isExclusive = rawTier === 'exclusive'
   const isFree = rawTier === 'free'
 
-  // DEBUG
-  console.log('DEBUG MESSAGE TIER:', { id: m.id, rawTier, isCourseBuyer, isPro, isExclusive, isFree })
-
   const tierKey = isCourseBuyer ? 'course_buyer' : isPro ? 'pro' : isExclusive ? 'exclusive' : 'free'
   const tier = TIERS[tierKey] || TIERS.free
   const TierIcon = typeof tier.icon === 'string' || !tier.icon ? null : tier.icon
@@ -92,84 +89,79 @@ function MessageCard({ m, userId, isAdmin, currentUserAvatar, authorTiers, confi
       : m.user_avatar || avatarFallback(m.user_name)
 
   return (
-    <div className={`group rounded-xl border p-3 transition ${
-      mine
-        ? 'border-sky-200/80 bg-sky-50/60 dark:border-sky-500/25 dark:bg-sky-500/[0.06]'
-        : 'border-slate-200/80 bg-white dark:border-slate-700/60 dark:bg-white/[0.02]'
-    }`}>
-      <div className="flex gap-3">
+    <div className={`group flex gap-2.5 ${mine ? 'flex-row-reverse' : ''}`}>
+      <div className="mt-0.5 shrink-0">
         <Avatar name={m.user_name} avatar={activeAvatar} tierKey={tierKey} />
-
-        <div className="min-w-0 flex-1">
-          {/* Author row */}
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span className={`text-sm font-bold ${tier.name}`}>{m.user_name}</span>
+      </div>
+      <div className={`flex min-w-0 max-w-[85%] flex-col ${mine ? 'items-end' : 'items-start'}`}>
+        {!mine && (
+          <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 px-1">
+            <span className={`text-xs font-bold ${tier.name}`}>{m.user_name}</span>
             {tier.label && tier.badge && (
               <span className={`inline-flex items-center gap-1 ${tier.badge}`}>
                 {TierIcon ? <TierIcon className="w-3 h-3" /> : tier.icon}
                 {tier.label}
               </span>
             )}
-            <span className="text-[11px] text-slate-400">{timeAgo(m.created_at)}</span>
-
-            {canDelete &&
-              (confirmId === m.id ? (
-                <span className="ml-auto inline-flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => onDelete(m.id)}
-                    className="inline-flex items-center gap-1 rounded-lg bg-rose-600 px-2.5 py-1 text-[11px] font-semibold text-white transition hover:bg-rose-700"
-                  >
-                    <Trash2 className="w-3 h-3" /> Delete
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setConfirmId(null)}
-                    className="rounded-lg border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-white/5"
-                  >
-                    Cancel
-                  </button>
-                </span>
-              ) : (
-                <button
-                  type="button"
-                  aria-label="Delete message"
-                  onClick={() => setConfirmId(m.id)}
-                  className="ml-auto rounded-lg p-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 dark:hover:text-rose-400"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
-              ))}
           </div>
-
-          {/* Message content */}
-          <div className="mt-1">
-            <CommunityContent content={m.content} />
-          </div>
-
-          {/* Minimal actions */}
-          <div className="mt-2 flex flex-wrap items-center gap-1.5">
+        )}
+        <div className={`relative rounded-2xl px-4 py-2.5 shadow-sm ${
+          mine
+            ? 'rounded-tr-sm bg-gradient-to-br from-sky-500 to-cyan-500 text-white'
+            : 'rounded-tl-sm border border-slate-200 bg-white text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100'
+        }`}>
+          <CommunityContent content={m.content} />
+          {canDelete && (
             <button
               type="button"
-              onClick={() => toggleReaction(m.id, 'like')}
-              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold transition ${
-                liked
-                  ? 'border-amber-300 bg-amber-500/10 text-amber-600 dark:border-amber-500/40 dark:bg-amber-500/15 dark:text-amber-300'
-                  : 'border-slate-200 bg-white text-slate-500 hover:border-amber-200 hover:text-amber-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400'
-              }`}
+              aria-label="Delete message"
+              onClick={() => setConfirmId(m.id)}
+              className={`absolute -top-2 ${mine ? '-left-2' : '-right-2'} rounded-full bg-white p-1 text-slate-400 shadow-md transition hover:bg-rose-50 hover:text-rose-600 dark:bg-slate-700 dark:hover:bg-rose-500/20 dark:hover:text-rose-400`}
             >
-              <ThumbsUp className={`w-3.5 h-3.5 ${liked ? 'fill-amber-500/30' : ''}`} />
-              {likeCount > 0 ? likeCount : 'Like'}
+              <Trash2 className="w-3 h-3" />
             </button>
+          )}
+        </div>
 
-            <button
-              type="button"
-              onClick={() => onReply(m)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-500 transition hover:border-sky-200 hover:text-sky-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400 dark:hover:border-sky-500/40 dark:hover:text-sky-300"
-            >
-              <Reply className="w-3.5 h-3.5" /> Reply
-            </button>
-          </div>
+        <div className={`mt-1 flex flex-wrap items-center gap-2 px-1 ${mine ? 'flex-row-reverse' : ''}`}>
+          <span className="text-[10px] font-medium text-slate-400">{timeAgo(m.created_at)}</span>
+          <button
+            type="button"
+            onClick={() => toggleReaction(m.id, 'like')}
+            className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold transition ${
+              liked
+                ? 'border-amber-300 bg-amber-500/10 text-amber-600 dark:border-amber-500/40 dark:bg-amber-500/15 dark:text-amber-300'
+                : 'border-slate-200 bg-white text-slate-500 hover:border-amber-200 hover:text-amber-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400'
+            }`}
+          >
+            <ThumbsUp className={`w-3 h-3 ${liked ? 'fill-amber-500/30' : ''}`} />
+            {likeCount > 0 ? likeCount : 'Like'}
+          </button>
+          <button
+            type="button"
+            onClick={() => onReply(m)}
+            className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[11px] font-semibold text-slate-500 transition hover:border-sky-200 hover:text-sky-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400 dark:hover:border-sky-500/40 dark:hover:text-sky-300"
+          >
+            <Reply className="w-3 h-3" /> Reply
+          </button>
+          {confirmId === m.id && (
+            <span className="inline-flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => onDelete(m.id)}
+                className="inline-flex items-center gap-1 rounded-lg bg-rose-500/10 px-2 py-0.5 text-[11px] font-semibold text-rose-600 transition hover:bg-rose-500/20 dark:bg-rose-500/15 dark:text-rose-300"
+              >
+                <Trash2 className="w-3 h-3" /> Delete
+              </button>
+              <button
+                type="button"
+                onClick={() => setConfirmId(null)}
+                className="rounded-lg border border-slate-200 px-2 py-0.5 text-[11px] font-semibold text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-white/5"
+              >
+                Cancel
+              </button>
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -518,15 +510,18 @@ export default function Community() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-slate-950 dark:text-white">Developer Community</h1>
-        <p className="mt-1 max-w-2xl text-sm text-slate-600 dark:text-slate-500">
-          Live chat with the IH Academy community — ask questions and share wins in real time.
-        </p>
+      <div className="flex items-center gap-3">
+        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/20">
+          <MessageSquare className="w-5 h-5" />
+        </span>
+        <div>
+          <h1 className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">Developer Community</h1>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Live chat with the IH Academy community — ask questions & share wins in real time.</p>
+        </div>
       </div>
 
       {/* Feed */}
-      <div className="relative flex h-[calc(100vh-20rem)] min-h-[420px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-[#111827]">
+      <div className="relative flex h-[calc(100vh-20rem)] min-h-[420px] flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 shadow-xl shadow-slate-900/5 dark:border-slate-800 dark:bg-[#111827]">
         {error && (
           <p className="flex items-start gap-1.5 border-b border-rose-200/80 bg-rose-50/80 px-4 py-2 text-xs font-medium text-rose-700 dark:border-rose-500/25 dark:bg-rose-500/10 dark:text-rose-300">
             <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-px" /> Failed to load messages: {error}

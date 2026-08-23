@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { LogOut } from 'lucide-react'
 import { useInternAuth } from '../context/InternAuthContext'
 import { sidebarItems } from '../data/internPortalNav'
+import Logo from './Logo'
 
 /**
  * Persistent portal chrome: left sidebar navigation, sticky top header, and
@@ -35,7 +36,7 @@ export default function InternPortalShell({ title, subtitle = 'Intern Portal · 
       <aside className="hidden md:flex w-64 shrink-0 border-r border-sky-900/40 bg-gradient-to-b from-[#081325] via-[#0c1e38] to-[#070f1e] text-white p-4 flex-col justify-between h-full min-h-screen sticky top-0 overflow-y-auto custom-scrollbar">
         <div>
           <div className="flex items-center gap-3 px-2 mb-6">
-            <div className="w-9 h-9 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-black font-bold text-sm border border-sky-500/30 shadow-lg shadow-sky-500/10">IH</div>
+            <Logo className="h-9 w-9" />
             <div>
               <p className="font-bold text-white leading-tight">Intern Portal</p>
               <p className="text-xs font-extrabold text-sky-400">IH Academy</p>

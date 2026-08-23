@@ -16,16 +16,22 @@ import { useEffect, useRef } from 'react'
 // ---------------------------------------------------------------------------
 
 export const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
-export const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || ''
-export const AI_MODEL = import.meta.env.VITE_AI_MODEL || 'cohere/north-mini-code:free'
+// The key must be VITE_-prefixed to reach the browser bundle. Accept the bare
+// name too as a safety net for local setups that expose it manually.
+export const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || import.meta.env.OPENROUTER_API_KEY || ''
+export const AI_MODEL = import.meta.env.VITE_AI_MODEL || 'nvidia/nemotron-3-super-120b-a12b:free'
 
 // Unified model priority queue (primary model first, then these fallbacks).
+// Every id below is a verified live OpenRouter :free model — no paid models,
+// so a missing credit balance can never break the tutor. Order reflects
+// real-world availability tests (strongest reliable responder first).
 export const FALLBACK_MODELS = [
   'poolside/laguna-s-2.1:free',
+  'dots-studio/dots-3-note-preview:free',
+  'z-ai/glm-5.2:free',
+  'google/gemma-4-31b-it:free',
   'cohere/north-mini-code:free',
-  'poolside/laguna-xs-2.1:free',
-  'meta-llama/llama-3.3-70b-instruct',
-  'qwen/qwen-2.5-72b-instruct',
+  'liquid/lfm-2.5-2.6b:free',
 ]
 
 // Backwards-compatible alias (older consumers used this name).
@@ -199,9 +205,13 @@ async function streamOnce(model, messages, maxTokens, onDelta) {
 // first, then walks the unified FALLBACK_MODELS queue one by one. Each attempt
 // is guarded by the 10-second watchdog and every failure (timeout / 400 / 404 /
 // 429 / 500 / any non-ok status) is logged silently and auto-switches to the
-// next model. Resolves { ok: true } the moment any model streams, and only
-// returns { ok: false, status, errorText } when the whole queue is exhausted —
-// callers render the end-user error only in that case.
+// next model. A short cooldown after a rate-limit (429) gives the free tier a
+// beat to recover before the next model fires. Resolves { ok: true } the
+// moment any model streams, and only returns { ok: false, status, errorText }
+// when the whole queue is exhausted — callers render the end-user error only
+// in that case.
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
 export async function streamAIReply({ messages, maxTokens = 1200, onDelta, model }) {
   const primary = model || AI_MODEL
   const models = [primary, ...FALLBACK_MODELS.filter((m) => m !== primary)]
@@ -212,7 +222,53 @@ export async function streamAIReply({ messages, maxTokens = 1200, onDelta, model
     if (r.ok) return { ok: true }
     last = r
     console.warn('Model failed, auto-switching...', models[i], r.status)
+    if (r.status === 429) await sleep(700)
   }
 
   return { ok: false, status: last.status, errorText: last.errorText }
+}
+
+// Non-streaming sibling of streamAIReply — same queue, same watchdogs, but it
+// buffers the full reply instead of streaming deltas. Used by features that
+// need complete text up-front (e.g. code translation in lesson code blocks).
+export async function completeAI({ messages, maxTokens = 1600, model }) {
+  const primary = model || AI_MODEL
+  const models = [primary, ...FALLBACK_MODELS.filter((m) => m !== primary)]
+  let last = null
+
+  for (let i = 0; i < models.length; i++) {
+    try {
+      const controller = new AbortController()
+      const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS * 3)
+      const res = await fetch(OPENROUTER_URL, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ model: models[i], max_tokens: maxTokens, messages }),
+      })
+      clearTimeout(timer)
+
+      if (!res.ok) {
+        last = { status: res.status, errorText: await res.text() }
+        console.warn('Model failed, auto-switching...', models[i], res.status)
+        if (res.status === 429) await sleep(700)
+        continue
+      }
+
+      const json = await res.json()
+      const text = json?.choices?.[0]?.message?.content || ''
+      if (!text.trim()) {
+        last = { status: 200, errorText: 'Empty response from model' }
+        continue
+      }
+      return { ok: true, text }
+    } catch (err) {
+      last = { status: err.name === 'AbortError' ? 408 : 0, errorText: err.message }
+    }
+  }
+
+  return { ok: false, status: last?.status ?? 0, errorText: last?.errorText ?? 'All models failed' }
 }

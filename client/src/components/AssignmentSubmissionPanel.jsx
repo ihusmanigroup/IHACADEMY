@@ -227,21 +227,35 @@ export default function AssignmentSubmissionPanel({ courseId, assignmentTitle, c
   const fileInputRef = useRef(null)
 
   const loadSubmissions = useCallback(async () => {
-    if (!user || !courseId) {
+    if (!user) {
       setSubmissions([])
       setLoading(false)
       return
     }
     setLoading(true)
     setLoadError('')
-    const { data, error } = await supabase
+    // Preferred: scope by course_id. If the live table is missing that column
+    // (older deployments), fall back to all of the user's rows and filter by
+    // title below — submissions still load instead of hard-failing.
+    let query = supabase
       .from('course_assignment_submissions')
       .select('*')
       .eq('user_id', user.id)
-      .eq('course_id', courseId)
-      .order('submitted_at', { ascending: false })
-    if (error) setLoadError(error.message)
-    else setSubmissions(data || [])
+    if (courseId) query = query.eq('course_id', courseId)
+    const { data, error } = await query.order('submitted_at', { ascending: false })
+    if (error && courseId && /course_id/.test(error.message)) {
+      const { data: all, error: err2 } = await supabase
+        .from('course_assignment_submissions')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('submitted_at', { ascending: false })
+      if (err2) setLoadError(err2.message)
+      else setSubmissions(all || [])
+    } else if (error) {
+      setLoadError(error.message)
+    } else {
+      setSubmissions(data || [])
+    }
     setLoading(false)
   }, [user, courseId])
 
@@ -336,9 +350,8 @@ export default function AssignmentSubmissionPanel({ courseId, assignmentTitle, c
       fileName = pdfFile.name
     }
 
-    const { error } = await supabase.from('course_assignment_submissions').insert({
+    const payload = {
       user_id: user.id,
-      course_id: courseId,
       assignment_title: assignmentTitle.trim(),
       github_url: hasGithub || null,
       demo_link: hasDemo || null,
@@ -346,7 +359,17 @@ export default function AssignmentSubmissionPanel({ courseId, assignmentTitle, c
       file_url: fileUrl,
       file_name: fileName,
       status: 'pending',
-    })
+    }
+    if (courseId) payload.course_id = courseId
+
+    let { error } = await supabase.from('course_assignment_submissions').insert(payload)
+    // If the live table lacks course_id, retry without that column so the
+    // submission still saves instead of throwing a 400 at the student.
+    if (error && courseId && /course_id/.test(error.message)) {
+      const rest = { ...payload }
+      delete rest.course_id
+      ;({ error } = await supabase.from('course_assignment_submissions').insert(rest))
+    }
     setSubmitting(false)
     if (error) {
       setFormError(error.message)

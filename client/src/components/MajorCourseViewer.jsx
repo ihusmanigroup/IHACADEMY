@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeft, BookOpen, BookMarked, Zap, Brain, CheckCircle2, Circle, ChevronDown,
   Award, Rocket, GraduationCap, FileText, Trophy, Sparkles,
-  CheckCircle, Copy, Code2, Layers, AlertTriangle, X, Lock, Play, ArrowRight,
+  CheckCircle, Code2, Layers, AlertTriangle, X, Lock, Play, ArrowRight,
   ChevronLeft, Target, Timer, Clock, RotateCcw,
 } from 'lucide-react'
 import { mlMajorCourse } from '../data/mlCourseData'
@@ -16,6 +16,7 @@ import { getPlanTier } from '../utils/subscription'
 import AiLessonChat from './AiLessonChat'
 import CourseMasterNotes from './CourseMasterNotes'
 import CourseEbook from './CourseEbook'
+import MultiLangCodeBlock from './MultiLangCodeBlock'
 import { RoadmapContent } from './MLMajorRoadmap'
 import CourseWorkspaceShell from './CourseWorkspaceShell'
 import {
@@ -93,41 +94,6 @@ function renderInline(text) {
 }
 
 // Universal dark syntax theme for code blocks (identical in light + dark mode)
-function CodeBlock({ code }) {
-  const [copied, setCopied] = useState(false)
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(code)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
-    } catch (_) {}
-  }
-
-  return (
-    <div className="bg-[#0B0F17] border border-slate-800/80 rounded-xl overflow-hidden shadow-inner">
-      <div className="flex items-center justify-between px-4 py-2 bg-[#151D2A] border-b border-slate-800">
-        <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500">
-          <Code2 className="w-3.5 h-3.5 text-sky-400" /> Python
-        </span>
-        <button
-          onClick={copy}
-          className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-sky-400 hover:text-sky-300 transition-colors cursor-pointer"
-        >
-          {copied ? (
-            <><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Copied!</>
-          ) : (
-            <><Copy className="w-3.5 h-3.5" /> Copy Code</>
-          )}
-        </button>
-      </div>
-      <pre className="p-4 font-mono text-xs md:text-[13px] text-slate-100 leading-relaxed overflow-x-auto custom-scrollbar whitespace-pre">
-        {code}
-      </pre>
-    </div>
-  )
-}
-
 function TabButton({ active, onClick, icon: Icon, label, badge, locked, title }) {
   return (
     <button
@@ -592,40 +558,49 @@ export default function MajorCourseViewer() {
       }
       drawer={
         <div className="space-y-4 p-3">
-            <div className="bg-white dark:bg-[#0f1420]/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center shrink-0">
-                  <Brain className="w-5 h-5 text-sky-500 dark:text-sky-400" />
+            <div className="relative overflow-hidden rounded-2xl p-5 shadow-xl shadow-slate-900/10 border border-cyan-400/20 bg-gradient-to-br from-[#0B2A4F] via-[#0F3D6E] to-[#081E3B]">
+              <div aria-hidden className="pointer-events-none absolute -right-8 -top-10 h-32 w-32 rounded-full bg-cyan-400/20 blur-2xl" />
+              <div aria-hidden className="pointer-events-none absolute -left-6 -bottom-10 h-28 w-28 rounded-full bg-sky-500/20 blur-2xl" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-cyan-300/30 flex items-center justify-center shrink-0">
+                    <Brain className="w-5 h-5 text-cyan-300" />
+                  </div>
+                  <div className="min-w-0">
+                    <h1 className="text-sm font-bold text-white leading-snug drop-shadow-sm">{mlMajorCourse.title}</h1>
+                    <p className="text-[11px] text-cyan-100/70 font-medium">{mlMajorCourse.subtitle}</p>
+                  </div>
                 </div>
-                <div className="min-w-0">
-                  <h1 className="text-sm font-bold text-slate-900 dark:text-white leading-snug">{mlMajorCourse.title}</h1>
-                  <p className="text-[11px] text-slate-500 font-medium">{mlMajorCourse.subtitle}</p>
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-wide text-cyan-200 flex items-center gap-1">
+                    <Zap className="w-3 h-3 text-cyan-300" /> Overall Progress
+                  </span>
+                  <span className="text-[11px] font-bold text-white">
+                    {completedLessons.size}/{totalLessons} lessons · {overallProgress}%
+                  </span>
                 </div>
+                <div className="h-2 bg-white/15 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-cyan-300 to-sky-400 rounded-full shadow-[0_0_10px_rgba(56,189,248,0.6)] transition-all duration-500"
+                    style={{ width: `${Math.min(100, Math.max(0, overallProgress))}%` }}
+                  />
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-2 flex-wrap">
+                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold ${courseStatus.chip}`}>
+                    <courseStatus.icon className="w-3 h-3" /> {courseStatus.label}
+                  </span>
+                </div>
+                <p className="mt-2 text-[10px] text-cyan-100/70 font-medium tracking-wide">
+                  Lessons {LESSON_WEIGHT}% · Quiz {QUIZ_WEIGHT}% · Capstone {CAPSTONE_WEIGHT}% — 100% required for your certificate.
+                </p>
+                <button
+                  onClick={handleResetProgress}
+                  title="Reset Course Progress (Dev / user utility)"
+                  className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-rose-200 border border-rose-300/30 hover:bg-white/20 transition-colors cursor-pointer text-[10px] font-bold"
+                >
+                  <RotateCcw className="w-3 h-3" /> Reset Progress
+                </button>
               </div>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-wide text-sky-600 dark:text-sky-400 flex items-center gap-1">
-                  <Zap className="w-3 h-3" /> Overall Progress
-                </span>
-                <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">
-                  {completedLessons.size}/{totalLessons} lessons · {overallProgress}%
-                </span>
-              </div>
-              <ProgressBar percent={overallProgress} />
-              <div className="mt-3 flex items-center justify-between gap-2 flex-wrap">
-                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold ${courseStatus.chip}`}>
-                  <courseStatus.icon className="w-3 h-3" /> {courseStatus.label}
-                </span>
-              </div>
-              <p className="mt-2 text-[10px] text-slate-500 font-medium tracking-wide">
-                Lessons {LESSON_WEIGHT}% · Quiz {QUIZ_WEIGHT}% · Capstone {CAPSTONE_WEIGHT}% — 100% required for your certificate.
-              </p>
-              <button
-                onClick={handleResetProgress}
-                title="Reset Course Progress (Dev / user utility)"
-                className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500/10 text-red-500 dark:text-red-400 border border-red-500/30 hover:bg-red-500/20 transition-colors cursor-pointer text-[10px] font-bold"
-              >
-                <RotateCcw className="w-3 h-3" /> Reset Progress
-              </button>
             </div>
 
             <div className="bg-white dark:bg-[#0f1420]/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-sm">
@@ -953,35 +928,37 @@ export default function MajorCourseViewer() {
 
                   {activeLesson.codeSnippet && (
                     <div className="mt-5">
-                      <CodeBlock code={activeLesson.codeSnippet} />
+                      <MultiLangCodeBlock code={activeLesson.codeSnippet} title="Lesson Code" />
                     </div>
                   )}
                 </div>
 
-                {/* Sticky bottom navigation */}
-                <div className="sticky bottom-4 z-20 bg-white/95 dark:bg-[#0f1420]/80/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 flex items-center justify-between gap-3 shadow-2xl">
-                  <button
-                    onClick={goPrevious}
-                    disabled={currentIndex <= 0}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-xs font-semibold transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    <ChevronLeft className="w-4 h-4" /> Previous Lesson
-                  </button>
-                  <div className="text-center shrink-0">
-                    <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Lesson {currentIndex + 1} of {totalLessons}</p>
-                    <p className="text-[10px] font-bold text-sky-600 dark:text-sky-400 mt-0.5">{lessonPercent}% lessons · {overallProgress}% overall</p>
+                {/* Sticky bottom navigation — floating, lifted, centered */}
+                <div className="sticky bottom-4 z-20 flex justify-center px-3">
+                  <div className="flex w-full max-w-2xl items-center justify-between gap-3 rounded-2xl border border-slate-200/80 dark:border-slate-700/60 bg-white/95 dark:bg-[#0f1420]/95 px-3 py-2.5 shadow-2xl shadow-slate-900/15 backdrop-blur-md sm:gap-4">
+                    <button
+                      onClick={goPrevious}
+                      disabled={currentIndex <= 0}
+                      className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-semibold border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5 hover:border-slate-400 dark:hover:border-slate-600 transition-all active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed sm:gap-2 sm:px-4"
+                    >
+                      <ChevronLeft className="w-4 h-4" /> <span className="hidden sm:inline">Previous</span> Lesson
+                    </button>
+                    <div className="hidden text-center shrink-0 sm:block">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Lesson {currentIndex + 1} of {totalLessons}</p>
+                      <p className="text-[10px] font-bold text-sky-600 dark:text-sky-400 mt-0.5">{lessonPercent}% lessons · {overallProgress}%</p>
+                    </div>
+                    <button
+                      onClick={markCompletedAndContinue}
+                      disabled={courseComplete}
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed sm:gap-2 sm:px-5"
+                    >
+                      {isLessonCompleted(activeLesson.id) ? (
+                        <>Next Lesson <ArrowRight className="w-3.5 h-3.5" /></>
+                      ) : (
+                        <>Mark Completed & Next <ArrowRight className="w-3.5 h-3.5" /></>
+                      )}
+                    </button>
                   </div>
-                  <button
-                    onClick={markCompletedAndContinue}
-                    disabled={courseComplete}
-                    className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-all shadow-md shadow-sky-500/20 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {isLessonCompleted(activeLesson.id) ? (
-                      <>Next Lesson <ArrowRight className="w-3.5 h-3.5" /></>
-                    ) : (
-                      <>Mark Completed & Next <ArrowRight className="w-3.5 h-3.5" /></>
-                    )}
-                  </button>
                 </div>
               </div>
             )}

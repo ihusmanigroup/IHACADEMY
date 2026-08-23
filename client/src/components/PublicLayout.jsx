@@ -4,6 +4,7 @@ import { Sparkles } from 'lucide-react'
 import AIChatModal from './AIChatModal'
 import GooeyNav from './GooeyNav'
 import Footer from './Footer'
+import Logo from './Logo'
 
 const navLinks = [
   { label: 'Courses', to: '/courses' },
@@ -34,7 +35,7 @@ export default function PublicLayout() {
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-[#090d16] dark:text-slate-100 transition-colors duration-200">
       <nav className="flex items-center justify-between px-8 py-4 bg-white dark:bg-[#090D16] border-b border-slate-200 dark:border-slate-800/80 transition-colors duration-200">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-md flex items-center justify-center text-black font-bold text-sm">IH</div>
+          <Logo className="h-8 w-8" />
           <span className="font-bold text-slate-900 dark:text-white">IH Academy</span>
         </Link>
         <div className="hidden md:flex items-center rounded-full bg-slate-100/80 dark:bg-[#0d1322]/80 border border-slate-200 dark:border-slate-800/60 backdrop-blur-md py-1">

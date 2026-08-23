@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeft, BookOpen, BookMarked, Zap, CheckCircle2, Circle, ChevronDown, ChevronLeft,
-  ChevronRight, Copy, Code2, Lock, Play, Layers, FileText, Award, Crown,
+  ChevronRight, Code2, Lock, Play, Layers, FileText, Award, Crown,
   AlertTriangle, Trophy, Rocket, X, Sparkles, GraduationCap,
 } from 'lucide-react'
 import {
@@ -19,6 +19,7 @@ import CourseMasterNotes from './CourseMasterNotes'
 import CourseEbook from './CourseEbook'
 import CourseWorkspaceShell from './CourseWorkspaceShell'
 import CapstoneSubmissionPanel from './CapstoneSubmissionPanel'
+import MultiLangCodeBlock from './MultiLangCodeBlock'
 
 // ---------------------------------------------------------------------------
 // CourseViewer — generic interactive player for ANY PRO major that ships its
@@ -117,41 +118,6 @@ function RichText({ text }) {
           </p>
         )
       })}
-    </div>
-  )
-}
-
-function CodeBlock({ code }) {
-  const [copied, setCopied] = useState(false)
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(code)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
-    } catch (_) {}
-  }
-
-  return (
-    <div className="bg-[#0B0F17] border border-slate-800/80 rounded-xl overflow-hidden shadow-inner">
-      <div className="flex items-center justify-between px-4 py-2 bg-[#151D2A] border-b border-slate-800">
-        <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500">
-          <Code2 className="w-3.5 h-3.5 text-sky-400" /> Code
-        </span>
-        <button
-          onClick={copy}
-          className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-sky-400 hover:text-sky-300 transition-colors cursor-pointer"
-        >
-          {copied ? (
-            <><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Copied!</>
-          ) : (
-            <><Copy className="w-3.5 h-3.5" /> Copy Code</>
-          )}
-        </button>
-      </div>
-      <pre className="p-4 font-mono text-xs md:text-[13px] text-slate-100 leading-relaxed overflow-x-auto custom-scrollbar whitespace-pre">
-        {code}
-      </pre>
     </div>
   )
 }
@@ -784,33 +750,42 @@ export default function CourseViewer() {
       }
       drawer={
         <div className="space-y-4 p-3">
-            <div className="bg-white dark:bg-[#0f1420] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-5 shadow-sm dark:shadow-none">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center shrink-0">
-                  <BookOpen className="w-5 h-5 text-sky-500 dark:text-sky-400" />
+            <div className="relative overflow-hidden rounded-2xl p-5 shadow-xl shadow-slate-900/10 border border-cyan-400/20 bg-gradient-to-br from-[#0B2A4F] via-[#0F3D6E] to-[#081E3B]">
+              <div aria-hidden className="pointer-events-none absolute -right-8 -top-10 h-32 w-32 rounded-full bg-cyan-400/20 blur-2xl" />
+              <div aria-hidden className="pointer-events-none absolute -left-6 -bottom-10 h-28 w-28 rounded-full bg-sky-500/20 blur-2xl" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-cyan-300/30 flex items-center justify-center shrink-0">
+                    <BookOpen className="w-5 h-5 text-cyan-300" />
+                  </div>
+                  <div className="min-w-0">
+                    <h1 className="text-sm font-bold text-white leading-snug drop-shadow-sm">{course.title}</h1>
+                    <p className="text-[11px] text-cyan-100/70 font-medium">{course.subtitle}</p>
+                  </div>
                 </div>
-                <div className="min-w-0">
-                  <h1 className="text-sm font-bold text-slate-900 dark:text-white leading-snug">{course.title}</h1>
-                  <p className="text-[11px] text-slate-500 font-medium">{course.subtitle}</p>
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-wide text-cyan-200 flex items-center gap-1">
+                    <Zap className="w-3 h-3 text-cyan-300" /> Overall Progress
+                  </span>
+                  <span className="text-[11px] font-bold text-white">
+                    {completedLessons.size}/{flatLessons.length} lessons · {overallProgress}%
+                  </span>
                 </div>
+                <div className="h-2 bg-white/15 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-cyan-300 to-sky-400 rounded-full shadow-[0_0_10px_rgba(56,189,248,0.6)] transition-all duration-500"
+                    style={{ width: `${Math.min(100, Math.max(0, overallProgress))}%` }}
+                  />
+                </div>
+                {courseComplete && (
+                  <button
+                    onClick={goToGrandQuiz}
+                    className="mt-3 flex items-center gap-1.5 text-[11px] font-bold text-cyan-200 cursor-pointer hover:underline"
+                  >
+                    <Award className="w-3.5 h-3.5" /> Curriculum complete — take the Grand Quiz!
+                  </button>
+                )}
               </div>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-wide text-sky-600 dark:text-sky-400 flex items-center gap-1">
-                  <Zap className="w-3 h-3" /> Overall Progress
-                </span>
-                <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">
-                  {completedLessons.size}/{flatLessons.length} lessons · {overallProgress}%
-                </span>
-              </div>
-              <ProgressBar percent={overallProgress} />
-              {courseComplete && (
-                <button
-                  onClick={goToGrandQuiz}
-                  className="mt-3 flex items-center gap-1.5 text-[11px] font-bold text-sky-400 cursor-pointer hover:underline"
-                >
-                  <Award className="w-3.5 h-3.5" /> Curriculum complete — take the Grand Quiz!
-                </button>
-              )}
             </div>
 
             <div className="bg-white dark:bg-[#0f1420] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-3 shadow-sm dark:shadow-none space-y-1">
@@ -1152,35 +1127,37 @@ export default function CourseViewer() {
 
                   {activeLesson.codeSnippet && (
                     <div className="mt-5">
-                      <CodeBlock code={activeLesson.codeSnippet} />
+                      <MultiLangCodeBlock code={activeLesson.codeSnippet} title="Lesson Code" />
                     </div>
                   )}
                 </div>
 
-                {/* Sticky bottom navigation */}
-                <div className="sticky bottom-4 z-20 bg-white/95 dark:bg-[#0f1420]/80/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 flex items-center justify-between gap-3 shadow-2xl">
-                  <button
-                    onClick={goPrevious}
-                    disabled={currentIndex <= 0}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-xs font-semibold transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    <ChevronLeft className="w-4 h-4" /> Previous Lesson
-                  </button>
-                  <div className="text-center shrink-0">
-                    <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Lesson {currentIndex + 1} of {flatLessons.length}</p>
-                    <p className="text-[10px] font-bold text-sky-600 dark:text-sky-400 mt-0.5">{overallProgress}% complete</p>
+                {/* Sticky bottom navigation — floating, lifted, centered */}
+                <div className="sticky bottom-4 z-20 flex justify-center px-3">
+                  <div className="flex w-full max-w-2xl items-center justify-between gap-3 rounded-2xl border border-slate-200/80 dark:border-slate-700/60 bg-white/95 dark:bg-[#0f1420]/95 px-3 py-2.5 shadow-2xl shadow-slate-900/15 backdrop-blur-md sm:gap-4">
+                    <button
+                      onClick={goPrevious}
+                      disabled={currentIndex <= 0}
+                      className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-semibold border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5 hover:border-slate-400 dark:hover:border-slate-600 transition-all active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed sm:gap-2 sm:px-4"
+                    >
+                      <ChevronLeft className="w-4 h-4" /> <span className="hidden sm:inline">Previous</span> Lesson
+                    </button>
+                    <div className="hidden text-center shrink-0 sm:block">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Lesson {currentIndex + 1} of {flatLessons.length}</p>
+                      <p className="text-[10px] font-bold text-sky-600 dark:text-sky-400 mt-0.5">{overallProgress}% complete</p>
+                    </div>
+                    <button
+                      onClick={markCompletedAndContinue}
+                      disabled={courseComplete}
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed sm:gap-2 sm:px-5"
+                    >
+                      {completedLessons.has(activeLesson.id) ? (
+                        <>Next Lesson <ChevronRight className="w-3.5 h-3.5" /></>
+                      ) : (
+                        <>Mark Completed & Next <ChevronRight className="w-3.5 h-3.5" /></>
+                      )}
+                    </button>
                   </div>
-                  <button
-                    onClick={markCompletedAndContinue}
-                    disabled={courseComplete}
-                    className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-all shadow-md shadow-sky-500/20 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {completedLessons.has(activeLesson.id) ? (
-                      <>Next Lesson <ChevronRight className="w-3.5 h-3.5" /></>
-                    ) : (
-                      <>Mark Completed & Next <ChevronRight className="w-3.5 h-3.5" /></>
-                    )}
-                  </button>
                 </div>
               </div>
             )}

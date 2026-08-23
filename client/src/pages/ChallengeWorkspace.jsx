@@ -389,6 +389,17 @@ export default function ChallengeWorkspace() {
 
   return (
     <div className="space-y-4">
+      {/* Page header */}
+      <div className="flex items-center gap-3">
+        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/20">
+          <Code2 className="w-5 h-5" />
+        </span>
+        <div>
+          <h1 className="text-lg md:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">Coding Arena</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Solve the challenge, pass every test case, earn XP.</p>
+        </div>
+      </div>
+
       {/* Top bar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
@@ -453,10 +464,10 @@ export default function ChallengeWorkspace() {
       )}
 
       {/* Workspace */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[calc(100vh-14rem)]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[calc(100vh-16rem)] min-h-[640px] lg:min-h-0">
         {/* Left: problem panel */}
-        <div className="bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 backdrop-blur-md rounded-2xl shadow-lg flex flex-col min-h-0">
-          <div className="flex items-center gap-1 px-4 pt-3 pb-2 border-b border-slate-200/80 dark:border-slate-800/80 overflow-x-auto">
+        <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 backdrop-blur-md rounded-2xl shadow-xl shadow-slate-900/5 flex flex-col min-h-0">
+          <div className="flex items-center gap-1 px-3 pt-3 pb-2 border-b border-slate-200/80 dark:border-slate-800/80 overflow-x-auto">
             {leftTabs.map((t) => (
               <button
                 key={t.key}
