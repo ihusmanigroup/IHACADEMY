@@ -257,7 +257,7 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
               <span className="block">
                 <SplitText tag="span" text={title2Words[0]} textAlign="left" className="text-slate-900 dark:text-white" delay={45} duration={0.6} threshold={0.3} />{' '}
                 {title2Accent && (
-                  <SplitText tag="span" text={title2Accent} textAlign="left" className="ih-gradient-text" delay={45} duration={0.6} threshold={0.3} />
+                  <span className="ih-gradient-text">{title2Accent}</span>
                 )}
               </span>
               <span className="block">
@@ -514,7 +514,7 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
                   <s.icon className={`w-6 h-6 ${s.accent}`} />
                 </span>
               </div>
-              <p className="text-5xl font-extrabold text-slate-100 dark:text-slate-800 mt-4 select-none">{s.step}</p>
+              <p className="text-6xl font-extrabold text-slate-200 dark:text-slate-700 mt-4 select-none">{s.step}</p>
               <h3 className="text-slate-900 dark:text-white text-lg font-bold -mt-6">{s.title}</h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm mt-2">{s.desc}</p>
             </div>
