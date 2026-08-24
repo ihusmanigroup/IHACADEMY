@@ -20,7 +20,7 @@ export function ThemeProvider({ children }) {
   })
   const [systemPrefersDark, setSystemPrefersDark] = useState(getSystemPrefersDark)
 
-  // Guests (signed-out visitors) always get the light, frosted white + blue theme.
+  // Guests (signed-out visitors) share the same dark theme as the logged-in app.
   const { user } = useAuth()
   const isGuest = !user
 
@@ -43,7 +43,7 @@ export function ThemeProvider({ children }) {
   }, [])
 
   const isDark = useMemo(
-    () => !isGuest && (theme === 'dark' || (theme === 'system' && systemPrefersDark)),
+    () => isGuest || theme === 'dark' || (theme === 'system' && systemPrefersDark),
     [theme, systemPrefersDark, isGuest],
   )
 

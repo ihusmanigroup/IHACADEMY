@@ -8,60 +8,7 @@ body {
   background-color: #f8fafc;
 }
 
-/* Guest (signed-out) frosted white + blue theme */
-html.guest {
-  color-scheme: light;
-}
-html.guest body {
-  background-color: rgba(255, 255, 255, 0.62);
-  background-image:
-    radial-gradient(50rem 50rem at 8% -8%, rgba(56, 189, 248, 0.30), transparent 60%),
-    radial-gradient(46rem 46rem at 102% 4%, rgba(99, 102, 241, 0.24), transparent 55%),
-    radial-gradient(42rem 42rem at 50% 116%, rgba(14, 165, 233, 0.22), transparent 60%),
-    linear-gradient(180deg, #f7fbff 0%, #eef4ff 100%);
-  background-attachment: fixed;
-}
-html.guest::before {
-  content: '';
-  position: fixed;
-  inset: -12%;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(28rem 28rem at 16% 22%, rgba(56, 189, 248, 0.40), transparent 70%),
-    radial-gradient(30rem 30rem at 84% 28%, rgba(129, 140, 248, 0.34), transparent 70%),
-    radial-gradient(34rem 34rem at 50% 90%, rgba(14, 165, 233, 0.30), transparent 70%);
-  filter: blur(64px);
-  opacity: 0.9;
-}
-
-/* Guest (signed-out) blue & white theme: plain white surfaces become blue boxes */
-html.guest .bg-white {
-  background-color: #ffffff;
-  border-color: rgba(37, 99, 235, 0.38);
-  box-shadow: 0 14px 38px -16px rgba(37, 99, 235, 0.32);
-}
-html.guest .border-slate-200 {
-  border-color: rgba(37, 99, 235, 0.30);
-}
-html.guest .border-slate-800,
-html.guest .dark\:border-slate-800,
-html.guest .dark\:border-slate-800\/80 {
-  border-color: rgba(37, 99, 235, 0.30);
-}
-html.guest .bg-slate-100\/80 {
-  background-color: rgba(219, 234, 254, 0.7);
-  border-color: rgba(37, 99, 235, 0.30);
-}
-html.guest .text-cyan-600 {
-  color: #2563eb;
-}
-html.guest .text-cyan-400 {
-  color: #3b82f6;
-}
-html.guest .ih-gradient-text {
-  background-image: linear-gradient(90deg, #2563eb, #06b6d4);
-}
+/* Guest (signed-out) pages share the logged-in app's dark theme. */
 
 .dark body,
 body.dark {
