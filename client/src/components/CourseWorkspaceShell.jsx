@@ -4,6 +4,7 @@ import {
   ArrowLeft, Bot, Zap, PanelLeftClose, PanelLeftOpen,
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import ThemeToggle from './ThemeToggle'
 
 // ---------------------------------------------------------------------------
 // CourseWorkspaceShell — 100% full-screen, distraction-free shell for every
@@ -100,6 +101,7 @@ export default function CourseWorkspaceShell({
 
         {/* Right — XP + AI Tutor toggle + avatar */}
         <div className="flex items-center gap-2 shrink-0">
+          <ThemeToggle />
           <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-bold">
             <Zap className="w-3.5 h-3.5" /> {xp.toLocaleString()} XP
           </span>

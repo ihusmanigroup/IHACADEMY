@@ -42,10 +42,10 @@ export function ThemeProvider({ children }) {
     }
   }, [])
 
-  // Logged-in users get the full dark theme; guests can pick light or dark.
+  // Signed-out visitors get the fixed full dark theme; logged-in users pick light or dark.
   const isDark = useMemo(
-    () => !!user || theme === 'dark' || (theme === 'system' && systemPrefersDark),
-    [theme, systemPrefersDark, user],
+    () => isGuest || theme === 'dark' || (theme === 'system' && systemPrefersDark),
+    [theme, systemPrefersDark, isGuest],
   )
 
   useEffect(() => {
