@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Sun, Moon } from 'lucide-react'
 import AIChatModal from './AIChatModal'
 import GooeyNav from './GooeyNav'
 import Footer from './Footer'
 import Logo from './Logo'
+import { useTheme } from '../context/ThemeContext'
+import { useAuth } from '../context/AuthContext'
 
 const navLinks = [
   { label: 'Courses', to: '/courses' },
@@ -17,6 +19,8 @@ export default function PublicLayout() {
   const [aiChatOpen, setAiChatOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+  const { setTheme, isDark } = useTheme()
+  const { user } = useAuth()
 
   const hideFooterRoutes = ['/learn', '/course', '/ml-major', '/quiz', '/test', '/editor', '/solve']
   const isExcludedRoute = hideFooterRoutes.some((route) => location.pathname.startsWith(route))
@@ -42,6 +46,16 @@ export default function PublicLayout() {
           <GooeyNav items={gooeyItems} initialActiveIndex={activeIndex} />
         </div>
         <div className="flex items-center gap-4">
+          {!user && (
+            <button
+              type="button"
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              aria-label="Toggle light / dark theme"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-[#0d1322]/80 text-slate-700 dark:text-slate-200 hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors cursor-pointer"
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+          )}
           <Link to="/login" className="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors bg-transparent border-none cursor-pointer">Sign In</Link>
           <Link to="/register" className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-4 py-2 rounded-md text-sm shadow-[0_0_16px_rgba(6,182,212,0.35)] hover:shadow-[0_0_24px_rgba(6,182,212,0.5)] transition-all cursor-pointer">
             Get Started
