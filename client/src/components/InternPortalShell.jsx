@@ -84,12 +84,12 @@ export default function InternPortalShell({ title, subtitle = 'Intern Portal · 
       </aside>
 
       <main className="flex-1 min-w-0 p-6 md:p-8">
-        <div className="sticky top-0 z-10 -mx-6 md:-mx-8 px-6 md:px-8 -mt-6 md:-mt-8 pt-5 md:pt-6 pb-4 mb-6 bg-white dark:bg-[#080C14]/90 backdrop-blur border-b border-slate-200/90 dark:border-slate-800/60 shadow-sm shadow-slate-200/60 dark:shadow-none flex items-center justify-between gap-4">
+        <div className="sticky top-0 z-10 -mx-6 md:-mx-8 px-6 md:px-8 -mt-6 md:-mt-8 pt-5 md:pt-6 pb-4 mb-8 bg-white dark:bg-[#080C14]/90 backdrop-blur border-b border-slate-200/90 dark:border-slate-800/60 shadow-sm shadow-slate-200/60 dark:shadow-none flex items-center justify-between gap-4">
           <div className="min-w-0">
             <h1 className="text-xl font-extrabold text-slate-900 dark:text-white truncate">{title}</h1>
             <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">{subtitle}</p>
           </div>
-        </div>        <div className="md:hidden flex gap-2 overflow-x-auto pb-4 -mx-1 px-1">
+        </div>        <div className="md:hidden flex gap-2 overflow-x-auto pb-4 pt-1 -mx-1 px-1">
           {sidebarItems.map((item) => (
             <NavLink
               key={item.id}

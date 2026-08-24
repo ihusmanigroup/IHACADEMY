@@ -536,13 +536,13 @@ export default function Courses() {
                   }}
                   className={`cursor-pointer ${
                     isPro
-                      ? 'rounded-2xl border border-sky-500/40 bg-[#0f1420] shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-sky-500/15 hover:border-sky-400/60 flex flex-col'
-                      : 'group bg-[#0f1420] border border-slate-800 rounded-2xl overflow-hidden shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500/50 flex flex-col'
+                      ? 'rounded-2xl border border-sky-500/30 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-sky-500/10 hover:border-sky-400/60 flex flex-col'
+                      : 'group bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-cyan-500/5 hover:border-cyan-500/40 flex flex-col'
                   }`}
                 >
                   <div className={`${isPro ? 'h-full flex flex-col overflow-hidden rounded-[14px]' : 'h-full flex flex-col'}`}>
 {/* Thumbnail — image cover if provided, otherwise designed gradient cover */}
-                    <div className="relative h-44 flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 to-[#0d1526]">
+                    <div className="relative h-44 flex items-center justify-center overflow-hidden bg-gradient-to-br from-sky-50 to-blue-100/60">
                       {course.thumbnail_url ? (
                         <>
                           <img
@@ -563,9 +563,9 @@ export default function Courses() {
                           {/* Clean dark overlay */}
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 dark:from-slate-950/60 to-transparent pointer-events-none" />
                           {/* Bottom fade */}
-                          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0f1420]/80 to-transparent" />
+                          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-blue-50/80 to-transparent" />
                           {/* Glassmorphic icon */}
-                          <div className={`relative backdrop-blur-md rounded-full p-4 ring-1 z-10 ${isPro ? 'bg-gradient-to-b from-sky-500/20 to-transparent ring-sky-500/30' : 'bg-white/10 ring-white/10'}`}>
+                          <div className={`relative backdrop-blur-md rounded-full p-4 ring-1 z-10 ${isPro ? 'bg-gradient-to-b from-sky-500/20 to-transparent ring-sky-500/30' : 'bg-white/60 ring-sky-200/60'}`}>
                             <IconComponent className={`w-12 h-12 ${meta.iconColor}`} />
                           </div>
                         </>
@@ -597,24 +597,24 @@ export default function Courses() {
                     <div className="p-5 flex flex-col flex-1">
                       {/* Level + Category pills */}
                       <div className="flex items-center gap-2 mb-3 flex-wrap">
-                        <span className="bg-blue-500/15 text-blue-300 font-semibold px-2.5 py-1 rounded-md text-xs">
+                        <span className="bg-blue-100 text-blue-700 font-semibold px-2.5 py-1 rounded-md text-xs">
                           {course.level || 'Beginner'}
                         </span>
                         {course.category && (
-                          <span className="text-[11px] text-slate-500 font-medium">{course.category}</span>
+                          <span className="text-[11px] text-slate-600 font-medium">{course.category}</span>
                         )}
                         {isPro && course.trackLabel && (
-                          <span className="text-[11px] text-sky-400 font-bold uppercase tracking-wide">{course.trackLabel}</span>
+                          <span className="text-[11px] text-sky-500 font-bold uppercase tracking-wide">{course.trackLabel}</span>
                         )}
                       </div>
 
-                      <h3 className="text-lg text-white font-bold leading-snug">{course.title}</h3>
-                      <p className="text-slate-400 text-sm mt-1.5 line-clamp-2 leading-relaxed">
+                      <h3 className="text-lg text-slate-900 font-bold leading-snug">{course.title}</h3>
+                      <p className="text-slate-600 text-sm mt-1.5 line-clamp-2 leading-relaxed">
                         {course.description || 'No description available.'}
                       </p>
 
                       {isPro && (
-                        <div className="mt-3 flex items-center gap-1.5 text-[11px] font-bold text-emerald-400">
+                        <div className="mt-3 flex items-center gap-1.5 text-[11px] font-bold text-emerald-500">
                           <Award className="w-3.5 h-3.5" /> Certificate Included
                         </div>
                       )}
@@ -623,11 +623,11 @@ export default function Courses() {
                       {isEnrolled && !isCompleted && (
                         <div className="mt-3">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-xs font-medium text-cyan-300">
+                            <span className="text-xs font-medium text-cyan-600">
                               {isPro ? `In Progress — ${displayProgress}%` : `${displayProgress}% complete`}
                             </span>
                           </div>
-                          <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
                             <div
                               className="h-full bg-blue-500 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.4)] transition-all duration-500"
                               style={{ width: `${displayProgress}%` }}
@@ -640,14 +640,14 @@ export default function Courses() {
                           <div className="flex items-center gap-1.5 text-xs font-medium text-emerald-400">
                             <CheckCircle2 className="w-3.5 h-3.5" /> Completed
                           </div>
-                          <div className="mt-1.5 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div className="mt-1.5 h-1.5 bg-slate-200 rounded-full overflow-hidden">
                             <div className="h-full w-full bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
                           </div>
                         </div>
                       )}
 
                       {/* Meta row */}
-                      <div className="flex items-center gap-4 mt-3 text-slate-300 font-medium text-xs">
+                      <div className="flex items-center gap-4 mt-3 text-slate-700 font-medium text-xs">
                         <span className="flex items-center gap-1.5">
                           <BookOpen className="w-3.5 h-3.5 text-slate-500" />
                           {course.total_lessons} lesson{course.total_lessons !== 1 ? 's' : ''}
@@ -673,7 +673,7 @@ export default function Courses() {
                             className={`w-full inline-flex items-center justify-center gap-1.5 text-xs font-bold px-3 py-2.5 rounded-xl transition-all active:scale-95 cursor-pointer ${
                               isEnrolled
                                 ? 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25'
-                                : 'bg-emerald-500/15 text-emerald-300 border border-emerald-400/40 hover:bg-emerald-500/25'
+                                : 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/30 hover:bg-emerald-500/20'
                             }`}
                           >
                             {isEnrolled ? <><Zap className="w-3.5 h-3.5" /> {enrolledCta(course, displayProgress, isCompleted, false)}</> : 'Start Course for Free'}
@@ -698,7 +698,7 @@ export default function Courses() {
                           </button>
                           <button
                             onClick={(e) => { e.stopPropagation(); openCourseCard(course) }}
-                            className="w-full inline-flex items-center justify-center gap-1 text-[11px] font-bold text-slate-400 hover:text-sky-300 transition-colors"
+                            className="w-full inline-flex items-center justify-center gap-1 text-[11px] font-bold text-slate-500 hover:text-sky-600 transition-colors"
                           >
                             View Roadmap <ChevronRight className="w-3 h-3" />
                           </button>
