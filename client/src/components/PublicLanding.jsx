@@ -29,7 +29,7 @@ const pillarsFallback = [
     desc: 'Master modern tech stacks with project-based curricula designed by industry veterans.',
     points: ['200+ hours of interactive content', 'Real-world projects & code reviews', 'Certified career pathways'],
     to: '/courses',
-    iconColor: 'text-cyan-400',
+    iconColor: 'text-cyan-600',
     hoverBorder: 'hover:border-cyan-400 dark:hover:border-cyan-400',
     spotlight: 'rgba(6, 182, 212, 0.25)',
     tile: 'from-cyan-500/15 to-cyan-500/5 border-cyan-500/25',
@@ -40,7 +40,7 @@ const pillarsFallback = [
     desc: 'Compete in timed coding battles, algorithm duels, and system design face-offs.',
     points: ['Live 1v1 & team tournaments', 'AI-powered difficulty scaling', 'Global leaderboard & ELO ranking'],
     to: '/arena',
-    iconColor: 'text-orange-400',
+    iconColor: 'text-orange-600',
     hoverBorder: 'hover:border-orange-400 dark:hover:border-orange-400',
     spotlight: 'rgba(249, 115, 22, 0.25)',
     tile: 'from-orange-500/15 to-orange-500/5 border-orange-500/25',
@@ -51,7 +51,7 @@ const pillarsFallback = [
     desc: 'From resume roast to mock interviews — we prep you for the roles you deserve.',
     points: ['Personalized job matching engine', 'Technical & behavioral mock interviews', 'Direct referrals to 300+ partners'],
     to: '/careers',
-    iconColor: 'text-emerald-400',
+    iconColor: 'text-emerald-600',
     hoverBorder: 'hover:border-emerald-400 dark:hover:border-emerald-400',
     spotlight: 'rgba(34, 197, 94, 0.25)',
     tile: 'from-emerald-500/15 to-emerald-500/5 border-emerald-500/25',
@@ -62,7 +62,7 @@ const pillarsFallback = [
     desc: 'A growing library of cheat sheets, templates, and study guides.',
     points: ['Community-contributed playbooks', 'Weekly digest & curated newsletters', 'Open-source tooling & SDKs'],
     to: '/resources',
-    iconColor: 'text-violet-400',
+    iconColor: 'text-violet-600',
     hoverBorder: 'hover:border-violet-400 dark:hover:border-violet-400',
     spotlight: 'rgba(168, 85, 247, 0.25)',
     tile: 'from-violet-500/15 to-violet-500/5 border-violet-500/25',
@@ -75,7 +75,7 @@ const journeySteps = [
     step: '01',
     title: 'Learn by building',
     desc: 'Follow structured, project-based tracks with an AI mentor reviewing every line you ship.',
-    accent: 'text-cyan-400',
+    accent: 'text-cyan-600',
     tile: 'from-cyan-500/15 to-cyan-500/5 border-cyan-500/25',
     glow: 'bg-cyan-500/20',
   },
@@ -84,7 +84,7 @@ const journeySteps = [
     step: '02',
     title: 'Compete in the Arena',
     desc: 'Prove your skills in timed coding battles and climb a global ELO leaderboard.',
-    accent: 'text-orange-400',
+    accent: 'text-orange-600',
     tile: 'from-orange-500/15 to-orange-500/5 border-orange-500/25',
     glow: 'bg-orange-500/20',
   },
@@ -93,7 +93,7 @@ const journeySteps = [
     step: '03',
     title: 'Get hired',
     desc: 'Match with 300+ hiring partners through job matching, mock interviews, and referrals.',
-    accent: 'text-violet-400',
+    accent: 'text-violet-600',
     tile: 'from-violet-500/15 to-violet-500/5 border-violet-500/25',
     glow: 'bg-violet-500/20',
   },
@@ -186,7 +186,7 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
         desc: f.description,
         points: Array.isArray(f.points) ? f.points : [],
         to: f.to || '#',
-        iconColor: 'text-cyan-400',
+        iconColor: 'text-cyan-600',
         hoverBorder: 'hover:border-cyan-400 dark:hover:border-cyan-400',
         spotlight: 'rgba(6, 182, 212, 0.25)',
         tile: pillarsFallback[i % pillarsFallback.length].tile,
@@ -335,18 +335,18 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
         </div>
       </section>
 
-      {/* ─── TECH MARQUEE (dark band) ─── */}
-      <section className="mt-20 bg-[#090d16] border-y border-slate-800/60 py-6 transition-colors duration-300">
+      {/* ─── TECH MARQUEE ─── */}
+      <section className="mt-20 border-y border-slate-200 py-5 transition-colors duration-300">
         <div className="ih-marquee">
           <div className="ih-marquee-track items-center gap-10 pr-10">
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
               <span
                 key={`${item}-${i}`}
-                className="flex items-center gap-10 text-sm font-semibold uppercase tracking-widest text-slate-300 whitespace-nowrap"
+                className="flex items-center gap-10 text-sm font-semibold uppercase tracking-widest text-slate-400 whitespace-nowrap"
                 aria-hidden={i >= marqueeItems.length}
               >
                 {item}
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/60" />
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500/50" />
               </span>
             ))}
           </div>
@@ -367,23 +367,22 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
         </div>
       </section>
 
-      {/* ─── FOUR PILLARS (dark band) ─── */}
-      <section className="mt-24 py-16 bg-[#090d16]">
-        <div className="max-w-7xl mx-auto px-8">
+      {/* ─── FOUR PILLARS ─── */}
+      <section className="mt-24 max-w-7xl mx-auto px-8">
         <div className="text-center">
-          <p className="text-cyan-400 text-sm tracking-widest uppercase font-semibold">The Platform</p>
+          <p className="text-cyan-600 text-sm tracking-widest uppercase font-semibold">The Platform</p>
           <div className="mt-2">
             <SplitText
               tag="h2"
               text="Four pillars, one ecosystem. Zero limits."
-              className="text-4xl md:text-5xl font-extrabold text-white"
+              className="text-4xl md:text-5xl font-extrabold text-slate-900"
               textAlign="center"
               delay={50}
               duration={0.7}
               threshold={0.2}
             />
           </div>
-          <p className="text-slate-400 mt-4 max-w-2xl mx-auto">
+          <p className="text-slate-600 mt-4 max-w-2xl mx-auto">
             Everything you need to go from curious beginner to hired engineer — in one place.
           </p>
         </div>
@@ -393,27 +392,26 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
               key={p.title}
               spotlightColor={p.spotlight}
               onClick={() => p.to && p.to !== '#' && navigate(p.to)}
-              className={`group cursor-pointer bg-[#0f1420]/90 border border-slate-800 rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/40 ${p.hoverBorder}`}
+              className={`group cursor-pointer bg-white border border-slate-200 rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/5 ${p.hoverBorder}`}
             >
               <div className="flex items-start justify-between">
                 <span className={`w-12 h-12 rounded-2xl bg-gradient-to-br border flex items-center justify-center ${p.tile}`}>
                   <p.icon className={`w-6 h-6 ${p.iconColor}`} />
                 </span>
-                <ArrowRight className="w-5 h-5 text-slate-600 transition-all duration-300 group-hover:text-cyan-400 group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 text-slate-300 transition-all duration-300 group-hover:text-cyan-500 group-hover:translate-x-1" />
               </div>
-              <h3 className="text-white text-xl font-bold mt-5 transition-colors duration-300">{p.title}</h3>
-              <p className="text-slate-300 mt-2 text-sm transition-colors duration-300">{p.desc}</p>
+              <h3 className="text-slate-900 text-xl font-bold mt-5 transition-colors duration-300">{p.title}</h3>
+              <p className="text-slate-600 mt-2 text-sm transition-colors duration-300">{p.desc}</p>
               <ul className="mt-4 space-y-2">
                 {p.points.map((pt) => (
-                  <li key={pt} className="flex items-start gap-2 text-sm text-slate-400 transition-colors duration-300">
-                    <Check className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+                  <li key={pt} className="flex items-start gap-2 text-sm text-slate-600 transition-colors duration-300">
+                    <Check className="w-4 h-4 mt-0.5 text-cyan-600 shrink-0" />
                     {pt}
                   </li>
                 ))}
               </ul>
             </SpotlightCard>
           ))}
-        </div>
         </div>
       </section>
 
@@ -454,16 +452,15 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
         </div>
       </section>
 
-      {/* ─── TESTIMONIALS (dark band) ─── */}
-      <section className="mt-24 py-16 bg-[#090d16]">
-        <div className="max-w-7xl mx-auto px-8">
+      {/* ─── TESTIMONIALS ─── */}
+      <section className="mt-24 max-w-7xl mx-auto px-8">
         <div className="text-center">
-          <p className="text-cyan-400 text-sm tracking-widest uppercase font-semibold">Wall of Love</p>
+          <p className="text-cyan-600 text-sm tracking-widest uppercase font-semibold">Wall of Love</p>
           <div className="mt-2">
             <SplitText
               tag="h2"
               text="Loved by developers worldwide."
-              className="text-4xl md:text-5xl font-extrabold text-white"
+              className="text-4xl md:text-5xl font-extrabold text-slate-900"
               textAlign="center"
               delay={50}
               duration={0.7}
@@ -475,27 +472,26 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
           {testimonials.map((t) => (
             <div
               key={t.name}
-              className="bg-[#0f1420]/90 border border-slate-800 rounded-2xl p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/40"
+              className="bg-white border border-slate-200 rounded-2xl p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/5"
             >
-              <Quote className="w-7 h-7 text-cyan-400/50" />
+              <Quote className="w-7 h-7 text-cyan-500/60" />
               <div className="flex items-center gap-1 mt-3">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                 ))}
               </div>
-              <p className="text-slate-200 text-sm leading-relaxed mt-3 flex-1">"{t.quote}"</p>
-              <div className="flex items-center gap-3 mt-6 pt-5 border-t border-slate-800">
+              <p className="text-slate-700 text-sm leading-relaxed mt-3 flex-1">"{t.quote}"</p>
+              <div className="flex items-center gap-3 mt-6 pt-5 border-t border-slate-100">
                 <span className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.tile} flex items-center justify-center text-xs font-bold text-white`}>
                   {t.initials}
                 </span>
                 <div>
-                  <p className="text-sm font-bold text-white">{t.name}</p>
+                  <p className="text-sm font-bold text-slate-900">{t.name}</p>
                   <p className="text-xs text-slate-500">{t.role}</p>
                 </div>
               </div>
             </div>
           ))}
-        </div>
         </div>
       </section>
 
