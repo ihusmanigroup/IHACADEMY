@@ -10,6 +10,7 @@ import { mlMajorCourse } from '../data/mlCourseData'
 import { MAJOR_COURSE_DB_ID } from '../data/coursesData'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
+import { useCourseSubmissionGate } from '../hooks/useCourseSubmissionGate'
 import { useActiveCourse } from '../context/CourseContext'
 import { useEnrollmentGuard } from '../hooks/useEnrollmentGuard'
 import { getPlanTier } from '../utils/subscription'
@@ -164,6 +165,9 @@ export default function MajorCourseViewer() {
   const { user, addXp, profile } = useAuth()
   const { markCourseStarted, refreshActiveCourse } = useActiveCourse()
   const { checking: guardChecking, denied: guardDenied } = useEnrollmentGuard(mlMajorCourse.id)
+  // Practical-submission gate: certificate only unlocks once every practical
+  // lesson in this course has an approved submission.
+  const { isGateSatisfied } = useCourseSubmissionGate(user?.id, [mlMajorCourse])
   const [searchParams] = useSearchParams()
 
   // Full-screen workspace: refs to the scrollable content area + AI tutor block
@@ -235,11 +239,15 @@ export default function MajorCourseViewer() {
     capstoneSubmittedCount,
   } = computeMajorProgress(flatLessons, completedLessons, quizSubmitted, capstoneStatuses, answeredCount)
 
-  const courseStatus = certificateUnlocked
+  const certUnlockedGated = certificateUnlocked && isGateSatisfied(mlMajorCourse.id)
+
+  const courseStatus = certUnlockedGated
     ? { label: 'Certificate Unlocked', chip: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30', icon: Award }
-    : courseComplete && quizSubmitted
-      ? { label: 'Pending / In Progress (90%) — Submit Capstone', chip: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30', icon: Timer }
-      : { label: `In Progress · ${overallProgress}%`, chip: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30', icon: Zap }
+    : certificateUnlocked
+      ? { label: 'Awaiting submission approval', chip: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30', icon: Timer }
+      : courseComplete && quizSubmitted
+        ? { label: 'Pending / In Progress (90%) — Submit Capstone', chip: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30', icon: Timer }
+        : { label: `In Progress · ${overallProgress}%`, chip: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30', icon: Zap }
 
   const moduleLessons = (moduleId) => flatLessons.filter((l) => l.moduleId === moduleId)
   const moduleCompleted = (moduleId) => {
@@ -871,11 +879,19 @@ export default function MajorCourseViewer() {
                     </p>
                   </div>
                 )}
-                {certificateUnlocked && (
+                {certUnlockedGated && (
                   <div className="rounded-2xl px-5 py-4 bg-emerald-500/10 border border-emerald-500/40 flex items-center gap-3 animate-fade-in">
                     <Award className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
                     <p className="text-xs text-emerald-700 dark:text-emerald-200/90 leading-relaxed">
                       <strong className="text-emerald-600 dark:text-emerald-300">Certificate Unlocked — 100%!</strong> Congratulations: all lessons, the Grand Quiz, and a Capstone project are complete. Your IH Academy certificate is ready.
+                    </p>
+                  </div>
+                )}
+                {certificateUnlocked && !certUnlockedGated && (
+                  <div className="rounded-2xl px-5 py-4 bg-amber-500/5 border border-amber-500/30 flex items-center gap-3">
+                    <Trophy className="w-5 h-5 text-amber-500 dark:text-amber-400 shrink-0" />
+                    <p className="text-xs text-amber-700 dark:text-amber-200/90 leading-relaxed">
+                      <strong className="text-amber-600 dark:text-amber-300">Curriculum complete — {overallProgress}%.</strong> Your certificate unlocks once every practical topic submission is reviewed and approved.
                     </p>
                   </div>
                 )}

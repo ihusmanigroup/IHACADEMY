@@ -10,6 +10,7 @@ import {
   certificateIdFor,
   certificateDuration,
 } from '../lib/certificates'
+import { useCourseSubmissionGate } from '../hooks/useCourseSubmissionGate'
 import MinorCourseCertificate from '../components/MinorCourseCertificate'
 import CertificationCard from '../components/CertificationCard'
 import {
@@ -66,6 +67,9 @@ export default function Certifications() {
   const [preview, setPreview] = useState(null)
   const [certificates, setCertificates] = useState([])
   const [templates, setTemplates] = useState([])
+  // Submission gate: a course with practical topics can't unlock/issue its
+  // certificate until every practical topic has an approved submission.
+  const { isGateSatisfied } = useCourseSubmissionGate(user?.id, courses)
   // Lesson-completion counts keyed by course id (uuid). Empty (not crashing) is
   // the safe fallback when the DB fetch fails or returns nothing.
   const [lessonCounts, setLessonCounts] = useState({})
@@ -181,15 +185,23 @@ export default function Certifications() {
 
   const isEnrollComplete = (courseId) => getEnrollProgress(courseId) >= 100
 
-  // 100% lesson progress OR an issued certificate record unlocks the cert.
-  const isComplete = (courseId) => getProgress(courseId) >= 100
+  // 100% lesson progress OR an issued certificate record unlocks the cert —
+  // BUT only when the practical-submission gate is satisfied (every practical
+  // topic in the course has an approved submission).
+  const isComplete = (courseId) =>
+    getProgress(courseId) >= 100 && isGateSatisfied(courseId)
 
   const templForCourse = (courseId) => templateForCourse(templates, courseId)
 
   // Unlock rule: lesson progress is 100% (e.g. 20/20) OR a certificate record
-  // exists in Supabase.
-  const isUnlocked = (courseId) =>
-    isLessonComplete(courseId) || isEnrollComplete(courseId) || hasCert(courseId)
+  // exists in Supabase — gated by approved submissions unless a cert was
+  // already issued (legacy records stay unlocked).
+  const isUnlocked = (courseId) => {
+    const base =
+      isLessonComplete(courseId) || isEnrollComplete(courseId) || hasCert(courseId)
+    if (base && !hasCert(courseId) && !isGateSatisfied(courseId)) return false
+    return base
+  }
 
   const getStatus = (courseId) => (isUnlocked(courseId) ? 'unlocked' : 'locked')
 
