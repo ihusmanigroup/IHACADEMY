@@ -7,6 +7,8 @@ import {
 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
+import TopicSubmissionPanel from '../components/TopicSubmissionPanel'
+import { isPracticalTopic } from '../utils/topicUtils'
 
 const LABELS = ['A', 'B', 'C', 'D']
 
@@ -642,6 +644,17 @@ export default function LessonPlayer() {
                   <div className="max-w-none mb-6 text-slate-900 dark:text-slate-300 leading-relaxed">
                     <ReactMarkdown components={MarkdownComponents}>{topics[activeTopicIndex]?.content || ''}</ReactMarkdown>
                   </div>
+
+                  {/* Topic Submission Panel — only for practical (hands-on) topics */}
+                  {isPracticalTopic(topics[activeTopicIndex]) && (
+                    <TopicSubmissionPanel
+                      courseId={courseId}
+                      lessonId={lessonId}
+                      topicId={topics[activeTopicIndex].topic_id}
+                      topicTitle={topics[activeTopicIndex].title}
+                      courseType="free"
+                    />
+                  )}
 
                   {/* STRICT BOTTOM NAV MATRIX */}
                   {!isLastTopic && (

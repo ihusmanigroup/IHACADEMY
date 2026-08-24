@@ -19,11 +19,13 @@ import CourseEbook from './CourseEbook'
 import MultiLangCodeBlock from './MultiLangCodeBlock'
 import { RoadmapContent } from './MLMajorRoadmap'
 import CourseWorkspaceShell from './CourseWorkspaceShell'
+import TopicSubmissionPanel from './TopicSubmissionPanel'
 import {
   LESSON_WEIGHT, QUIZ_WEIGHT, CAPSTONE_WEIGHT, MODULE_XP_REWARD,
   COMPLETED_KEY, CAPSTONE_STATUS_KEY, XP_AWARDED_KEY, lsKey, loadJson, saveJson,
   flatLessonsOf, computeUnlockedLessons, computeMajorProgress, resetMajorProgress,
 } from '../utils/mlMajorProgress'
+import { isPracticalLesson } from '../utils/topicUtils'
 
 // ---------------------------------------------------------------------------
 // Progress weighting (strict course completion):
@@ -929,6 +931,19 @@ export default function MajorCourseViewer() {
                   {activeLesson.codeSnippet && (
                     <div className="mt-5">
                       <MultiLangCodeBlock code={activeLesson.codeSnippet} title="Lesson Code" />
+                    </div>
+                  )}
+
+                  {/* Topic Submission Panel — only for practical (code) lessons */}
+                  {isPracticalLesson(activeLesson) && (
+                    <div className="mt-5">
+                      <TopicSubmissionPanel
+                        courseId={mlMajorCourse.id}
+                        lessonId={activeLesson.id}
+                        topicId={activeLesson.id}
+                        topicTitle={activeLesson.title}
+                        courseType="pro"
+                      />
                     </div>
                   )}
                 </div>

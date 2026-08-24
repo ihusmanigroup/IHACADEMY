@@ -14,12 +14,14 @@ import { useActiveCourse } from '../context/CourseContext'
 import { useAuth } from '../context/AuthContext'
 import { useEnrollmentGuard } from '../hooks/useEnrollmentGuard'
 import { getPlanTier } from '../utils/subscription'
+import { isPracticalLesson } from '../utils/topicUtils'
 import AiLessonChat from './AiLessonChat'
 import CourseMasterNotes from './CourseMasterNotes'
 import CourseEbook from './CourseEbook'
 import CourseWorkspaceShell from './CourseWorkspaceShell'
 import CapstoneSubmissionPanel from './CapstoneSubmissionPanel'
 import MultiLangCodeBlock from './MultiLangCodeBlock'
+import TopicSubmissionPanel from './TopicSubmissionPanel'
 
 // ---------------------------------------------------------------------------
 // CourseViewer — generic interactive player for ANY PRO major that ships its
@@ -1128,6 +1130,19 @@ export default function CourseViewer() {
                   {activeLesson.codeSnippet && (
                     <div className="mt-5">
                       <MultiLangCodeBlock code={activeLesson.codeSnippet} title="Lesson Code" />
+                    </div>
+                  )}
+
+                  {/* Topic Submission Panel — only for practical (code) lessons */}
+                  {isPracticalLesson(activeLesson) && (
+                    <div className="mt-5">
+                      <TopicSubmissionPanel
+                        courseId={course.id}
+                        lessonId={activeLesson.id}
+                        topicId={activeLesson.id}
+                        topicTitle={activeLesson.title}
+                        courseType="pro"
+                      />
                     </div>
                   )}
                 </div>
