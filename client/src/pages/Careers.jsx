@@ -700,15 +700,15 @@ export default function Careers() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#07090e] text-slate-900 dark:text-slate-100 transition-colors duration-300">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {/* Hero */}
-        <div className="mb-10 bg-gradient-to-r from-[#111827] via-[#0F172A] to-[#0369A1]/20 border border-slate-800/80 rounded-3xl p-8 md:p-10 shadow-xl relative overflow-hidden">
+        <div className="mb-10 bg-gradient-to-r from-[#111827] via-[#0F172A] to-[#0369A1]/20 border border-slate-800/80 rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-3">
-              <Snowflake className="w-9 h-9 md:w-11 md:h-11 text-sky-400" />
-              <h1 className="text-4xl md:text-5xl font-extrabold text-white">Winter Internship 2026-27</h1>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3">
+              <Snowflake className="w-9 h-9 md:w-11 md:h-11 text-sky-400 shrink-0" />
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white break-words min-w-0">Winter Internship 2026-27</h1>
             </div>
             <p className="text-slate-300 text-sm md:text-base mb-2 max-w-3xl leading-relaxed">
               A structured <span className="text-sky-400 font-semibold">4-week cohort</span> that replaces the old
