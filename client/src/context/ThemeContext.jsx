@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
+import { useAuth } from './AuthContext'
 
 const ThemeContext = createContext()
 
@@ -19,6 +20,10 @@ export function ThemeProvider({ children }) {
   })
   const [systemPrefersDark, setSystemPrefersDark] = useState(getSystemPrefersDark)
 
+  // Guests (signed-out visitors) always get the light, frosted white + blue theme.
+  const { user } = useAuth()
+  const isGuest = !user
+
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
@@ -38,8 +43,8 @@ export function ThemeProvider({ children }) {
   }, [])
 
   const isDark = useMemo(
-    () => theme === 'dark' || (theme === 'system' && systemPrefersDark),
-    [theme, systemPrefersDark],
+    () => !isGuest && (theme === 'dark' || (theme === 'system' && systemPrefersDark)),
+    [theme, systemPrefersDark, isGuest],
   )
 
   useEffect(() => {
@@ -51,10 +56,11 @@ export function ThemeProvider({ children }) {
       root.classList.remove('dark')
       root.classList.add('light')
     }
+    root.classList.toggle('guest', isGuest)
     try {
       localStorage.setItem(THEME_STORAGE_KEY, theme)
     } catch {}
-  }, [theme, isDark])
+  }, [theme, isDark, isGuest])
 
   const setTheme = useCallback((next) => {
     if (next === 'dark' || next === 'light' || next === 'system') {
