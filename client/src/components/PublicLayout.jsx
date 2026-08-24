@@ -6,7 +6,6 @@ import GooeyNav from './GooeyNav'
 import Footer from './Footer'
 import Logo from './Logo'
 import { useAuth } from '../context/AuthContext'
-import { useInternAuth } from '../context/InternAuthContext'
 
 const navLinks = [
   { label: 'Courses', to: '/courses' },
@@ -90,16 +89,13 @@ export default function PublicLayout() {
   const [aiChatOpen, setAiChatOpen] = useState(false)
   const location = useLocation()
   const { user } = useAuth()
-  const { intern } = useInternAuth()
-
-  const isAuthenticated = Boolean(user || intern)
 
   const hideFooterRoutes = ['/learn', '/course', '/ml-major', '/quiz', '/test', '/editor', '/solve']
   const isExcludedRoute = hideFooterRoutes.some((route) => location.pathname.startsWith(route))
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-[#090d16] dark:text-slate-100 transition-colors duration-200">
-      {!isAuthenticated && <NavHeader key={location.key} />}
+      {!user && <NavHeader key={location.key} />}
       <div className="flex-1 w-full">
         <Outlet />
       </div>
