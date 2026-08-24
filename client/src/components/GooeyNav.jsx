@@ -9,7 +9,8 @@ const GooeyNav = ({
   particleR = 60,
   timeVariance = 300,
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
-  initialActiveIndex = 0
+  initialActiveIndex = 0,
+  tone = 'light'
 }) => {
   const containerRef = useRef(null)
   const navRef = useRef(null)
@@ -152,7 +153,9 @@ const GooeyNav = ({
                 key={index}
                 className={`rounded-full border transition-colors duration-300 ${
                   isActive
-                    ? 'bg-white border-slate-200/80 shadow-sm dark:bg-slate-800 dark:border-slate-700'
+                    ? tone === 'dark'
+                      ? 'bg-cyan-500/15 border-cyan-400/40'
+                      : 'bg-white border-slate-200/80 shadow-sm dark:bg-slate-800 dark:border-slate-700'
                     : 'border-transparent'
                 }`}
               >
@@ -162,8 +165,10 @@ const GooeyNav = ({
                   onKeyDown={e => handleKeyDown(e, index)}
                   className={`relative z-10 block px-4 py-2 text-sm font-medium transition-colors duration-300 ${
                     isActive
-                      ? 'text-slate-900 dark:text-white'
-                      : 'text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white'
+                      ? tone === 'dark' ? 'text-cyan-300' : 'text-slate-900 dark:text-white'
+                      : tone === 'dark'
+                        ? 'text-slate-300 hover:text-white'
+                        : 'text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white'
                   }`}
                 >
                   {item.label}

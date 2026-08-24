@@ -536,7 +536,7 @@ export default function Courses() {
                   }}
                   className={`cursor-pointer ${
                     isPro
-                      ? 'rounded-2xl border border-sky-500/30 bg-white dark:bg-[#0f1420] shadow-sm dark:shadow-none transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-cyan-500/5 hover:border-cyan-500/40'
+                      ? 'rounded-2xl border border-sky-500/40 bg-[#0f1420] shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-sky-500/15 hover:border-sky-400/60 flex flex-col'
                       : 'group bg-[#0f1420] border border-slate-800 rounded-2xl overflow-hidden shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500/50 flex flex-col'
                   }`}
                 >
