@@ -80,7 +80,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-3 text-sm">
               <li className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 mt-0.5 text-cyan-500 shrink-0" />
-                <a href="mailto:support@ihacademy.com" className="hover:text-cyan-400 transition-colors break-all">support@ihacademy.com</a>
+                <a href="mailto:ihusmanigroup@gmail.com" className="hover:text-cyan-400 transition-colors break-all">ihusmanigroup@gmail.com</a>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 mt-0.5 text-cyan-500 shrink-0" />
