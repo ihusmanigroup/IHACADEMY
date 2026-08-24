@@ -1,12 +1,10 @@
-import { useState } from 'react'
 import {
-  BookOpen, Crosshair, Briefcase, Library, ChevronRight, Check, LogIn, Loader2,
+  BookOpen, Crosshair, Briefcase, Library, ChevronRight, Check,
   Sparkles, Trophy, ArrowRight, Star, Zap, ShieldCheck, Code2, Rocket, Swords,
   Users, Brain, Quote,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
-import { useInternAuth } from '../context/InternAuthContext'
 import { useSiteData, useFeatures } from '../hooks/useSiteData'
 import SplitText from './SplitText'
 import BorderGlow from './BorderGlow'
@@ -162,21 +160,9 @@ const codeMockup = (
   </div>
 )
 
-const avatarTiles = [
-  'from-cyan-500 to-blue-600',
-  'from-violet-500 to-fuchsia-600',
-  'from-emerald-500 to-teal-600',
-  'from-orange-500 to-amber-600',
-  'from-pink-500 to-rose-600',
-]
-const avatarInitials = ['AS', 'PP', 'DK', 'MR', 'ZK']
-
 export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
   const navigate = useNavigate()
   const { isDark } = useTheme()
-  const { login } = useInternAuth()
-  const [demoBusy, setDemoBusy] = useState(false)
-  const [demoError, setDemoError] = useState('')
 
   // CMS-driven content with static fallbacks while DB rows load / are absent.
   const { settings } = useSiteData()
@@ -208,22 +194,6 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
     : pillarsFallback
 
   const stats = statsFallback
-
-  // Temporary: one-click demo sign-in straight into the intern portal.
-  const demoSignIn = async () => {
-    setDemoBusy(true)
-    setDemoError('')
-    try {
-      const res = await login('intern@ih.com', 'password123')
-      if (res.success) {
-        navigate('/intern-portal')
-      } else {
-        setDemoError(res.error || 'Demo login failed')
-      }
-    } finally {
-      setDemoBusy(false)
-    }
-  }
 
   const title2Words = heroTitle2.split(' ')
   const title2Accent = title2Words.slice(1).join(' ')
@@ -314,46 +284,6 @@ export default function PublicLanding({ onOpenAuth: _onOpenAuth }) {
               </SpecularButton>
             </div>
 
-            {/* Social proof */}
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mt-6">
-              <div className="flex -space-x-2.5">
-                {avatarInitials.map((ini, i) => (
-                  <span
-                    key={ini}
-                    className={`w-8 h-8 rounded-full bg-gradient-to-br ${avatarTiles[i]} ring-2 ring-white dark:ring-[#090d16] flex items-center justify-center text-[10px] font-bold text-white`}
-                  >
-                    {ini}
-                  </span>
-                ))}
-              </div>
-              <div>
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                  ))}
-                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 ml-1">4.9/5</span>
-                </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400">from 2,000+ reviews · 10k+ developers</p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-4 text-xs text-slate-600 dark:text-slate-300 transition-colors duration-300">
-              <span className="inline-flex items-center gap-1"><Check className="w-3.5 h-3.5 text-emerald-500" /> No credit card</span>
-              <span className="inline-flex items-center gap-1"><Zap className="w-3.5 h-3.5 text-amber-500" /> Start in 60 seconds</span>
-              <span className="inline-flex items-center gap-1"><ShieldCheck className="w-3.5 h-3.5 text-cyan-500" /> Cancel anytime</span>
-            </div>
-
-            <div className="mt-6">
-              <button
-                onClick={demoSignIn}
-                disabled={demoBusy}
-                className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-sky-400/60 bg-sky-500/5 px-4 py-2.5 text-sm font-semibold text-sky-700 dark:text-cyan-300 transition-all hover:border-sky-500 hover:bg-sky-500/10 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {demoBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}
-                {demoBusy ? 'Signing in as demo intern...' : 'Demo sign-in — try the Intern Portal'}
-              </button>
-              {demoError && <p className="mt-2 text-xs text-red-500">{demoError}</p>}
-            </div>
           </div>
 
           {/* Code Mockup + floating achievement chips */}
