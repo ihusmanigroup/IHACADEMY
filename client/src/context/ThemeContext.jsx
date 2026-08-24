@@ -1,77 +1,23 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
-import { useAuth } from './AuthContext'
+import { createContext, useContext, useEffect, useMemo } from 'react'
 
 const ThemeContext = createContext()
 
-const THEME_STORAGE_KEY = 'app-theme'
-
-function getSystemPrefersDark() {
-  if (typeof window === 'undefined') return false
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-}
-
+// The site uses one fixed designed look: white sections with dark bands and
+// dark headings (styled per-section in the components themselves). No
+// user-facing theme switching.
 export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => {
-    try {
-      return localStorage.getItem(THEME_STORAGE_KEY) || 'light'
-    } catch {
-      return 'light'
-    }
-  })
-  const [systemPrefersDark, setSystemPrefersDark] = useState(getSystemPrefersDark)
-
-  // Guests (signed-out visitors) share the same dark theme as the logged-in app.
-  const { user } = useAuth()
-  const isGuest = !user
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const handleChange = (e) => setSystemPrefersDark(e.matches)
-    if (typeof mq.addEventListener === 'function') {
-      mq.addEventListener('change', handleChange)
-    } else {
-      mq.addListener(handleChange)
-    }
-    return () => {
-      if (typeof mq.removeEventListener === 'function') {
-        mq.removeEventListener('change', handleChange)
-      } else {
-        mq.removeListener(handleChange)
-      }
-    }
-  }, [])
-
-  // Signed-out visitors get the fixed full dark theme; logged-in users pick light or dark.
-  const isDark = useMemo(
-    () => isGuest || theme === 'dark' || (theme === 'system' && systemPrefersDark),
-    [theme, systemPrefersDark, isGuest],
-  )
-
   useEffect(() => {
     const root = document.documentElement
-    if (isDark) {
-      root.classList.add('dark')
-      root.classList.remove('light')
-    } else {
-      root.classList.remove('dark')
-      root.classList.add('light')
-    }
-    root.classList.toggle('guest', isGuest)
+    root.classList.remove('dark')
+    root.classList.add('light')
     try {
-      localStorage.setItem(THEME_STORAGE_KEY, theme)
+      localStorage.setItem('app-theme', 'light')
     } catch {}
-  }, [theme, isDark, isGuest])
-
-  const setTheme = useCallback((next) => {
-    if (next === 'dark' || next === 'light' || next === 'system') {
-      setThemeState(next)
-    }
   }, [])
 
   const value = useMemo(
-    () => ({ theme, setTheme, isDark }),
-    [theme, setTheme, isDark],
+    () => ({ theme: 'light', setTheme: () => {}, isDark: false }),
+    [],
   )
 
   return (

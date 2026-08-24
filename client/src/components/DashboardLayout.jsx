@@ -9,7 +9,6 @@ import { useAuth } from '../context/AuthContext'
 import AIChatModal from './AIChatModal'
 import UserDropdown from './UserDropdown'
 import NotificationBell from './NotificationBell'
-import ThemeToggle from './ThemeToggle'
 import Logo from './Logo'
 
 const navSections = [
@@ -216,7 +215,6 @@ export default function DashboardLayout() {
       <main className="flex-1 min-w-0 flex flex-col bg-slate-50 dark:bg-[#090d16] transition-all duration-300 ease-in-out">
         <header className="sticky top-0 z-30 bg-white dark:bg-[#090D16] border-b border-slate-200 dark:border-slate-800/80 transition-colors duration-200 px-6 md:px-8 py-3 flex items-center justify-end shrink-0">
           <div className="flex items-center gap-3">
-            <ThemeToggle />
             <NotificationBell />
 
             <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold transition-all duration-300">

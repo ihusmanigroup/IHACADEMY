@@ -3,7 +3,6 @@ import { LogOut } from 'lucide-react'
 import { useInternAuth } from '../context/InternAuthContext'
 import { sidebarItems } from '../data/internPortalNav'
 import Logo from './Logo'
-import ThemeToggle from './ThemeToggle'
 
 /**
  * Persistent portal chrome: left sidebar navigation, sticky top header, and
@@ -89,9 +88,6 @@ export default function InternPortalShell({ title, subtitle = 'Intern Portal · 
           <div className="min-w-0">
             <h1 className="text-xl font-extrabold text-slate-900 dark:text-white truncate">{title}</h1>
             <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">{subtitle}</p>
-          </div>
-          <div className="flex items-center gap-3 shrink-0">
-            <ThemeToggle />
           </div>
         </div>        <div className="md:hidden flex gap-2 overflow-x-auto pb-4 -mx-1 px-1">
           {sidebarItems.map((item) => (
