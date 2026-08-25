@@ -3,7 +3,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeft, BookOpen, BookMarked, Zap, CheckCircle2, Circle, ChevronDown, ChevronLeft,
   ChevronRight, Code2, Lock, Play, Layers, FileText, Award, Crown,
-  AlertTriangle, Trophy, Rocket, X, Sparkles, GraduationCap,
+  AlertTriangle, Clock3, Trophy, Rocket, X, Sparkles, GraduationCap,
 } from 'lucide-react'
 import {
   resolveLocalCourse, localLessonList, localResumeLesson, localProgressKey,
@@ -348,7 +348,8 @@ function QuizSection({ course, quizState, updateQuiz, onBack, onProceed }) {
 // ---------------------------------------------------------------------------
 function CapstoneSection({ course, capstoneState, updateCapstone, quizPassed, onQuiz }) {
   const capstones = course.capstones || []
-  const submitted = capstoneState?.submittedAt != null
+  const capstoneApproved = capstoneState?.status === 'approved'
+  const capstonePending = capstoneState?.status === 'pending'
   const [selectedId, setSelectedId] = useState(capstoneState?.capstoneId || '')
 
   return (
@@ -359,9 +360,14 @@ function CapstoneSection({ course, capstoneState, updateCapstone, quizPassed, on
           <span className="bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30 text-[10px] font-bold uppercase tracking-wide px-2.5 py-0.5 rounded-md">
             Capstone Projects · Certification Gate
           </span>
-          {submitted && (
+          {capstoneApproved && (
             <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-              <CheckCircle2 className="w-3 h-3" /> Submission Recorded
+              <CheckCircle2 className="w-3 h-3" /> Capstone Approved
+            </span>
+          )}
+          {capstonePending && (
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+              <Clock3 className="w-3 h-3" /> Submitted — Under Review
             </span>
           )}
         </div>
@@ -376,7 +382,7 @@ function CapstoneSection({ course, capstoneState, updateCapstone, quizPassed, on
       <div className="space-y-4">
         {capstones.map((cap, idx) => {
           const isSelected = selectedId === cap.id
-          const isSubmittedCap = submitted && capstoneState.capstoneId === cap.id
+                  const isSubmittedCap = (capstoneApproved || capstonePending) && capstoneState.capstoneId === cap.id
           return (
             <div
               key={cap.id}
@@ -400,11 +406,15 @@ function CapstoneSection({ course, capstoneState, updateCapstone, quizPassed, on
                     <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/30">
                       <Rocket className="w-3 h-3" /> Capstone {idx + 1}
                     </span>
-                    {isSubmittedCap && (
+                    {isSubmittedCap && (capstoneApproved ? (
                       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                        <CheckCircle2 className="w-3 h-3" /> Your Submission
+                        <CheckCircle2 className="w-3 h-3" /> Capstone Approved
                       </span>
-                    )}
+                    ) : (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                        <Clock3 className="w-3 h-3" /> Submitted — Under Review
+                      </span>
+                    ))}
                   </div>
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-snug mt-1.5">{cap.title}</h3>
                   <p className="text-xs text-slate-500 dark:text-slate-500 mt-1 leading-relaxed">{cap.description}</p>
@@ -573,7 +583,7 @@ export default function CourseViewer() {
     : 0
   const quizPassed = quizState.submitted && quizScorePct >= QUIZ_PASS_PERCENT
 
-  const capstoneSubmitted = capstoneState?.submittedAt != null
+  const capstoneSubmitted = capstoneState?.status === 'approved'
 
   if (!course || flatLessons.length === 0) {
     return (

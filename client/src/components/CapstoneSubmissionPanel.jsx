@@ -20,7 +20,7 @@ import { useAuth } from '../context/AuthContext'
 
 const STATUS_META = {
   pending: {
-    label: 'Submitted - Under Review',
+    label: 'Submitted — Under Review',
     hint: 'Your capstone has been received and is being reviewed by the IH Academy team. We usually respond within a few days.',
     chip: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
     icon: Clock3,
@@ -155,6 +155,7 @@ export function CapstoneSubmitForm({ cap, courseId, quizPassed, onQuiz, updateCa
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState({ studentName: undefined, repoUrl: '', demoUrl: '', notes: '', pdfFile: null, error: '', submitting: false })
   const inputRef = useRef(null)
+  const approvedNotified = useRef(false)
 
   const loadSub = useCallback(async () => {
     if (!user) { setSubmissions([]); setLoading(false); return }
@@ -171,6 +172,20 @@ export function CapstoneSubmitForm({ cap, courseId, quizPassed, onQuiz, updateCa
 
   useEffect(() => { loadSub() }, [loadSub])
 
+  // When an admin approves this capstone (status === 'approved'), mark it as
+  // completed locally so course progress / certification eligibility updates.
+  useEffect(() => {
+    const mySub = submissions.find((s) => s.capstone_id === cap.id || s.assignment_title === cap.title)
+    if (mySub && mySub.status === 'approved') {
+      if (!approvedNotified.current) {
+        approvedNotified.current = true
+        updateCapstone?.({ capstoneId: cap.id, capstoneTitle: cap.title, repoUrl: mySub.github_url || '', demoUrl: mySub.live_demo_url || '', status: 'approved', submittedAt: mySub.submitted_at || new Date().toISOString() })
+      }
+    } else {
+      approvedNotified.current = false
+    }
+  }, [submissions, cap.id, cap.title])
+
   const sub = submissions.find((s) => s.capstone_id === cap.id || s.assignment_title === cap.title) || null
   const meta = sub ? STATUS_META[sub.status] : null
 
@@ -186,10 +201,10 @@ export function CapstoneSubmitForm({ cap, courseId, quizPassed, onQuiz, updateCa
     if (!user) { setForm((p) => ({ ...p, error: 'You must be signed in to submit.' })); return }
     const studentName = (form.studentName ?? defaultName).trim()
     if (!studentName) { setForm((p) => ({ ...p, error: 'Please enter your name.' })); return }
-    if (!form.repoUrl?.trim()) { setForm((p) => ({ ...p, error: 'Please provide the GitHub repository URL.' })); return }
+    const hasAtLeastOneInput = Boolean(form.repoUrl?.trim() || form.demoUrl?.trim() || form.notes?.trim() || form.pdfFile)
+    if (!hasAtLeastOneInput) { setForm((p) => ({ ...p, error: 'Please provide at least one submission item (GitHub link, Live Demo, Notes, or PDF file).' })); return }
     setForm((p) => ({ ...p, submitting: true, error: '' }))
     let pdfUrl = null
-    let fileName = null
     if (form.pdfFile) {
       const safeName = form.pdfFile.name.replace(/[^a-z0-9._-]/gi, '_').slice(0, 80)
       const filePath = `capstones/${Date.now()}_${safeName}`
@@ -201,7 +216,6 @@ export function CapstoneSubmitForm({ cap, courseId, quizPassed, onQuiz, updateCa
         return
       }
       pdfUrl = supabase.storage.from('assignment-docs').getPublicUrl(filePath).data.publicUrl
-      fileName = form.pdfFile.name
     }
     const payload = {
       user_id: user.id,
@@ -209,17 +223,22 @@ export function CapstoneSubmitForm({ cap, courseId, quizPassed, onQuiz, updateCa
       capstone_id: cap.id,
       assignment_title: cap.title,
       student_name: studentName,
-      github_url: form.repoUrl.trim(),
-      live_demo_url: form.demoUrl?.trim() || null,
-      notes: form.notes?.trim() || null,
+      github_url: form.repoUrl?.trim() || '',
+      live_demo_url: form.demoUrl?.trim() || '',
+      notes: form.notes?.trim() || '',
       pdf_url: pdfUrl,
-      file_name: fileName,
       status: 'pending',
     }
-    const { error } = await supabase.from('capstone_submissions').insert(payload)
+    const { data, error } = await supabase.from('capstone_submissions').insert([payload])
     setForm((p) => ({ ...p, submitting: false }))
-    if (error) { setForm((p) => ({ ...p, error: error.message })); return }
-    updateCapstone?.({ capstoneId: cap.id, capstoneTitle: cap.title, repoUrl: form.repoUrl.trim(), demoUrl: form.demoUrl?.trim(), submittedAt: new Date().toISOString() })
+    if (error) {
+      console.error('Capstone submission failed:', error)
+      setForm((p) => ({ ...p, error: error.message }))
+      return
+    }
+    // Pending: do NOT mark as completed. The capstone only counts toward
+    // course progress / certification once an admin sets status to 'approved'.
+    updateCapstone?.({ capstoneId: cap.id, capstoneTitle: cap.title, repoUrl: form.repoUrl?.trim() || '', demoUrl: form.demoUrl?.trim() || '', status: 'pending', submittedAt: null })
     setOpen(false)
     await loadSub()
   }
@@ -271,12 +290,6 @@ export function CapstoneSubmitForm({ cap, courseId, quizPassed, onQuiz, updateCa
         <div className='flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-sky-600 dark:text-cyan-400'>
           <Link2 className='w-4 h-4' /> Submit Capstone {cap.title ? 'Project' : 'Project'}
         </div>
-        {quizLockNote && (
-          <div className='flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/5 px-3 py-2 text-xs text-amber-700 dark:text-amber-300'>
-            <Lock className='w-4 h-4' /> Grand Quiz not passed yet - you can submit now; passing it later completes certification.
-          </div>
-        )}
-
         <div>
           <label className='block text-[11px] font-bold uppercase tracking-wide text-slate-500 mb-1.5'>Student Name <span className='text-rose-500'>*</span></label>
           <div className='relative'>

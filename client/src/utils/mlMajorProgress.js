@@ -70,7 +70,7 @@ export function computeMajorProgress(flatLessons, completedLessons, quizSubmitte
   const quizPercent = quizSubmitted
     ? QUIZ_WEIGHT
     : Math.round((answeredCount / quizTotal) * QUIZ_WEIGHT)
-  const capstoneSubmittedCount = Object.values(capstoneStatuses || {}).filter((s) => s === 'submitted').length
+  const capstoneSubmittedCount = Object.values(capstoneStatuses || {}).filter((s) => s === 'submitted' || s === 'approved').length
   const capstoneInReviewCount = Object.values(capstoneStatuses || {}).filter((s) => s === 'in_review').length
   const capstonePercent = capstoneSubmittedCount > 0
     ? CAPSTONE_WEIGHT
