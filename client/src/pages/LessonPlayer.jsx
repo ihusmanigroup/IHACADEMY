@@ -2,12 +2,13 @@ import { useState, useEffect, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
 import {
-  ArrowLeft, CheckCircle, Circle, Loader2, BookOpen,
+  ArrowLeft, CheckCircle, Circle, Loader2, BookOpen, AlertTriangle,
   ChevronLeft, ChevronRight, Menu, X, Clock,
 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import TopicSubmissionPanel from '../components/TopicSubmissionPanel'
+import { useTopicSubmissions } from '../hooks/useTopicSubmissions'
 import { isPracticalTopic } from '../utils/topicUtils'
 
 const LABELS = ['A', 'B', 'C', 'D']
@@ -328,6 +329,18 @@ export default function LessonPlayer() {
 
   const topics = useMemo(() => parseTopics(lesson?.content), [lesson])
   const hasExam = quizQuestions.length > 0
+
+  // Gate: a practical topic cannot be advanced/completed until a submission exists.
+  // LessonPlayer is the FREE-course player — submissions are NEVER shown here,
+  // so courseIsPro is false and the form/completion block are disabled.
+  const courseIsPro = !(Number(course?.price) === 0 || course?.is_free === true)
+  const activeTopic = topics?.[activeTopicIndex]
+  const { submission: activeSubmission } = useTopicSubmissions({
+    courseId, lessonId, topicId: activeTopic?.topic_id, courseType: 'free',
+  })
+  const activeRequiresSubmission = courseIsPro && activeTopic ? isPracticalTopic(activeTopic) : false
+  const submissionOk = activeSubmission && activeSubmission.status !== 'rejected'
+  const completionBlocked = activeRequiresSubmission && !!user && !submissionOk
   const isLastTopic = topics ? activeTopicIndex === topics.length - 1 : false
   const isLastLesson = lessonIndex === lessons.length - 1
   const allTopicsCompleted = useMemo(() => {
@@ -401,6 +414,7 @@ export default function LessonPlayer() {
   }
 
   const handleTopicComplete = () => {
+    if (completionBlocked) return
     if (activeTopicIndex < topics.length - 1) {
       const nextIdx = activeTopicIndex + 1
       const newHighest = Math.max(highestUnlockedIndex, nextIdx)
@@ -645,8 +659,8 @@ export default function LessonPlayer() {
                     <ReactMarkdown components={MarkdownComponents}>{topics[activeTopicIndex]?.content || ''}</ReactMarkdown>
                   </div>
 
-                  {/* Topic Submission Panel — only for practical (hands-on) topics */}
-                  {isPracticalTopic(topics[activeTopicIndex]) && (
+                  {/* Topic Submission Panel — only for practical (hands-on) topics in PRO courses */}
+                  {courseIsPro && isPracticalTopic(topics[activeTopicIndex]) && (
                     <TopicSubmissionPanel
                       courseId={courseId}
                       lessonId={lessonId}
@@ -656,12 +670,19 @@ export default function LessonPlayer() {
                     />
                   )}
 
+                  {completionBlocked && (
+                    <p className="mt-4 flex items-center justify-center gap-1.5 text-sm font-semibold text-amber-600 dark:text-amber-400">
+                      <AlertTriangle className="w-4 h-4" /> Submit your practical work above to continue.
+                    </p>
+                  )}
+
                   {/* STRICT BOTTOM NAV MATRIX */}
                   {!isLastTopic && (
                     <div className="flex justify-center mt-8">
                       <button
                         onClick={handleTopicComplete}
-                        className="w-full bg-[#6366F1] hover:bg-[#5558E6] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 active:scale-[0.97] flex items-center justify-center gap-2 text-base"
+                        disabled={completionBlocked}
+                        className="w-full bg-[#6366F1] hover:bg-[#5558E6] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 active:scale-[0.97] flex items-center justify-center gap-2 text-base disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         Complete Topic & Continue →
                       </button>
@@ -672,7 +693,8 @@ export default function LessonPlayer() {
                     <div className="flex justify-center mt-8">
                       <button
                         onClick={() => { saveTopicProgress(); navigate(`/dashboard/learn/${courseId}/lesson/${nextLesson.id}`) }}
-                        className="w-full bg-[#6366F1] hover:bg-[#5558E6] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 active:scale-[0.97] flex items-center justify-center gap-2 text-base"
+                        disabled={completionBlocked}
+                        className="w-full bg-[#6366F1] hover:bg-[#5558E6] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 active:scale-[0.97] flex items-center justify-center gap-2 text-base disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         Next Lesson <ChevronRight className="w-4 h-4" />
                       </button>
@@ -683,7 +705,8 @@ export default function LessonPlayer() {
                     <div className="flex justify-center mt-8">
                       <button
                         onClick={() => { saveTopicProgress(); setShowExam(true); setExamStarted(true); window.scrollTo({ top: 0, behavior: 'smooth' }); try { localStorage.setItem(`exam_showing_course_${courseId}`, 'true'); localStorage.setItem(`exam_started_course_${courseId}`, 'true') } catch (_) {} }}
-                        className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-indigo-400 text-black font-semibold px-6 py-3 rounded-lg transition-all duration-200 active:scale-[0.97] flex items-center justify-center gap-2 text-base"
+                        disabled={completionBlocked}
+                        className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-indigo-400 text-black font-semibold px-6 py-3 rounded-lg transition-all duration-200 active:scale-[0.97] flex items-center justify-center gap-2 text-base disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         Proceed to Final Course Assessment <ChevronRight className="w-4 h-4" />
                       </button>
@@ -718,7 +741,8 @@ export default function LessonPlayer() {
                   {isLastTopic && !isLastLesson && nextLesson && (
                     <button
                       onClick={() => { saveTopicProgress(); navigate(`/dashboard/learn/${courseId}/lesson/${nextLesson.id}`) }}
-                      className="flex items-center gap-2 bg-[#6366F1] hover:bg-[#5558E6] text-white font-semibold px-6 py-3 rounded-lg transition"
+                      disabled={completionBlocked}
+                      className="flex items-center gap-2 bg-[#6366F1] hover:bg-[#5558E6] text-white font-semibold px-6 py-3 rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Next Lesson <ChevronRight className="w-4 h-4" />
                     </button>
@@ -726,7 +750,8 @@ export default function LessonPlayer() {
                   {isLastTopic && isLastLesson && !showExam && (
                     <button
                       onClick={() => { saveTopicProgress(); setShowExam(true); setExamStarted(true); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                      className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold px-6 py-3 rounded-lg transition"
+                      disabled={completionBlocked}
+                      className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold px-6 py-3 rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Proceed to Final Course Assessment <ChevronRight className="w-4 h-4" />
                     </button>

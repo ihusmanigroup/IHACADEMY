@@ -296,6 +296,9 @@ export default function LearnView() {
   const isEnrolled = !!enrollment
   const isPro = profile?.is_pro === true
   const hasAccess = isFree || isEnrolled || isPro
+  // A course is Pro (paid) iff it is NOT free. Submissions exist ONLY for Pro
+  // courses — free courses must never render an assignment/capstone form.
+  const courseIsPro = !isFree
 
   const lockedIds = useMemo(() => {
     const set = new Set()
@@ -361,6 +364,7 @@ export default function LearnView() {
           isLocked: !!l.is_locked,
           isAssessment: !!l.is_assessment,
           isPreview: !!l.is_preview,
+          hasSubmission: !!l.has_submission,
           moduleOrder: l.module_order || null,
           moduleTitle: l.module_title || null,
           lessonOrder: l.lesson_order || null,
@@ -853,13 +857,16 @@ export default function LearnView() {
                   </div>
                 )}
 
-                <div className="mt-8">
-                  <AssignmentSubmissionPanel
-                    courseId={courseId}
-                    assignmentTitle={course?.title || 'Course Assignment'}
-                    courseTitle={course?.title}
-                  />
-                </div>
+                {courseIsPro && activeLesson?.hasSubmission && (
+                  <div className="mt-8">
+                    <AssignmentSubmissionPanel
+                      courseId={courseId}
+                      topicId={activeLesson.id}
+                      assignmentTitle={activeLesson.title || course?.title || 'Course Assignment'}
+                      courseTitle={course?.title}
+                    />
+                  </div>
+                )}
 
                 {/* Bottom Navigation — floating, centered, lifted */}
                 <div className="sticky bottom-4 z-20 mt-10 flex justify-center px-3">

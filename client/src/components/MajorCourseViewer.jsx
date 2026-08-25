@@ -27,6 +27,7 @@ import {
   flatLessonsOf, computeUnlockedLessons, computeMajorProgress, resetMajorProgress,
 } from '../utils/mlMajorProgress'
 import { isPracticalLesson } from '../utils/topicUtils'
+import { useTopicSubmissions } from '../hooks/useTopicSubmissions'
 
 // ---------------------------------------------------------------------------
 // Progress weighting (strict course completion):
@@ -227,6 +228,17 @@ export default function MajorCourseViewer() {
   const activeModule = mlMajorCourse.modules.find((m) => m.id === activeLesson?.moduleId)
   const nextLesson = currentIndex >= 0 && currentIndex < flatLessons.length - 1 ? flatLessons[currentIndex + 1] : null
 
+  // Gate: a practical lesson cannot be marked complete until a submission exists.
+  const { submission: activeSubmission } = useTopicSubmissions({
+    courseId: mlMajorCourse.id,
+    lessonId: activeLesson?.id,
+    topicId: activeLesson?.id,
+    courseType: 'pro',
+  })
+  const activeRequiresSubmission = isPracticalLesson(activeLesson)
+  const submissionOk = activeSubmission && activeSubmission.status !== 'rejected'
+  const completionBlocked = activeRequiresSubmission && !!user && !submissionOk
+
   // -------------------------------------------------------------------------
   // Strict completion: lessons 90% · quiz 5% · capstone 5% (shared engine)
   // -------------------------------------------------------------------------
@@ -385,6 +397,7 @@ export default function MajorCourseViewer() {
 
   const markCompletedAndContinue = () => {
     if (!activeLesson || courseComplete) return
+    if (completionBlocked) return
     const next = new Set(completedLessons).add(activeLesson.id)
     setCompletedLessons(next)
     saveJson(COMPLETED_KEY, Array.from(next))
@@ -840,7 +853,7 @@ export default function MajorCourseViewer() {
                   <div className="flex flex-wrap items-center gap-3 mt-4">
                     <button
                       onClick={markCompletedAndContinue}
-                      disabled={courseComplete}
+                      disabled={courseComplete || completionBlocked}
                       className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all shadow-md shadow-sky-500/20 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                     >
                       {isLessonCompleted(activeLesson.id) ? (
@@ -849,6 +862,11 @@ export default function MajorCourseViewer() {
                         <><CheckCircle2 className="w-4 h-4" /> Mark Completed & Continue</>
                       )}
                     </button>
+                    {completionBlocked && (
+                      <p className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
+                        <AlertTriangle className="w-3.5 h-3.5" /> Submit your practical work above to unlock completion.
+                      </p>
+                    )}
                     {nextLesson && isLessonCompleted(activeLesson.id) && (
                       <button
                         onClick={goNext}
@@ -978,9 +996,12 @@ export default function MajorCourseViewer() {
                       <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Lesson {currentIndex + 1} of {totalLessons}</p>
                       <p className="text-[10px] font-bold text-sky-600 dark:text-sky-400 mt-0.5">{lessonPercent}% lessons · {overallProgress}%</p>
                     </div>
+                    {completionBlocked && (
+                      <p className="w-full text-center text-[11px] font-semibold text-amber-500 mb-1">Submit your practical work to unlock completion.</p>
+                    )}
                     <button
                       onClick={markCompletedAndContinue}
-                      disabled={courseComplete}
+                      disabled={courseComplete || completionBlocked}
                       className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed sm:gap-2 sm:px-5"
                     >
                       {isLessonCompleted(activeLesson.id) ? (

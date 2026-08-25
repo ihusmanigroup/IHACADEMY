@@ -204,7 +204,7 @@ function StatusCard({ sub, meta, onResubmit }) {
   )
 }
 
-export default function AssignmentSubmissionPanel({ courseId, assignmentTitle, courseTitle }) {
+export default function AssignmentSubmissionPanel({ courseId, assignmentTitle, courseTitle, topicId }) {
   const { user } = useAuth()
 
   const [submissions, setSubmissions] = useState([])
@@ -234,21 +234,24 @@ export default function AssignmentSubmissionPanel({ courseId, assignmentTitle, c
     }
     setLoading(true)
     setLoadError('')
-    // Preferred: scope by course_id. If the live table is missing that column
-    // (older deployments), fall back to all of the user's rows and filter by
-    // title below — submissions still load instead of hard-failing.
-    let query = supabase
+    // Preferred: scope by course_id (and topic_id when the form is per-topic).
+    // If the live table is missing an optional column, fall back to all of the
+    // user's rows and let the `latest` lookup below filter by topic/title so
+    // submissions still load instead of hard-failing.
+    const base = supabase
       .from('course_assignment_submissions')
       .select('*')
       .eq('user_id', user.id)
+    let query = base
     if (courseId) query = query.eq('course_id', courseId)
+    if (topicId) query = query.eq('topic_id', topicId)
     const { data, error } = await query.order('submitted_at', { ascending: false })
-    if (error && courseId && /course_id/.test(error.message)) {
-      const { data: all, error: err2 } = await supabase
-        .from('course_assignment_submissions')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('submitted_at', { ascending: false })
+    if (
+      error &&
+      ((courseId && /course_id/.test(error.message)) ||
+        (topicId && /topic_id/.test(error.message)))
+    ) {
+      const { data: all, error: err2 } = await base.order('submitted_at', { ascending: false })
       if (err2) setLoadError(err2.message)
       else setSubmissions(all || [])
     } else if (error) {
@@ -257,16 +260,21 @@ export default function AssignmentSubmissionPanel({ courseId, assignmentTitle, c
       setSubmissions(data || [])
     }
     setLoading(false)
-  }, [user, courseId])
+  }, [user, courseId, topicId])
 
   useEffect(() => {
     loadSubmissions()
   }, [loadSubmissions])
 
   const latest = useMemo(() => {
+    // Prefer the exact topic's submission when the form is scoped per-topic.
+    if (topicId) {
+      const byTopic = submissions.find((s) => s.topic_id === topicId)
+      if (byTopic) return byTopic
+    }
     if (!assignmentTitle) return submissions[0] || null
     return submissions.find((s) => s.assignment_title === assignmentTitle) || null
-  }, [submissions, assignmentTitle])
+  }, [submissions, assignmentTitle, topicId])
 
   const latestStatus = latest?.status || null
   const meta = STATUS_META[latestStatus]
@@ -361,14 +369,18 @@ export default function AssignmentSubmissionPanel({ courseId, assignmentTitle, c
       status: 'pending',
     }
     if (courseId) payload.course_id = courseId
+    if (topicId) payload.topic_id = topicId
 
     let { error } = await supabase.from('course_assignment_submissions').insert(payload)
-    // If the live table lacks course_id, retry without that column so the
-    // submission still saves instead of throwing a 400 at the student.
-    if (error && courseId && /course_id/.test(error.message)) {
+    // If the live table lacks an optional column (course_id / topic_id), retry
+    // without it so the submission still saves instead of throwing a 400.
+    if (error) {
       const rest = { ...payload }
-      delete rest.course_id
-      ;({ error } = await supabase.from('course_assignment_submissions').insert(rest))
+      if (courseId && /course_id/.test(error.message)) delete rest.course_id
+      if (topicId && /topic_id/.test(error.message)) delete rest.topic_id
+      if (Object.keys(rest).length !== Object.keys(payload).length) {
+        ;({ error } = await supabase.from('course_assignment_submissions').insert(rest))
+      }
     }
     setSubmitting(false)
     if (error) {
