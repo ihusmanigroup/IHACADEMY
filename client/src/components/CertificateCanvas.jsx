@@ -1,110 +1,147 @@
-import { useEffect, useRef } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useEffect, useState } from 'react'
 
-const CANVAS_W = 1920
-const CANVAS_H = 1080
+const CW = 1920
+const CH = 1080
 
-// Renders the certificate onto a high-resolution HTML5 canvas (A4 @ 1920x1080).
-// The supplied canvasRef is exposed to the parent so it can export a PNG / PDF.
-//
-// CRITICAL: the uploaded template contains hardcoded placeholder text
-// ([RECIPIENT NAME], [MINOR COURSE NAME], [DURATION], [DATE], [CERTIFICATE ID]).
-// Before drawing any dynamic text we paint opaque white rectangles over those
-// placeholder areas so the underlying strings are completely erased and the
-// dynamic text does not overlap them.
-export default function CertificateCanvas({
-  canvasRef,
-  templateUrl,
-  recipientName,
-  courseTitle,
-  duration,
-  date,
-  certificateId,
-}) {
-  const localRef = useRef(null)
-  const ref = canvasRef || localRef
+// Pixel positions mapped 1:1 from the DOM overlay percentages so the canvas
+// preview matches exactly what the old DOM preview looked like.
+const NAME = { x: 960, y: 491, size: 38, font: 'Georgia, "Times New Roman", serif', color: '#1E293B', spacing: 0.16 }
+const COURSE = { x: 960, y: 664, size: 31, font: 'Arial, sans-serif', color: '#0F172A' }
+const META = {
+  y: 970,
+  size: 23,
+  font: 'Arial, sans-serif',
+  color: '#334155',
+  cols: [470, 796, 1122, 1449],
+}
 
-  useEffect(() => {
-    const canvas = ref.current
+const CertificateCanvas = forwardRef(function CertificateCanvas(
+  { templateUrl, studentName, courseTitle, category, issueDate, certificateId, submissionDate },
+  ref
+) {
+  const canvasRef = useRef(null)
+  const [tainted, setTainted] = useState(false)
+  const readyRef = useRef(Promise.resolve())
+
+  const draw = (img) => {
+    const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, CW, CH)
 
-    // Erase ONLY the template's baked-in placeholder strings (not the static
-    // label headers like "COURSE DURATION") with white boxes.
-    const patchPlaceholders = () => {
-      ctx.fillStyle = '#FFFFFF'
-      ctx.fillRect(480, 470, 960, 90) // [RECIPIENT NAME]
-      ctx.fillRect(520, 625, 880, 55) // [MINOR COURSE NAME]
-      ctx.fillRect(580, 782, 170, 32) // [DURATION] (right half only)
-      ctx.fillRect(980, 782, 160, 32) // [DATE] (right half only)
-      ctx.fillRect(1380, 782, 260, 32) // [CERTIFICATE ID] (right half only)
-    }
-
-    const drawText = () => {
-      ctx.textBaseline = 'alphabetic'
-
-      // Recipient name
-      ctx.textAlign = 'center'
-      ctx.fillStyle = '#2563EB'
-      ctx.font = '700 50px "Inter", sans-serif'
-      ctx.fillText(recipientName || '', 960, 532)
-
-      // Course title
-      ctx.fillStyle = '#0F172A'
-      ctx.font = '700 30px "Inter", sans-serif'
-      ctx.fillText(courseTitle || '', 960, 665)
-
-      // Metadata row (left-aligned, drawn over the erased inline placeholders)
-      ctx.textAlign = 'left'
-      ctx.fillStyle = '#0F172A'
-      ctx.font = '700 18px "Inter", sans-serif'
-      ctx.fillText(duration || '—', 585, 804)
-      ctx.fillText(date || '—', 985, 804)
-      ctx.fillText(certificateId || '', 1385, 804)
-    }
-
-    const render = () => {
-      ctx.clearRect(0, 0, CANVAS_W, CANVAS_H)
+    if (img) {
+      ctx.drawImage(img, 0, 0, CW, CH)
+    } else {
       ctx.fillStyle = '#ffffff'
-      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H)
+      ctx.fillRect(0, 0, CW, CH)
+    }
 
-      if (templateUrl) {
-        const img = new Image()
-        img.crossOrigin = 'anonymous'
-        img.onload = () => {
-          ctx.drawImage(img, 0, 0, CANVAS_W, CANVAS_H)
-          patchPlaceholders()
-          drawText()
-        }
-        img.onerror = () => {
-          patchPlaceholders()
-          drawText()
-        }
-        img.src = templateUrl
-      } else {
-        patchPlaceholders()
-        drawText()
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px'
+
+    // Recipient name
+    ctx.font = `700 ${NAME.size}px ${NAME.font}`
+    ctx.fillStyle = NAME.color
+    if ('letterSpacing' in ctx) ctx.letterSpacing = `${Math.round(NAME.size * NAME.spacing)}px`
+    ctx.fillText(studentName || '', NAME.x, NAME.y)
+
+    // Course title
+    ctx.font = `700 ${COURSE.size}px ${COURSE.font}`
+    ctx.fillStyle = COURSE.color
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px'
+    ctx.fillText(courseTitle || '', COURSE.x, COURSE.y)
+
+    // Bottom meta row (category / issue date / cert id / submission date)
+    ctx.font = `600 ${META.size}px ${META.font}`
+    ctx.fillStyle = META.color
+    const metaValues = [category, issueDate, certificateId, submissionDate]
+    metaValues.forEach((val, i) => {
+      ctx.fillText(val || '', META.cols[i], META.y)
+    })
+  }
+
+  useEffect(() => {
+    let cancelled = false
+
+    const renderWhenReady = () => {
+      if (cancelled) return
+      const img = imgRef.current
+      if (!img || !img.complete) return
+      try {
+        draw(img)
+      } catch (e) {
+        // Tainted canvas (CORS) — keep the white fallback, mark tainted.
+        console.error('CertificateCanvas draw failed:', e)
+        setTainted(true)
       }
     }
 
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(render)
+    const imgRef = { current: null }
+
+    if (templateUrl) {
+      readyRef.current = new Promise((resolve) => {
+        const img = new Image()
+        img.crossOrigin = 'anonymous'
+        img.onload = () => {
+          if (cancelled) return
+          imgRef.current = img
+          const finish = () => {
+            renderWhenReady()
+            resolve()
+          }
+          if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(finish)
+          } else {
+            finish()
+          }
+        }
+        img.onerror = () => {
+          if (cancelled) return
+          imgRef.current = null
+          renderWhenReady()
+          resolve()
+        }
+        img.src = templateUrl
+        imgRef.current = img
+      })
     } else {
-      render()
+      readyRef.current = (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => {
+        if (cancelled) return
+        renderWhenReady()
+      })
     }
-  }, [ref, templateUrl, recipientName, courseTitle, duration, date, certificateId])
+
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templateUrl, studentName, courseTitle, category, issueDate, certificateId, submissionDate])
+
+  useImperativeHandle(ref, () => ({
+    ready: () => readyRef.current,
+    toDataURL: () => {
+      const canvas = canvasRef.current
+      if (!canvas) return null
+      try {
+        return canvas.toDataURL('image/png', 1.0)
+      } catch (e) {
+        console.error('Canvas export failed (likely CORS taint):', e)
+        setTainted(true)
+        return null
+      }
+    },
+    isTainted: () => tainted,
+  }))
 
   return (
     <canvas
-      ref={ref}
-      width={CANVAS_W}
-      height={CANVAS_H}
-      style={{
-        width: '100%',
-        height: 'auto',
-        display: 'block',
-        borderRadius: 12,
-        boxShadow: '0 20px 50px rgba(2, 44, 34, 0.25)',
-      }}
+      ref={canvasRef}
+      width={CW}
+      height={CH}
+      className="mc-certificate-image"
     />
   )
-}
+})
+
+export default CertificateCanvas

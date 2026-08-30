@@ -8,7 +8,6 @@ import {
   templateForCourse,
   issueCertificateIfNeeded,
   certificateIdFor,
-  certificateDuration,
 } from '../lib/certificates'
 import { useCourseSubmissionGate } from '../hooks/useCourseSubmissionGate'
 import MinorCourseCertificate from '../components/MinorCourseCertificate'
@@ -59,6 +58,18 @@ const formatDate = (value) => {
   const dd = String(dt.getDate()).padStart(2, '0')
   const mm = String(dt.getMonth() + 1).padStart(2, '0')
   return `${dd}/${mm}/${dt.getFullYear()}`
+}
+
+const LONG_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
+const toLongDate = (value) => {
+  if (!value) return ''
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})/.exec(value)
+  const dt = m ? new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1])) : (() => {
+    const mm = /^(\d{4})-(\d{2})-(\d{2})/.exec(value || '')
+    return mm ? new Date(Number(mm[1]), Number(mm[2]) - 1, Number(mm[3])) : new Date(value)
+  })()
+  if (isNaN(dt.getTime())) return value
+  return `${LONG_MONTHS[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`
 }
 
 export default function Certifications() {
@@ -269,15 +280,19 @@ export default function Certifications() {
   }, [user?.id, loading, courses, templates, enrollments, certificates, lessonCounts])
 
   const openModal = (course) => {
+    const cert = getCert(course.id)
     const template = templForCourse(course.id)
+    const issue = getIssueDate(course.id)
+    const submission = (cert?.created_at && formatDate(cert.created_at)) || issue
     setPreview({
       studentName: userName,
       courseTitle: course.title,
-      duration: certificateDuration(course),
-      completionDate: getIssueDate(course.id),
+      category: course.category || 'AI & Engineering',
+      issueDate: toLongDate(issue),
+      submissionDate: toLongDate(submission),
       certificateId: getCredentialId(course.id),
-      blankTemplateUrl: template?.template_url,
       verifyUrl: getVerifyUrl(course.id),
+      templateUrl: template?.template_url,
     })
   }
 
@@ -380,11 +395,12 @@ export default function Certifications() {
           <MinorCourseCertificate
             studentName={preview.studentName}
             courseTitle={preview.courseTitle}
-            duration={preview.duration}
-            completionDate={preview.completionDate}
+            category={preview.category}
+            issueDate={preview.issueDate}
+            submissionDate={preview.submissionDate}
             certificateId={preview.certificateId}
-            blankTemplateUrl={preview.blankTemplateUrl}
             verifyUrl={preview.verifyUrl}
+            templateUrl={preview.templateUrl}
             onClose={() => setPreview(null)}
           />
         )}
