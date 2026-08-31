@@ -8,11 +8,11 @@ const CH = 1080
 const NAME = { x: 960, y: 454, size: 64, font: 'Georgia, "Times New Roman", serif', color: '#1E293B', spacing: 0.16 }
 const COURSE = { x: 960, y: 691, size: 34, font: 'Arial, sans-serif', color: '#0F172A' }
 const META = {
-  y: 1000,
+  y: 1015,
   size: 24,
   font: 'Arial, sans-serif',
   color: '#0f2942',
-  cols: [430, 790, 1140, 1480],
+  cols: [428, 785, 1130, 1475],
 }
 
 const CertificateCanvas = forwardRef(function CertificateCanvas(
