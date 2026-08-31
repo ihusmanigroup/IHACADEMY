@@ -8,11 +8,11 @@ const CH = 1080
 const NAME = { x: 960, y: 454, size: 64, font: 'Georgia, "Times New Roman", serif', color: '#1E293B', spacing: 0.16 }
 const COURSE = { x: 960, y: 691, size: 34, font: 'Arial, sans-serif', color: '#0F172A' }
 const META = {
-  y: 995,
-  size: 28,
+  y: 1000,
+  size: 24,
   font: 'Arial, sans-serif',
-  color: '#334155',
-  cols: [600, 770, 960, 1160],
+  color: '#0f2942',
+  cols: [430, 790, 1140, 1480],
 }
 
 const CertificateCanvas = forwardRef(function CertificateCanvas(
@@ -53,15 +53,12 @@ const CertificateCanvas = forwardRef(function CertificateCanvas(
     ctx.fillText((courseTitle || '').toUpperCase(), COURSE.x, COURSE.y)
 
     // Bottom meta row (category / issue date / cert id / submission date)
-    const metaValues = ['Minor', issueDate, certificateId, submissionDate]
-    ctx.font = `600 ${META.size}px ${META.font}`
+    const metaValues = [category || 'Minor', issueDate, certificateId, submissionDate]
+    ctx.font = `700 ${META.size}px ${META.font}`
     ctx.fillStyle = META.color
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px'
     metaValues.forEach((val, i) => {
-      if (i === 2) {
-        ctx.font = `700 ${META.size}px ${META.font}`
-      } else {
-        ctx.font = `600 ${META.size}px ${META.font}`
-      }
+      ctx.font = `700 ${META.size}px ${META.font}`
       ctx.fillText(val || '', META.cols[i], META.y)
     })
   }
