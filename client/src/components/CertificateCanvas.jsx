@@ -12,7 +12,7 @@ const META = {
   size: 24,
   font: 'Arial, sans-serif',
   color: '#0f2942',
-  cols: [430, 600, 780, 960],
+  cols: [413, 778, 1142, 1507],
 }
 
 const CertificateCanvas = forwardRef(function CertificateCanvas(
