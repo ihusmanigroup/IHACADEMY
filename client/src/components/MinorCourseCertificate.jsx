@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 import CertificateCanvas from './CertificateCanvas'
 import './certificateModal.css'
 
@@ -48,34 +49,32 @@ export default function MinorCourseCertificate({
     }
   }
 
-  const getImageDataURL = async () => {
-    const c = canvasRef.current
-    if (!c) return null
-    try {
-      await c.ready()
-      const dataUrl = c.toDataURL()
-      if (dataUrl) return dataUrl
-      if (c.isTainted()) {
-        console.warn('Canvas tainted, falling back to print')
-        window.print()
-        return null
-      }
-    } catch (err) {
-      console.error('Certificate canvas export failed:', err)
-      window.print()
-      return null
-    }
-    return null
-  }
-
   const handleDownloadHD = async () => {
+    const originalEl = certRef.current?.querySelector('#certificate-node')
+    if (!originalEl) return
     try {
       setDownloading(true)
-      const dataUrl = await getImageDataURL()
-      if (!dataUrl) return
+      const clone = originalEl.cloneNode(true)
+      clone.style.position = 'fixed'
+      clone.style.left = '-9999px'
+      clone.style.top = '0px'
+      clone.style.width = '1200px'
+      clone.style.height = 'auto'
+      clone.style.transform = 'none'
+      document.body.appendChild(clone)
+      if (document.fonts) await document.fonts.ready
+      const canvas = await html2canvas(clone, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        logging: false,
+      })
+      document.body.removeChild(clone)
+      const image = canvas.toDataURL('image/png', 1.0)
       const link = document.createElement('a')
-      link.href = dataUrl
       link.download = `Certificate-${studentName?.replace(/\s+/g, '_') || 'HD'}.png`
+      link.href = image
       link.click()
     } catch (err) {
       console.error('HD Download failed:', err)
@@ -85,12 +84,34 @@ export default function MinorCourseCertificate({
   }
 
   const handleDownloadPDF = async () => {
+    const originalEl = certRef.current?.querySelector('#certificate-node')
+    if (!originalEl) return
     try {
       setDownloading(true)
-      const dataUrl = await getImageDataURL()
-      if (!dataUrl) return
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
-      pdf.addImage(dataUrl, 'PNG', 0, 0, 297, 210)
+      const clone = originalEl.cloneNode(true)
+      clone.style.position = 'fixed'
+      clone.style.left = '-9999px'
+      clone.style.top = '0px'
+      clone.style.width = '1200px'
+      clone.style.height = 'auto'
+      clone.style.transform = 'none'
+      document.body.appendChild(clone)
+      if (document.fonts) await document.fonts.ready
+      const canvas = await html2canvas(clone, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        logging: false,
+      })
+      document.body.removeChild(clone)
+      const imgData = canvas.toDataURL('image/png', 1.0)
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'px',
+        format: [canvas.width, canvas.height],
+      })
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height)
       pdf.save(`Certificate-${studentName?.replace(/\s+/g, '_') || 'HD'}.pdf`)
     } catch (err) {
       console.error('PDF Download failed:', err)
