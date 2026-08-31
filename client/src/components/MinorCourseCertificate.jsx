@@ -11,16 +11,20 @@ const LinkedinIcon = () => (
 )
 
 export default function MinorCourseCertificate({
-  studentName,
-  courseTitle,
-  category,
-  issueDate,
+  studentName = 'Student Name',
+  courseTitle = 'Course Title',
+  category = 'Tools',
+  issueDate = '',
+  submissionDate = '',
   certificateId,
-  submissionDate,
+  certId,
   verificationUrl,
+  verifyUrl,
   templateUrl,
   onClose,
 }) {
+  const resolvedCertId = certificateId || certId || 'IH-CERT-2026-8738'
+  const resolvedVerifyUrl = verificationUrl || verifyUrl || `https://ihacademy.app/verify/${resolvedCertId}`
   const certRef = useRef(null)
   const canvasRef = useRef(null)
   const [downloading, setDownloading] = useState(false)
@@ -32,8 +36,8 @@ export default function MinorCourseCertificate({
     return [
       `🎓 Proud to share that I have successfully completed the "${title}" course at IH Academy! 🚀`,
       '',
-      `📜 Certificate ID: ${certificateId || 'N/A'}`,
-      `🌐 Verify Certificate: ${verificationUrl || `https://ihacademy.app/verify/${certificateId || ''}`}`,
+      `📜 Certificate ID: ${resolvedCertId}`,
+      `🌐 Verify Certificate: ${resolvedVerifyUrl}`,
       '',
       `#IHAcademy #Certification #SkillUp #${courseHashtag} #ContinuousLearning`,
     ].join('\n')
@@ -63,9 +67,16 @@ export default function MinorCourseCertificate({
       clone.style.transform = 'none'
       const footerContainer = clone.querySelector('[class*="bottom-[6%]"]') ||
                               clone.querySelector('[class*="bottom-[5.5%]"]') ||
+                              clone.querySelector('[class*="bottom-[8.5%]"]') ||
                               clone.querySelector('[class*="bottom-"]')
       if (footerContainer) {
-        footerContainer.style.bottom = '8.5%'
+        footerContainer.style.bottom = '7%'
+        const columns = footerContainer.querySelectorAll('div')
+        columns.forEach(col => {
+          col.style.display = 'flex'
+          col.style.flexDirection = 'column'
+          col.style.alignItems = 'center'
+        })
       }
       document.body.appendChild(clone)
       if (document.fonts) await document.fonts.ready
@@ -103,9 +114,16 @@ export default function MinorCourseCertificate({
       clone.style.transform = 'none'
       const footerContainer = clone.querySelector('[class*="bottom-[6%]"]') ||
                               clone.querySelector('[class*="bottom-[5.5%]"]') ||
+                              clone.querySelector('[class*="bottom-[8.5%]"]') ||
                               clone.querySelector('[class*="bottom-"]')
       if (footerContainer) {
-        footerContainer.style.bottom = '8.5%'
+        footerContainer.style.bottom = '7%'
+        const columns = footerContainer.querySelectorAll('div')
+        columns.forEach(col => {
+          col.style.display = 'flex'
+          col.style.flexDirection = 'column'
+          col.style.alignItems = 'center'
+        })
       }
       document.body.appendChild(clone)
       if (document.fonts) await document.fonts.ready
@@ -199,7 +217,7 @@ export default function MinorCourseCertificate({
                   courseTitle={courseTitle}
                   category={category}
                   issueDate={issueDate}
-                  certificateId={certificateId}
+                  certificateId={resolvedCertId}
                   submissionDate={submissionDate}
                 />
               </div>
@@ -233,7 +251,7 @@ export default function MinorCourseCertificate({
                   </div>
                   {/* 3. CERTIFICATE ID (FINAL NUDGE LEFT) */}
                   <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap -translate-x-[12px]">
-                    {certificateId || "IH-CERT-2026-8738"}
+                    {resolvedCertId}
                   </div>
                   {/* 4. SUBMISSION DATE (FINAL TINY NUDGE LEFT) */}
                   <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap -translate-x-[35px]">
@@ -251,11 +269,11 @@ export default function MinorCourseCertificate({
           <span className="text-xs font-mono text-emerald-300 opacity-90">
             Verify at{' '}
             <a
-              href={verificationUrl || `https://ihacademy.app/verify/${certificateId || ''}`}
+              href={resolvedVerifyUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {verificationUrl || `ihacademy.app/verify/${certificateId || 'IH-CERT-2026-8738'}`}
+              {resolvedVerifyUrl.replace('https://', '').replace('http://', '')}
             </a>
           </span>
         </div>
