@@ -61,6 +61,12 @@ export default function MinorCourseCertificate({
       clone.style.width = '1200px'
       clone.style.height = 'auto'
       clone.style.transform = 'none'
+      const footerContainer = clone.querySelector('[class*="bottom-[6%]"]') ||
+                              clone.querySelector('[class*="bottom-[5.5%]"]') ||
+                              clone.querySelector('[class*="bottom-"]')
+      if (footerContainer) {
+        footerContainer.style.bottom = '8.5%'
+      }
       document.body.appendChild(clone)
       if (document.fonts) await document.fonts.ready
       const canvas = await html2canvas(clone, {
@@ -95,6 +101,12 @@ export default function MinorCourseCertificate({
       clone.style.width = '1200px'
       clone.style.height = 'auto'
       clone.style.transform = 'none'
+      const footerContainer = clone.querySelector('[class*="bottom-[6%]"]') ||
+                              clone.querySelector('[class*="bottom-[5.5%]"]') ||
+                              clone.querySelector('[class*="bottom-"]')
+      if (footerContainer) {
+        footerContainer.style.bottom = '8.5%'
+      }
       document.body.appendChild(clone)
       if (document.fonts) await document.fonts.ready
       const canvas = await html2canvas(clone, {
