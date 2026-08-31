@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
+import CertificateCanvas from './CertificateCanvas'
 import './certificateModal.css'
 
 const LinkedinIcon = () => (
@@ -21,10 +21,9 @@ export default function MinorCourseCertificate({
   onClose,
 }) {
   const certRef = useRef(null)
+  const canvasRef = useRef(null)
   const [downloading, setDownloading] = useState(false)
   const [copied, setCopied] = useState(false)
-
-  const verifyLink = verificationUrl || `https://ihacademy.app/verify/${certificateId || ''}`
 
   const buildLinkedInCaption = () => {
     const title = courseTitle || 'the course'
@@ -50,31 +49,23 @@ export default function MinorCourseCertificate({
   }
 
   const getImageDataURL = async () => {
-    const node = certRef.current
-    if (!node) return null
+    const c = canvasRef.current
+    if (!c) return null
     try {
-      const canvas = await html2canvas(node, {
-        scale: 4,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null,
-        logging: false,
-        windowWidth: node.scrollWidth,
-        windowHeight: node.scrollHeight,
-        onclone: (clonedDoc) => {
-          const cloned = clonedDoc.getElementById('certificate-node')
-          if (cloned) {
-            cloned.style.transform = 'none'
-            cloned.style.margin = '0'
-          }
-        },
-      })
-      return canvas.toDataURL('image/png', 1.0)
+      await c.ready()
+      const dataUrl = c.toDataURL()
+      if (dataUrl) return dataUrl
+      if (c.isTainted()) {
+        console.warn('Canvas tainted, falling back to print')
+        window.print()
+        return null
+      }
     } catch (err) {
-      console.error('Certificate export failed:', err)
+      console.error('Certificate canvas export failed:', err)
       window.print()
       return null
     }
+    return null
   }
 
   const handleDownloadHD = async () => {
@@ -129,15 +120,7 @@ export default function MinorCourseCertificate({
           <div className="mc-toolbar-right">
             <button
               type="button"
-              onClick={async () => {
-                try {
-                  await navigator.clipboard.writeText(buildLinkedInCaption())
-                  setCopied(true)
-                  setTimeout(() => setCopied(false), 2500)
-                } catch (err) {
-                  console.error('Failed to copy LinkedIn caption:', err)
-                }
-              }}
+              onClick={handleShareLinkedIn}
               className="bg-[#0A66C2] hover:bg-[#004182] text-white font-medium px-4 py-2 rounded-lg text-sm transition flex items-center gap-2"
             >
               <LinkedinIcon />
@@ -160,64 +143,87 @@ export default function MinorCourseCertificate({
 
         <div className="mc-stage">
           <div className="mc-canvas-wrap" ref={certRef}>
+            {/* Full template background — no cropping, natural aspect ratio */}
             <div
               id="certificate-node"
-              className="relative w-full max-w-3xl overflow-hidden"
-              style={{ aspectRatio: '16 / 9', background: 'transparent' }}
+              className="relative w-full max-w-4xl mx-auto my-auto"
             >
               {templateUrl ? (
                 <img
                   src={templateUrl}
-                  alt="IH Academy Certificate"
+                  alt="Certificate Template"
                   crossOrigin="anonymous"
-                  className="absolute inset-0 w-full h-full object-cover z-0"
-                  style={{ background: 'transparent' }}
+                  className="w-full h-auto block object-contain"
                 />
               ) : null}
 
-              {/* Student Name - below "THIS CERTIFICATE IS PROUDLY PRESENTED TO" */}
-              <h2 className="absolute top-[43%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl font-bold font-serif text-slate-900 text-center w-full z-20 pointer-events-none select-none bg-transparent">
-                {studentName || 'Student Name'}
-              </h2>
-
-              {/* Course Title - replaces static "MINOR COURSE" */}
-              <h3 className="absolute top-[57%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-extrabold uppercase text-slate-800 text-center w-full z-20 bg-transparent pointer-events-none select-none">
-                {courseTitle || 'Git & GitHub for Absolute Beginners'}
-              </h3>
-
-              {/* 4-Column Dynamic Data (Bottom Row) */}
-              <div className="absolute z-20 pointer-events-none select-none">
-                {/* Category */}
-                <div className="absolute bottom-[17%] left-[23%] -translate-x-1/2 z-20 pointer-events-none select-none">
-                  <span className="text-xs font-semibold text-slate-800 z-20 bg-transparent">{category || 'Tools'}</span>
-                </div>
-                {/* Issue Date */}
-                <div className="absolute bottom-[17%] left-[41%] -translate-x-1/2 z-20 pointer-events-none select-none">
-                  <span className="text-xs font-semibold text-slate-800 z-20 bg-transparent">{issueDate || '26/08/2026'}</span>
-                </div>
-                {/* Certificate ID */}
-                <div className="absolute bottom-[17%] left-[59%] -translate-x-1/2 z-20 pointer-events-none select-none">
-                  <span className="text-xs font-mono font-bold text-slate-900 z-20 bg-transparent">{certificateId || 'IH-CERT-2026-8738'}</span>
-                </div>
-                {/* Submission Date */}
-                <div className="absolute bottom-[17%] left-[77%] -translate-x-1/2 z-20 pointer-events-none select-none">
-                  <span className="text-xs font-semibold text-slate-800 z-20 bg-transparent">{submissionDate || '26/08/2026'}</span>
-                </div>
+              {/* Hidden high-res canvas for downloads */}
+              <div className="absolute -left-[9999px] -top-[9999px]">
+                <CertificateCanvas
+                  ref={canvasRef}
+                  templateUrl={templateUrl}
+                  studentName={studentName}
+                  courseTitle={courseTitle}
+                  category={category}
+                  issueDate={issueDate}
+                  certificateId={certificateId}
+                  submissionDate={submissionDate}
+                />
               </div>
 
-              {/* Footer Verification URL */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none select-none">
-                <span className="text-xs font-mono text-emerald-300 z-20 bg-transparent">
-                  Verify at {verificationUrl || `ihacademy.app/verify/${certificateId || 'IH-CERT-2026-8738'}`}
-                </span>
+              {/* Dynamic values overlay — only the 6 values that change per student */}
+              <div className="absolute inset-0 pointer-events-none font-sans text-[#0f2942] select-none">
+
+                {/* 1. STUDENT NAME */}
+                <div className="absolute top-[42%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-[70%]">
+                  <h2 className="text-2xl md:text-3xl font-serif font-bold tracking-wide text-slate-900">
+                    {studentName || 'Student Name'}
+                  </h2>
+                </div>
+
+                {/* 2. LOWER TITLE: COURSE NAME (Pushed down above bottom line) */}
+                <div className="absolute top-[64%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-[85%] px-4 pointer-events-none">
+                  <h3 className="text-sm md:text-base font-extrabold text-[#0f2942] uppercase tracking-wide leading-tight">
+                    {courseTitle || "Git & GitHub for Absolute Beginners"}
+                  </h3>
+                </div>
+
+                {/* FOOTER VALUES DIRECTLY ABOVE UNDERLINE BARS */}
+                <div className="absolute bottom-[6%] left-1/2 -translate-x-1/2 w-[76%] grid grid-cols-4 pointer-events-none">
+                  {/* 1. COURSE CATEGORY (NUDGED SLIGHTLY LEFT FOR PERFECT ALIGNMENT) */}
+                  <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap translate-x-[15px]">
+                    {category || "Tools"}
+                  </div>
+                  {/* 2. ISSUE DATE (NUDGED FURTHER RIGHT) */}
+                  <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap translate-x-[7px]">
+                    {issueDate || "August 26, 2026"}
+                  </div>
+                  {/* 3. CERTIFICATE ID (FINAL NUDGE LEFT) */}
+                  <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap -translate-x-[12px]">
+                    {certificateId || "IH-CERT-2026-8738"}
+                  </div>
+                  {/* 4. SUBMISSION DATE (FINAL TINY NUDGE LEFT) */}
+                  <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap -translate-x-[35px]">
+                    {submissionDate || "August 26, 2026"}
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
 
+        {/* Single verification link — below the certificate frame only */}
         <div className="mc-footer no-print">
-          <span className="text-xs font-mono text-emerald-300 opacity-90 bg-transparent">
-            Verify at {verificationUrl || `ihacademy.app/verify/${certificateId || 'IH-CERT-2026-8738'}`}
+          <span className="text-xs font-mono text-emerald-300 opacity-90">
+            Verify at{' '}
+            <a
+              href={verificationUrl || `https://ihacademy.app/verify/${certificateId || ''}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {verificationUrl || `ihacademy.app/verify/${certificateId || 'IH-CERT-2026-8738'}`}
+            </a>
           </span>
         </div>
       </div>

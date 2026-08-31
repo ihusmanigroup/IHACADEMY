@@ -3,16 +3,16 @@ import { forwardRef, useImperativeHandle, useRef, useEffect, useState } from 're
 const CW = 1920
 const CH = 1080
 
-// Pixel positions mapped 1:1 from the DOM overlay percentages so the canvas
-// preview matches exactly what the old DOM preview looked like.
-const NAME = { x: 960, y: 491, size: 38, font: 'Georgia, "Times New Roman", serif', color: '#1E293B', spacing: 0.16 }
-const COURSE = { x: 960, y: 664, size: 31, font: 'Arial, sans-serif', color: '#0F172A' }
+// Pixel positions mapped to match DOM overlay on a max-w-4xl (896px) container.
+// Scale factor: 1920 / 896 ≈ 2.14x for font sizes.
+const NAME = { x: 960, y: 454, size: 64, font: 'Georgia, "Times New Roman", serif', color: '#1E293B', spacing: 0.16 }
+const COURSE = { x: 960, y: 691, size: 34, font: 'Arial, sans-serif', color: '#0F172A' }
 const META = {
-  y: 970,
-  size: 23,
+  y: 995,
+  size: 28,
   font: 'Arial, sans-serif',
   color: '#334155',
-  cols: [470, 796, 1122, 1449],
+  cols: [600, 770, 960, 1160],
 }
 
 const CertificateCanvas = forwardRef(function CertificateCanvas(
@@ -47,16 +47,21 @@ const CertificateCanvas = forwardRef(function CertificateCanvas(
     ctx.fillText(studentName || '', NAME.x, NAME.y)
 
     // Course title
-    ctx.font = `700 ${COURSE.size}px ${COURSE.font}`
+    ctx.font = `800 ${COURSE.size}px ${COURSE.font}`
     ctx.fillStyle = COURSE.color
     if ('letterSpacing' in ctx) ctx.letterSpacing = '0px'
-    ctx.fillText(courseTitle || '', COURSE.x, COURSE.y)
+    ctx.fillText((courseTitle || '').toUpperCase(), COURSE.x, COURSE.y)
 
     // Bottom meta row (category / issue date / cert id / submission date)
+    const metaValues = ['Minor', issueDate, certificateId, submissionDate]
     ctx.font = `600 ${META.size}px ${META.font}`
     ctx.fillStyle = META.color
-    const metaValues = [category, issueDate, certificateId, submissionDate]
     metaValues.forEach((val, i) => {
+      if (i === 2) {
+        ctx.font = `700 ${META.size}px ${META.font}`
+      } else {
+        ctx.font = `600 ${META.size}px ${META.font}`
+      }
       ctx.fillText(val || '', META.cols[i], META.y)
     })
   }
