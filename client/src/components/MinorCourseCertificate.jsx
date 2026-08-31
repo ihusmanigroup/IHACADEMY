@@ -188,23 +188,31 @@ export default function MinorCourseCertificate({
                   </h3>
                 </div>
 
-                {/* FOOTER VALUES DIRECTLY ABOVE UNDERLINE BARS */}
-                <div className="absolute bottom-[6%] left-1/2 -translate-x-1/2 w-[76%] grid grid-cols-4 pointer-events-none">
-                  {/* 1. COURSE CATEGORY (NUDGED SLIGHTLY LEFT FOR PERFECT ALIGNMENT) */}
-                  <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap translate-x-[15px]">
-                    {category || "Tools"}
+                {/* FOOTER VALUES - HTML2CANVAS COMPATIBLE FLEX LAYOUT */}
+                <div className="absolute bottom-[5.5%] left-0 right-0 w-full px-8 flex flex-row items-end justify-between text-center pointer-events-none">
+                  {/* 1. COURSE CATEGORY */}
+                  <div className="w-1/4 flex items-center justify-center">
+                    <span className="text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap">
+                      {category || "Tools"}
+                    </span>
                   </div>
-                  {/* 2. ISSUE DATE (NUDGED FURTHER RIGHT) */}
-                  <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap translate-x-[7px]">
-                    {issueDate || "August 26, 2026"}
+                  {/* 2. ISSUE DATE */}
+                  <div className="w-1/4 flex items-center justify-center">
+                    <span className="text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap">
+                      {issueDate || "August 26, 2026"}
+                    </span>
                   </div>
-                  {/* 3. CERTIFICATE ID (FINAL NUDGE LEFT) */}
-                  <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap -translate-x-[12px]">
-                    {certificateId || "IH-CERT-2026-8738"}
+                  {/* 3. CERTIFICATE ID */}
+                  <div className="w-1/4 flex items-center justify-center">
+                    <span className="text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap">
+                      {certificateId || "IH-CERT-2026-8738"}
+                    </span>
                   </div>
-                  {/* 4. SUBMISSION DATE (FINAL TINY NUDGE LEFT) */}
-                  <div className="flex items-center justify-center text-center text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap -translate-x-[35px]">
-                    {submissionDate || "August 26, 2026"}
+                  {/* 4. SUBMISSION DATE */}
+                  <div className="w-1/4 flex items-center justify-center">
+                    <span className="text-[10px] md:text-[11px] font-bold text-[#0f2942] tracking-tight whitespace-nowrap">
+                      {submissionDate || "August 26, 2026"}
+                    </span>
                   </div>
                 </div>
 
